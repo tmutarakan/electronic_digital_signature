@@ -20,6 +20,7 @@ dependencies = [
     { name = "django-cors-headers" },
     { name = "djangorestframework" },
     { name = "djangorestframework-simplejwt" },
+    { name = "pytils" },
 ]
 
 [package.metadata]
@@ -28,6 +29,7 @@ requires-dist = [
     { name = "django-cors-headers", specifier = ">=4.7.0" },
     { name = "djangorestframework", specifier = ">=3.16.0" },
     { name = "djangorestframework-simplejwt", specifier = ">=5.5.0" },
+    { name = "pytils", specifier = ">=0.4.3" },
 ]
 
 [[package]]
@@ -91,6 +93,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/fb/68/ce067f09fca4abeca
 wheels = [
     { url = "https://files.pythonhosted.org/packages/79/84/0fdf9b18ba31d69877bd39c9cd6052b47f3761e9910c15de788e519f079f/PyJWT-2.9.0-py3-none-any.whl", hash = "sha256:3b02fb0f44517787776cf48f2ae25d8e14f300e6d7545a4315cee571a415e850", size = 22344, upload-time = "2024-08-01T15:01:06.481Z" },
 ]
+
+[[package]]
+name = "pytils"
+version = "0.4.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/af/250c7a895f4c685c4a0e7441cac1f4038aca52cb2acb44024dd88ed6e805/pytils-0.4.3.tar.gz", hash = "sha256:4828464cdb54b344843cfc5a7ed5cf5c605cb7e72e46a58b6ed2885568f301e5", size = 101364, upload-time = "2025-04-02T20:24:53.176Z" }
 
 [[package]]
 name = "sqlparse"

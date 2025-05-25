@@ -35,14 +35,4 @@ class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = (
-            "id",
-            "surname",
-            "name",
-            "patronymic",
-            "gender",
-            "position",
-            "civil_document",
-            "slug",
-            "created_at",
-        )
+        fields = "__all__"

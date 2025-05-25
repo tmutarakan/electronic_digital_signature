@@ -9,41 +9,33 @@ from .models import (
 
 
 class SettingAdminOrganization(admin.ModelAdmin):
-    list_display = ("title", "ogrn", "inn", "kpp", "registered_address")
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.fields]    # pylint: disable=W0212
 
 
 class SettingAdminPosition(admin.ModelAdmin):
-    list_display = ("title", "organization")
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.fields]    # pylint: disable=W0212
 
 
 class SettingAdminCivilDocument(admin.ModelAdmin):
-    list_display = (
-        "series",
-        "number",
-        "date_of_issue",
-        "birthdate",
-        "birthplace",
-        "code",
-        "inn",
-        "snils",
-    )
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.fields]    # pylint: disable=W0212
 
 
 class SettingAdminEmployee(admin.ModelAdmin):
-    list_display = (
-        "surname",
-        "name",
-        "patronymic",
-        "gender",
-        "position",
-        "civil_document",
-        "slug",
-        "created_at",
-    )
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.fields]    # pylint: disable=W0212
+
+    def save_model(self, request, obj, form, change):
+        if not change: # Проверяем что запись только создаётся
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
 
 
 class SettingAdminElectronicDigitalSignature(admin.ModelAdmin):
-    list_display = ("title", "sertificate", "archive", "owner")
+    def get_list_display(self, request):
+        return [field.name for field in self.model._meta.fields]    # pylint: disable=W0212
 
 
 admin.site.register(Organization, SettingAdminOrganization)

@@ -1,7 +1,8 @@
 from django.db import models
-from django.utils import timezone
+from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator, RegexValidator
 from .validators import validate_file_sertificate, validate_file_archive
+from .utils import unique_slugify
 
 
 class Organization(models.Model):
@@ -33,6 +34,8 @@ class Organization(models.Model):
     registered_address = models.CharField(
         max_length=200, verbose_name="Юридический адрес"
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     def __str__(self):
         return str(self.title)
@@ -47,6 +50,8 @@ class Position(models.Model):
     organization = models.ForeignKey(
         Organization, on_delete=models.PROTECT, verbose_name="Организация"
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     def __str__(self):
         return str(self.title)
@@ -100,6 +105,8 @@ class CivilDocument(models.Model):
         ],
         verbose_name="СНИЛС",
     )  # Страховой номер индивидуального лицевого счёта
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     def __str__(self):
         return f"{self.series} {self.number}"
@@ -128,8 +135,18 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
-    slug = models.SlugField()
-    created_at = models.DateField(default=timezone.now, verbose_name="Дата добавления")
+    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+    author = models.ForeignKey(to=User, on_delete=models.PROTECT, editable=False, verbose_name="Автор")
+
+    def save(self, *args, **kwargs):
+        """
+        Сохранение полей модели при их отсутствии заполнения
+        """
+        if not self.slug:
+            self.slug = unique_slugify(self, f"{self.surname} {self.name} {self.patronymic}")
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.surname} {self.name} {self.patronymic}"
@@ -152,6 +169,8 @@ class ElectronicDigitalSignature(models.Model):
         blank=True,
         verbose_name="Владелец",
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
         verbose_name = "ЭЦП"
