@@ -3,7 +3,10 @@ from .models import (
     Employee,
     Organization,
     Position,
-    CivilDocument,
+    Passport,
+    INN,
+    SNILS,
+    Sertificate,
     ElectronicDigitalSignature,
 )
 
@@ -20,9 +23,27 @@ class PositionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CivilDocumentSerializer(serializers.ModelSerializer):
+class PassportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CivilDocument
+        model = Passport
+        fields = "__all__"
+
+
+class INNSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = INN
+        fields = "__all__"
+
+
+class SNILSSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SNILS
+        fields = "__all__"
+
+
+class SertificateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sertificate
         fields = "__all__"
 
 

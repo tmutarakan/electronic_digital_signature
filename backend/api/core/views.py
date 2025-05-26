@@ -3,22 +3,28 @@ from .serializers import (
     EmployeeSerializer,
     OrganizationSerializer,
     PositionSerializer,
-    CivilDocumentSerializer,
+    PassportSerializer,
+    INNSerializer,
+    SNILSSerializer,
+    SertificateSerializer,
     ElectronicDigitalSignatureSerializer,
 )
 from .models import (
     Employee,
     Organization,
     Position,
-    CivilDocument,
+    Passport,
+    INN,
+    SNILS,
+    Sertificate,
     ElectronicDigitalSignature,
 )
 
 
 class PageNumberSetPagination(pagination.PageNumberPagination):
     page_size = 10
-    page_size_query_param = 'page_size'
-    ordering = 'slug'
+    page_size_query_param = "page_size"
+    ordering = "slug"
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -37,9 +43,23 @@ class PositionViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberSetPagination
 
 
-class CivilDocumentViewSet(viewsets.ModelViewSet):
-    serializer_class = CivilDocumentSerializer
-    queryset = CivilDocument.objects.all()
+class PassportViewSet(viewsets.ModelViewSet):
+    serializer_class = PassportSerializer
+    queryset = Passport.objects.all()
+    lookup_field = "slug"
+    pagination_class = PageNumberSetPagination
+
+
+class INNViewSet(viewsets.ModelViewSet):
+    serializer_class = INNSerializer
+    queryset = INN.objects.all()
+    lookup_field = "slug"
+    pagination_class = PageNumberSetPagination
+
+
+class SNILSViewSet(viewsets.ModelViewSet):
+    serializer_class = SNILSSerializer
+    queryset = SNILS.objects.all()
     lookup_field = "slug"
     pagination_class = PageNumberSetPagination
 
@@ -47,6 +67,13 @@ class CivilDocumentViewSet(viewsets.ModelViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
+    lookup_field = "slug"
+    pagination_class = PageNumberSetPagination
+
+
+class SertificateViewSet(viewsets.ModelViewSet):
+    serializer_class = SertificateSerializer
+    queryset = Sertificate.objects.all()
     lookup_field = "slug"
     pagination_class = PageNumberSetPagination
 

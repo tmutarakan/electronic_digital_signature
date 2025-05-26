@@ -4,7 +4,10 @@ from .views import (
     EmployeeViewSet,
     OrganizationViewSet,
     PositionViewSet,
-    CivilDocumentViewSet,
+    PassportViewSet,
+    INNViewSet,
+    SNILSViewSet,
+    SertificateViewSet,
     ElectronicDigitalSignatureViewSet,
 )
 
@@ -12,7 +15,10 @@ router = DefaultRouter()
 router.register("employee", EmployeeViewSet, basename="employee")
 router.register("organization", OrganizationViewSet, basename="organization")
 router.register("position", PositionViewSet, basename="position")
-router.register("civil-document", CivilDocumentViewSet, basename="civil-document")
+router.register("passport", PassportViewSet, basename="passport")
+router.register("inn", INNViewSet, basename="inn")
+router.register("snils", SNILSViewSet, basename="snils")
+router.register("sertificate", SertificateViewSet, basename="sertificate")
 router.register(
     "electronic-digital-signature",
     ElectronicDigitalSignatureViewSet,
