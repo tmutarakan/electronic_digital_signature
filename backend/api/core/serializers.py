@@ -57,3 +57,20 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = "__all__"
+
+
+class ContactSerailizer(serializers.Serializer):
+    name = serializers.CharField()
+    email = serializers.CharField()
+    subject = serializers.CharField()
+    message = serializers.CharField()
+
+    def create(self, validated_data):
+        # Since this is a simple serializer, just return the validated data
+        return validated_data
+
+    def update(self, instance, validated_data):
+        # Since this is a simple serializer, just update the instance dict
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        return instance

@@ -9,6 +9,7 @@ from .views import (
     SNILSViewSet,
     SertificateViewSet,
     ElectronicDigitalSignatureViewSet,
+    FeedBackView,
 )
 
 router = DefaultRouter()
@@ -25,4 +26,7 @@ router.register(
     basename="electronic-digital-signature",
 )
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+    path("feedback/", FeedBackView.as_view()),
+]
