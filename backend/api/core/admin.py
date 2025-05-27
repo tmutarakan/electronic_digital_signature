@@ -19,7 +19,7 @@ class SettingAdminOrganization(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -32,7 +32,7 @@ class SettingAdminPosition(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -45,7 +45,7 @@ class SettingAdminPassport(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -58,7 +58,7 @@ class SettingAdminINN(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -71,7 +71,7 @@ class SettingAdminSNILS(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -84,7 +84,7 @@ class SettingAdminEmployee(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -97,7 +97,7 @@ class SettingAdminSertificate(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -110,7 +110,7 @@ class SettingAdminElectronicDigitalSignature(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:  # Проверяем что запись только создаётся
-            obj.author = request.user
+            obj.created_by = request.user
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
 

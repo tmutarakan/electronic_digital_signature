@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, pagination
+from rest_framework import viewsets, permissions, pagination, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.mail import send_mail
@@ -69,6 +69,8 @@ class SNILSViewSet(viewsets.ModelViewSet):
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
+    search_fields = ['surname', 'name', 'patronymic']
+    filter_backends = (filters.SearchFilter,)
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     lookup_field = "slug"
@@ -93,7 +95,7 @@ class FeedBackView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ContactSerailizer
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> (Response | None):  # pylint: disable=unused-argument
         serializer_class = ContactSerailizer(data=request.data)
         if serializer_class.is_valid():
             data = serializer_class.validated_data
