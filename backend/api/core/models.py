@@ -324,6 +324,41 @@ class Employee(models.Model):
         verbose_name_plural = "Сотрудники"
 
 
+class CertificationCenter(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Название")
+    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
+    start_date = models.DateField(verbose_name="Дата начала действия")
+    end_date = models.DateField(verbose_name="Дата окончания")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+    created_by = models.ForeignKey(
+        to=User,
+        on_delete=models.PROTECT,
+        editable=False,
+        verbose_name="Автор",
+        related_name="certification_center_created_by",
+    )
+    modified_by = models.ForeignKey(
+        to=User,
+        on_delete=models.PROTECT,
+        editable=False,
+        verbose_name="Изменено",
+        related_name="certification_center_modified_by",
+    )
+
+    def save(self, *args, **kwargs):
+        """
+        Сохранение полей модели при их отсутствии заполнения
+        """
+        if not self.slug:
+            self.slug = unique_slugify(self, f"{self.title}")
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Сертификат"
+        verbose_name_plural = "Сертификаты"
+
+
 class Sertificate(models.Model):
     title = models.CharField(max_length=200, verbose_name="Имя файла")
     file = models.FileField(
@@ -378,6 +413,13 @@ class ElectronicDigitalSignature(models.Model):
         null=True,
         blank=True,
         verbose_name="Владелец",
+    )
+    certification_centerwner = models.ForeignKey(
+        CertificationCenter,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name="Удостоверяющий центр",
     )
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")

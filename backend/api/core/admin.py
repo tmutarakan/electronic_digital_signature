@@ -14,7 +14,7 @@ from .models import (
 class SettingAdminOrganization(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -27,7 +27,7 @@ class SettingAdminOrganization(admin.ModelAdmin):
 class SettingAdminPosition(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -40,7 +40,7 @@ class SettingAdminPosition(admin.ModelAdmin):
 class SettingAdminPassport(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -53,7 +53,7 @@ class SettingAdminPassport(admin.ModelAdmin):
 class SettingAdminINN(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -66,7 +66,7 @@ class SettingAdminINN(admin.ModelAdmin):
 class SettingAdminSNILS(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -79,7 +79,7 @@ class SettingAdminSNILS(admin.ModelAdmin):
 class SettingAdminEmployee(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -92,7 +92,7 @@ class SettingAdminEmployee(admin.ModelAdmin):
 class SettingAdminSertificate(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
@@ -105,7 +105,7 @@ class SettingAdminSertificate(admin.ModelAdmin):
 class SettingAdminElectronicDigitalSignature(admin.ModelAdmin):
     def get_list_display(self, request):
         return [
-            field.name for field in self.model._meta.fields  # pylint: disable=W0212
+            field.name for field in self.model._meta.fields
         ]
 
     def save_model(self, request, obj, form, change):
