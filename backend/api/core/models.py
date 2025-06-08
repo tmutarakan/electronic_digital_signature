@@ -5,8 +5,30 @@ from .validators import validate_file_sertificate, validate_file_archive
 from .utils import unique_slugify
 
 
-class Organization(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Название")
+class TrackChanges(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+    created_by = models.ForeignKey(
+        to=User,
+        on_delete=models.PROTECT,
+        editable=False,
+        verbose_name="Автор",
+        related_name='%(app_label)s_%(class)s_created_by',
+    )
+    modified_by = models.ForeignKey(
+        to=User,
+        on_delete=models.PROTECT,
+        editable=False,
+        verbose_name="Изменено",
+        related_name='%(app_label)s_%(class)s_modified_by',
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Organization(TrackChanges):
+    name = models.CharField(max_length=200, verbose_name="Название")
     ogrn = models.CharField(
         max_length=13,
         validators=[
@@ -35,79 +57,47 @@ class Organization(models.Model):
         max_length=200, verbose_name="Юридический адрес"
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="organization_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="organization_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
         """
         if not self.slug:
-            self.slug = unique_slugify(self, f"{self.title}")
+            self.slug = unique_slugify(self, f"{self.name}")
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.title)
+        return str(self.name)
 
     class Meta:
         verbose_name = "Организация"
         verbose_name_plural = "Организации"
 
 
-class Position(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Название")
+class Position(TrackChanges):
+    name = models.CharField(max_length=200, verbose_name="Название")
     organization = models.ForeignKey(
         Organization, on_delete=models.PROTECT, verbose_name="Организация"
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="position_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="position_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
         """
         if not self.slug:
-            self.slug = unique_slugify(self, f"{self.title}")
+            self.slug = unique_slugify(self, f"{self.name}")
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.title)
+        return str(self.name)
 
     class Meta:
         verbose_name = "Должность"
         verbose_name_plural = "Должности"
 
 
-class Passport(models.Model):
+class Passport(TrackChanges):
     series = models.CharField(
         max_length=4,
         validators=[
@@ -136,22 +126,6 @@ class Passport(models.Model):
         verbose_name="Код подразделения",
     )  # Код подразделения
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="passport_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="passport_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
@@ -169,7 +143,7 @@ class Passport(models.Model):
         verbose_name_plural = "Паспорта"
 
 
-class INN(models.Model):
+class INN(TrackChanges):
     value = models.CharField(
         max_length=12,
         validators=[
@@ -179,22 +153,6 @@ class INN(models.Model):
         verbose_name="ИНН",
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="inn_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="inn_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
@@ -212,7 +170,7 @@ class INN(models.Model):
         verbose_name_plural = "ИНН"
 
 
-class SNILS(models.Model):
+class SNILS(TrackChanges):
     value = models.CharField(
         max_length=11,
         validators=[
@@ -222,22 +180,6 @@ class SNILS(models.Model):
         verbose_name="СНИЛС",
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="snils_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="snils_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
@@ -255,7 +197,7 @@ class SNILS(models.Model):
         verbose_name_plural = "СНИЛС"
 
 
-class Employee(models.Model):
+class Employee(TrackChanges):
     GENDER_CHOICES = [
         ("М", "Мужской"),
         ("Ж", "Женский"),
@@ -289,22 +231,6 @@ class Employee(models.Model):
         blank=True,
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="employee_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="employee_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
@@ -324,34 +250,18 @@ class Employee(models.Model):
         verbose_name_plural = "Сотрудники"
 
 
-class CertificationCenter(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Название")
+class CertificationCenter(TrackChanges):
+    name = models.CharField(max_length=200, verbose_name="Название")
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="certification_center_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="certification_center_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
         """
         if not self.slug:
-            self.slug = unique_slugify(self, f"{self.title}")
+            self.slug = unique_slugify(self, f"{self.name}")
         super().save(*args, **kwargs)
 
     class Meta:
@@ -359,37 +269,21 @@ class CertificationCenter(models.Model):
         verbose_name_plural = "Сертификаты"
 
 
-class Sertificate(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Имя файла")
+class Sertificate(TrackChanges):
+    filename = models.CharField(max_length=200, verbose_name="Имя файла")
     file = models.FileField(
         validators=[validate_file_sertificate], verbose_name="Сертификат"
     )
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="sertificate_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="sertificate_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
         """
         if not self.slug:
-            self.slug = unique_slugify(self, f"{self.title}")
+            self.slug = unique_slugify(self, f"{self.filename}")
         super().save(*args, **kwargs)
 
     class Meta:
@@ -397,8 +291,8 @@ class Sertificate(models.Model):
         verbose_name_plural = "Сертификаты"
 
 
-class ElectronicDigitalSignature(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Имя файла")
+class ElectronicDigitalSignature(TrackChanges):
+    filename = models.CharField(max_length=200, verbose_name="Имя файла")
     sertificate = models.OneToOneField(
         Sertificate,
         on_delete=models.PROTECT,
@@ -424,29 +318,13 @@ class ElectronicDigitalSignature(models.Model):
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")
     slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    created_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Автор",
-        related_name="electronic_digital_signature_created_by",
-    )
-    modified_by = models.ForeignKey(
-        to=User,
-        on_delete=models.PROTECT,
-        editable=False,
-        verbose_name="Изменено",
-        related_name="electronic_digital_signature_modified_by",
-    )
 
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
         """
         if not self.slug:
-            self.slug = unique_slugify(self, f"{self.title}")
+            self.slug = unique_slugify(self, f"{self.filename}")
         super().save(*args, **kwargs)
 
     class Meta:
