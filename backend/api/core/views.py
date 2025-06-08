@@ -1,8 +1,10 @@
-from rest_framework import viewsets, permissions, pagination, filters
+from rest_framework import viewsets, permissions, pagination, filters, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.mail import send_mail
 from .serializers import (
+    RegisterSerializer,
+    UserSerializer,
     EmployeeSerializer,
     OrganizationSerializer,
     PositionSerializer,
@@ -23,6 +25,38 @@ from .models import (
     Sertificate,
     ElectronicDigitalSignature,
 )
+
+
+class RegisterView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(
+            {
+                "user": UserSerializer(
+                    user, context=self.get_serializer_context()
+                ).data,
+                "message": "Пользователь успешно создан",
+            }
+        )
+
+
+class ProfileView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        return Response(
+            {
+                "user": UserSerializer(
+                    request.user, context=self.get_serializer_context()
+                ).data,
+            }
+        )
 
 
 class PageNumberSetPagination(pagination.PageNumberPagination):
@@ -69,7 +103,7 @@ class SNILSViewSet(viewsets.ModelViewSet):
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-    search_fields = ['surname', 'name', 'patronymic']
+    search_fields = ["surname", "name", "patronymic"]
     filter_backends = (filters.SearchFilter,)
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
@@ -95,7 +129,9 @@ class FeedBackView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ContactSerailizer
 
-    def post(self, request, *args, **kwargs) -> (Response | None):  # pylint: disable=unused-argument
+    def post(
+        self, request, *args, **kwargs  # pylint: disable=unused-argument
+    ) -> Response | None:
         serializer_class = ContactSerailizer(data=request.data)
         if serializer_class.is_valid():
             data = serializer_class.validated_data
@@ -104,6 +140,9 @@ class FeedBackView(APIView):
             subject = data.get("subject")
             message = data.get("message")
             send_mail(
-                f"От {name} | {subject}", message, from_email, ["ratibor.tmutarakansky@yandex.ru"]
+                f"От {name} | {subject}",
+                message,
+                from_email,
+                ["ratibor.tmutarakansky@yandex.ru"],
             )
             return Response({"success": "Sent"})

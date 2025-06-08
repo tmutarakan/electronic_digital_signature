@@ -1,6 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
+    RegisterView,
+    ProfileView,
     EmployeeViewSet,
     OrganizationViewSet,
     PositionViewSet,
@@ -29,4 +31,6 @@ router.register(
 urlpatterns = [
     path("", include(router.urls)),
     path("feedback/", FeedBackView.as_view()),
+    path('register/', RegisterView.as_view()),
+    path('profile/', ProfileView.as_view()),
 ]
