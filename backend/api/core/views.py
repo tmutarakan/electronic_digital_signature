@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, pagination, filters, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.mail import send_mail
+from api.settings import EMAIL_HOST_USER
 from .serializers import (
     RegisterSerializer,
     UserSerializer,
@@ -143,6 +144,6 @@ class FeedBackView(APIView):
                 f"От {name} | {subject}",
                 message,
                 from_email,
-                ["ratibor.tmutarakansky@yandex.ru"],
+                [EMAIL_HOST_USER],
             )
             return Response({"success": "Sent"})

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.exceptions import ValidationError
 from .validators import validate_file_sertificate, validate_file_archive
 from .utils import unique_slugify
 
@@ -13,15 +14,24 @@ class TrackChanges(models.Model):
         on_delete=models.PROTECT,
         editable=False,
         verbose_name="Автор",
-        related_name='%(app_label)s_%(class)s_created_by',
+        related_name="%(app_label)s_%(class)s_created_by",
     )
     modified_by = models.ForeignKey(
         to=User,
         on_delete=models.PROTECT,
         editable=False,
         verbose_name="Изменено",
-        related_name='%(app_label)s_%(class)s_modified_by',
+        related_name="%(app_label)s_%(class)s_modified_by",
     )
+    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
+
+    def save(self, *args, **kwargs):
+        """
+        Сохранение полей модели при их отсутствии заполнения
+        """
+        if not self.slug:
+            self.slug = unique_slugify(self, str(self))
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -56,15 +66,6 @@ class Organization(TrackChanges):
     registered_address = models.CharField(
         max_length=200, verbose_name="Юридический адрес"
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.name}")
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.name)
@@ -79,15 +80,6 @@ class Position(TrackChanges):
     organization = models.ForeignKey(
         Organization, on_delete=models.PROTECT, verbose_name="Организация"
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.name}")
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.name)
@@ -125,15 +117,6 @@ class Passport(TrackChanges):
         ],
         verbose_name="Код подразделения",
     )  # Код подразделения
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.series} {self.number}")
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.series} {self.number}"
@@ -152,15 +135,6 @@ class INN(TrackChanges):
         ],
         verbose_name="ИНН",
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.value}")
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.value}"
@@ -179,15 +153,6 @@ class SNILS(TrackChanges):
         ],
         verbose_name="СНИЛС",
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.value}")
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.value}"
@@ -206,9 +171,6 @@ class Employee(TrackChanges):
     name = models.CharField(max_length=200, verbose_name="Имя")
     patronymic = models.CharField(max_length=200, verbose_name="Отчество")
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол")
-    position = models.ForeignKey(
-        Position, on_delete=models.PROTECT, verbose_name="Должность"
-    )
     passport = models.OneToOneField(
         Passport,
         on_delete=models.PROTECT,
@@ -230,17 +192,6 @@ class Employee(TrackChanges):
         null=True,
         blank=True,
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(
-                self, f"{self.surname} {self.name} {self.patronymic}"
-            )
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.surname} {self.name} {self.patronymic}"
@@ -252,21 +203,13 @@ class Employee(TrackChanges):
 
 class CertificationCenter(TrackChanges):
     name = models.CharField(max_length=200, verbose_name="Название")
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
-    start_date = models.DateField(verbose_name="Дата начала действия")
-    end_date = models.DateField(verbose_name="Дата окончания")
 
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.name}")
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.name)
 
     class Meta:
-        verbose_name = "Сертификат"
-        verbose_name_plural = "Сертификаты"
+        verbose_name = "Удостоверяющий центр"
+        verbose_name_plural = "Удостоверяющие центры"
 
 
 class Sertificate(TrackChanges):
@@ -274,17 +217,23 @@ class Sertificate(TrackChanges):
     file = models.FileField(
         validators=[validate_file_sertificate], verbose_name="Сертификат"
     )
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
+    position = models.ForeignKey(
+        Position, on_delete=models.PROTECT, verbose_name="Должность"
+    )
+    certification_center = models.ForeignKey(
+        CertificationCenter,
+        on_delete=models.PROTECT,
+        verbose_name="Удостоверяющий центр",
+    )
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")
 
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.filename}")
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.filename)
+
+    def clean(self):
+        if self.start_date > self.end_date:
+            raise ValidationError("Дата начала не может быть позже даты окончания.")
 
     class Meta:
         verbose_name = "Сертификат"
@@ -307,25 +256,17 @@ class ElectronicDigitalSignature(TrackChanges):
         null=True,
         blank=True,
         verbose_name="Владелец",
-    )
-    certification_centerwner = models.ForeignKey(
-        CertificationCenter,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        verbose_name="Удостоверяющий центр",
+        related_name='signatures',
     )
     start_date = models.DateField(verbose_name="Дата начала действия")
     end_date = models.DateField(verbose_name="Дата окончания")
-    slug = models.SlugField(verbose_name="ЧПУ", editable=False, unique=True)
 
-    def save(self, *args, **kwargs):
-        """
-        Сохранение полей модели при их отсутствии заполнения
-        """
-        if not self.slug:
-            self.slug = unique_slugify(self, f"{self.filename}")
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.filename)
+
+    def clean(self):
+        if self.start_date > self.end_date:
+            raise ValidationError("Дата начала не может быть позже даты окончания.")
 
     class Meta:
         verbose_name = "ЭЦП"

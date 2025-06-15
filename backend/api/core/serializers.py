@@ -86,6 +86,7 @@ class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    signatures = ElectronicDigitalSignatureSerializer(many=True, read_only=True)
     class Meta:
         model = Employee
         fields = "__all__"
