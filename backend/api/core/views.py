@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions, pagination, filters, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
 from django.core.mail import send_mail
 from api.settings import EMAIL_HOST_USER
 from .serializers import (
@@ -58,6 +59,19 @@ class ProfileView(generics.GenericAPIView):
                 ).data,
             }
         )
+
+
+class LogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        try:
+            # Отзываем все токены пользователя
+            for token in OutstandingToken.objects.filter(user=request.user):
+                BlacklistedToken.objects.create(token=token)
+            return Response({"message": "Вы успешно вышли из системы"}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
 
 
 class PageNumberSetPagination(pagination.PageNumberPagination):
