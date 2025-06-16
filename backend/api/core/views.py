@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
 from django.core.mail import send_mail
-from api.settings import EMAIL_HOST_USER
 from .serializers import (
     RegisterSerializer,
     UserSerializer,
