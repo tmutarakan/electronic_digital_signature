@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework_simplejwt.token_blacklist',
     "core",
+    "apps.organizations",
+    "apps.employees",
+    "apps.signatures",
 ]
 
 MIDDLEWARE = [
