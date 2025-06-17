@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
-from api.core.models import TrackChanges
+from core.models import TrackChanges
 
 
 class Organization(TrackChanges):

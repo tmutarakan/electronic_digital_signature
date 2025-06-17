@@ -1,8 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from api.core.models import TrackChanges
-from api.apps.organizations.models import Position
-from api.apps.employees.models import Employee
+from core.models import TrackChanges
+from apps.organizations.models import Position
+from apps.employees.models import Employee
 from .validators import validate_file_sertificate, validate_file_archive
 
 

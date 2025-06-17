@@ -1,35 +1,11 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from .views import (
     RegisterView,
     ProfileView,
-    EmployeeViewSet,
-    OrganizationViewSet,
-    PositionViewSet,
-    PassportViewSet,
-    INNViewSet,
-    SNILSViewSet,
-    SertificateViewSet,
-    ElectronicDigitalSignatureViewSet,
     FeedBackView,
 )
 
-router = DefaultRouter()
-router.register("employee", EmployeeViewSet, basename="employee")
-router.register("organization", OrganizationViewSet, basename="organization")
-router.register("position", PositionViewSet, basename="position")
-router.register("passport", PassportViewSet, basename="passport")
-router.register("inn", INNViewSet, basename="inn")
-router.register("snils", SNILSViewSet, basename="snils")
-router.register("sertificate", SertificateViewSet, basename="sertificate")
-router.register(
-    "electronic-digital-signature",
-    ElectronicDigitalSignatureViewSet,
-    basename="electronic-digital-signature",
-)
-
 urlpatterns = [
-    path("", include(router.urls)),
     path("feedback/", FeedBackView.as_view()),
     path('register/', RegisterView.as_view()),
     path('profile/', ProfileView.as_view()),

@@ -1,16 +1,10 @@
 from rest_framework import serializers
 from .models import (
-    Employee,
-    Position,
     Sertificate,
     ElectronicDigitalSignature,
+    CertificationCenter
 )
 
-
-class PositionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Position
-        fields = "__all__"
 
 
 class SertificateSerializer(serializers.ModelSerializer):
@@ -24,10 +18,7 @@ class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
         model = ElectronicDigitalSignature
         fields = "__all__"
 
-
-class EmployeeSerializer(serializers.ModelSerializer):
-    signatures = ElectronicDigitalSignatureSerializer(many=True, read_only=True)
-
+class CertificationCenterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Employee
+        model = CertificationCenter
         fields = "__all__"

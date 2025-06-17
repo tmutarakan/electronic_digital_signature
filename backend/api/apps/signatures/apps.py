@@ -3,6 +3,6 @@ from django.apps import AppConfig
 
 class SignaturesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'signatures'
+    name = 'apps.signatures'
     verbose_name = 'ЭЦП'
     label = 'ЭЦП'

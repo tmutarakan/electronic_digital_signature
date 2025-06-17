@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.apps.signatures.serializers import ElectronicDigitalSignatureSerializer
+from apps.signatures.serializers import ElectronicDigitalSignatureSerializer
 from .models import (
     Employee,
     Passport,
