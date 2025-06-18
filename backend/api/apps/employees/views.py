@@ -18,27 +18,25 @@ class PassportViewSet(viewsets.ModelViewSet):
     serializer_class = PassportSerializer
     queryset = Passport.objects.all()
     lookup_field = "slug"
-    pagination_class = PageNumberSetPagination
 
 
 class INNViewSet(viewsets.ModelViewSet):
     serializer_class = INNSerializer
     queryset = INN.objects.all()
     lookup_field = "slug"
-    pagination_class = PageNumberSetPagination
 
 
 class SNILSViewSet(viewsets.ModelViewSet):
     serializer_class = SNILSSerializer
     queryset = SNILS.objects.all()
     lookup_field = "slug"
-    pagination_class = PageNumberSetPagination
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
-    search_fields = ["surname", "name", "patronymic"]
-    filter_backends = (filters.SearchFilter,)
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["surname", "name", "patronymic"]
+    ordering_fields = ["surname", "name", "patronymic"]
     lookup_field = "slug"
     pagination_class = PageNumberSetPagination
