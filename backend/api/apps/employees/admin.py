@@ -1,49 +1,42 @@
 from django.contrib import admin
+from core.admin import BaseSettingAdmin
 from .models import Passport, INN, SNILS, Employee
 
 
-class SettingAdminPassport(admin.ModelAdmin):
+class SettingAdminPassport(BaseSettingAdmin):
+    fields = ("title", "date_of_issue", "birthdate", "birthplace", "code")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
+        return self.fields + super().get_list_display(request)
 
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+    def title(self, obj):
+        return f"{obj.series} {obj.number}"
 
 
-class SettingAdminINN(admin.ModelAdmin):
+class SettingAdminINN(BaseSettingAdmin):
+    fields = ("value",)
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
-class SettingAdminSNILS(admin.ModelAdmin):
+class SettingAdminSNILS(BaseSettingAdmin):
+    fields = ("value",)
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
-class SettingAdminEmployee(admin.ModelAdmin):
+class SettingAdminEmployee(BaseSettingAdmin):
+    fields = ("fullname", "gender", "passport", "inn", "snils")
+    search_fields = ('surname', "name", "patronymic")
+    ordering = ('surname', "name", "patronymic")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
+        return self.fields + super().get_list_display(request)
 
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+    def fullname(self, obj):
+        return f"{obj.surname} {obj.name} {obj.patronymic}"
 
 
 admin.site.register(Passport, SettingAdminPassport)

@@ -1,27 +1,20 @@
 from django.contrib import admin
+from core.admin import BaseSettingAdmin
 from .models import Organization, Position
 
 
-class SettingAdminOrganization(admin.ModelAdmin):
+class SettingAdminOrganization(BaseSettingAdmin):
+    fields = ("name", "ogrn", "inn", "kpp", "registered_address")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
-class SettingAdminPosition(admin.ModelAdmin):
+class SettingAdminPosition(BaseSettingAdmin):
+    fields = ("name", "organization")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
 admin.site.register(Organization, SettingAdminOrganization)

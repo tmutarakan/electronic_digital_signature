@@ -1,38 +1,30 @@
 from django.contrib import admin
+from core.admin import BaseSettingAdmin
 from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
 
 
-class SettingAdminSertificate(admin.ModelAdmin):
+class SettingAdminSertificate(BaseSettingAdmin):
+    fields = ("filename", "file", "position", "certification_center", "start_date", "end_date")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
-class SettingAdminCertificationCenter(admin.ModelAdmin):
+
+class SettingAdminCertificationCenter(BaseSettingAdmin):
+    fields = ("name", "inn")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+        return self.fields + super().get_list_display(request)
 
 
-class SettingAdminElectronicDigitalSignature(admin.ModelAdmin):
+
+class SettingAdminElectronicDigitalSignature(BaseSettingAdmin):
+    fields = ("filename", "sertificate", "archive", "owner", "start_date", "end_date")
+
     def get_list_display(self, request):
-        return [field.name for field in self.model._meta.fields]
+        return self.fields + super().get_list_display(request)
 
-    def save_model(self, request, obj, form, change):
-        if not change:  # Проверяем что запись только создаётся
-            obj.created_by = request.user
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
 
 
 admin.site.register(Sertificate, SettingAdminSertificate)

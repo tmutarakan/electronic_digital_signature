@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.exceptions import ValidationError
+from dateutil.relativedelta import relativedelta
 from core.models import TrackChanges
+from .validators import validate_birthdate
 
 
 class Passport(TrackChanges):
@@ -21,7 +24,9 @@ class Passport(TrackChanges):
         verbose_name="Номер",
     )
     date_of_issue = models.DateField(verbose_name="Дата выдачи")
-    birthdate = models.DateField(verbose_name="Дата рождения")
+    birthdate = models.DateField(
+        verbose_name="Дата рождения", validators=[validate_birthdate]
+    )
     birthplace = models.CharField(max_length=200, verbose_name="Место рождения")
     code = models.CharField(
         max_length=7,
@@ -34,6 +39,10 @@ class Passport(TrackChanges):
 
     def __str__(self):
         return f"{self.series} {self.number}"
+
+    def clean(self):
+        if self.birthdate > self.date_of_issue - relativedelta(years=14):
+            raise ValidationError("Паспорт выдаётся с 14 лет. Не верная дата выдачи.")
 
     class Meta:
         verbose_name = "Паспорт"
