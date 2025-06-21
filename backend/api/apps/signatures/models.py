@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator, RegexValidator
 from core.models import TrackChanges
 from apps.organizations.models import Position
 from apps.employees.models import Employee
@@ -8,6 +9,15 @@ from .validators import validate_file_sertificate, validate_file_archive
 
 class CertificationCenter(TrackChanges):
     name = models.CharField(max_length=200, verbose_name="Название")
+    inn = models.CharField(
+        max_length=10,
+        validators=[
+            MinLengthValidator(10),
+            RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
+        ],
+        verbose_name="ИНН",
+        unique=True,
+    )
 
     def __str__(self):
         return str(self.name)
@@ -20,7 +30,8 @@ class CertificationCenter(TrackChanges):
 class Sertificate(TrackChanges):
     filename = models.CharField(max_length=200, verbose_name="Имя файла")
     file = models.FileField(
-        validators=[validate_file_sertificate], verbose_name="Сертификат"
+        validators=[validate_file_sertificate], verbose_name="Сертификат",
+        unique=True,
     )
     position = models.ForeignKey(
         Position, on_delete=models.PROTECT, verbose_name="Должность"

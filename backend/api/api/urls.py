@@ -26,7 +26,7 @@ urlpatterns = [
     path("api/", include('core.urls')),
     path("api/", include('apps.employees.urls')),
     path("api/", include('apps.organizations.urls')),
-    path("api/", include('apps.signatures.urls')),
+    #path("api/", include('apps.signatures.urls')),
     path("api/token/", TokenObtainPairView.as_view(), name="token"),
     path("api/refresh_token/", TokenRefreshView.as_view(), name="refresh_token"),
     path('api/logout/', LogoutView.as_view(), name='logout'),

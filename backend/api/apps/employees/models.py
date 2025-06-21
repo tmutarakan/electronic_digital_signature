@@ -38,6 +38,10 @@ class Passport(TrackChanges):
     class Meta:
         verbose_name = "Паспорт"
         verbose_name_plural = "Паспорта"
+        unique_together = (
+            "series",
+            "number",
+        )
 
 
 class INN(TrackChanges):
@@ -48,6 +52,7 @@ class INN(TrackChanges):
             RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
         ],
         verbose_name="ИНН",
+        unique=True,
     )
 
     def __str__(self):
@@ -66,6 +71,7 @@ class SNILS(TrackChanges):
             RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
         ],
         verbose_name="СНИЛС",
+        unique=True,
     )
 
     def __str__(self):

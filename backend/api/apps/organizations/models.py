@@ -12,6 +12,7 @@ class Organization(TrackChanges):
             RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
         ],
         verbose_name="ОГРН",
+        unique=True,
     )  # Основной государственный регистрационный номер
     inn = models.CharField(
         max_length=10,
@@ -20,6 +21,7 @@ class Organization(TrackChanges):
             RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
         ],
         verbose_name="ИНН",
+        unique=True,
     )  # Идентификационный номер налогоплательщика
     kpp = models.CharField(
         max_length=9,
@@ -28,6 +30,7 @@ class Organization(TrackChanges):
             RegexValidator(regex=r"^\d+$", message="Разрешены только цифры."),
         ],
         verbose_name="КПП",
+        unique=True,
     )  # Код причины постановки на учёт
     registered_address = models.CharField(
         max_length=200, verbose_name="Юридический адрес"
@@ -53,3 +56,4 @@ class Position(TrackChanges):
     class Meta:
         verbose_name = "Должность"
         verbose_name_plural = "Должности"
+        unique_together = ('name', 'organization',)
