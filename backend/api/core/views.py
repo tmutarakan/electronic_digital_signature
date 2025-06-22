@@ -1,9 +1,14 @@
-from rest_framework import permissions, pagination, generics
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from rest_framework import permissions, pagination, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
-from django.core.mail import send_mail
 from .serializers import RegisterSerializer, UserSerializer, ContactSerailizer
+
+
+def ping_view(request):
+    return JsonResponse({"message": "pong"})
 
 
 class RegisterView(generics.GenericAPIView):
@@ -15,12 +20,13 @@ class RegisterView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response(
-            {
+            data={
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
                 "message": "Пользователь успешно создан",
-            }
+            },
+            status=status.HTTP_201_CREATED
         )
 
 
