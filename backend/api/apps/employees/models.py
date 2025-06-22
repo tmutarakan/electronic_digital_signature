@@ -128,3 +128,4 @@ class Employee(TrackChanges):
     class Meta:
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
+        ordering = ["surname", "name", "patronymic"]

@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -22,14 +23,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from core.views import LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("api/v1/", include('core.urls')),
-    path("api/v1/", include('apps.employees.urls')),
-    path("api/v1/", include('apps.organizations.urls')),
-    #path("api/v1/", include('apps.signatures.urls')),
+    path("admin/", admin.site.urls),
+    path("api/v1/", include("core.urls")),
+    path("api/v1/", include(("apps.employees.urls", "employees"), namespace="employees")),
+    path("api/v1/", include(("apps.organizations.urls", "organizations"), namespace="organizations")),
+    # path("api/v1/", include('apps.signatures.urls')),
     path("api/v1/token/", TokenObtainPairView.as_view(), name="token"),
     path("api/v1/refresh_token/", TokenRefreshView.as_view(), name="refresh_token"),
-    path('api/v1/logout/', LogoutView.as_view(), name='logout'),
+    path("api/v1/logout/", LogoutView.as_view(), name="logout"),
 ]
 
 if settings.DEBUG:  # Только для режима разработки
