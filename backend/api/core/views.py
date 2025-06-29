@@ -1,20 +1,59 @@
 from django.core.mail import send_mail
-from django.http import JsonResponse
 from rest_framework import permissions, pagination, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from api.settings.base import EMAIL_HOST_USER
 from .serializers import RegisterSerializer, UserSerializer, ContactSerailizer
 
 
-def ping_view(request):
-    return JsonResponse({"message": "pong"})
+class PingView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        tags=["core"],
+        operation_summary="Проверка API",
+        operation_description="Этот эндпоинт возвращает сообщение об успехе",
+        responses={
+            200: openapi.Response(
+                description="Успешный ответ",
+                examples={"application/json": {"message": "pong"}},
+            ),
+            404: "Не найдено",
+        },
+    )
+    def get(self, request):
+        # Логика обработки GET запроса
+        data = {"message": "pong"}
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class RegisterView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
+    @swagger_auto_schema(
+        tags=["Пользователи"],
+        operation_summary="Создание нового пользователя",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "username": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Имя пользователя"
+                ),
+                "password": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Пароль"
+                ),
+                "password2": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Подтверждение пароля"
+                ),
+            },
+            required=["username", "password", "password2"],
+        ),
+        responses={201: "Успешное создание"},
+    )
     def post(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -26,7 +65,7 @@ class RegisterView(generics.GenericAPIView):
                 ).data,
                 "message": "Пользователь успешно создан",
             },
-            status=status.HTTP_201_CREATED
+            status=status.HTTP_201_CREATED,
         )
 
 
