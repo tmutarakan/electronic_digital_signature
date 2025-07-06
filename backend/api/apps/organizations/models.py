@@ -51,6 +51,7 @@ class Organization(TrackChanges):
     class Meta:
         verbose_name = "Организация"
         verbose_name_plural = "Организации"
+        ordering = ["name"]
 
 
 class Position(TrackChanges):
@@ -74,3 +75,4 @@ class Position(TrackChanges):
             "name",
             "organization",
         )
+        ordering = ["name"]

@@ -66,6 +66,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     lookup_field = "slug"
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = PageNumberSetPagination
+    ordering_fields = ["name"]
+    ordering = ["name"]
 
 
 @method_decorator(
@@ -122,3 +124,5 @@ class PositionViewSet(viewsets.ModelViewSet):
     lookup_field = "slug"
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     pagination_class = PageNumberSetPagination
+    ordering_fields = ["name"]
+    ordering = ["name"]
