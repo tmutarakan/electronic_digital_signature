@@ -5,7 +5,7 @@ from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
 class CertificationCenterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CertificationCenter
-        fields = "__all__"
+        fields = ["name", "inn"]
 
 
 class SertificateSerializer(serializers.ModelSerializer):

@@ -8,10 +8,9 @@ from .models import (
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = "__all__"
-
+        fields = ["name", "ogrn", "inn", "kpp", "registered_address"]
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
-        fields = "__all__"
+        fields = ["name", "organization"]

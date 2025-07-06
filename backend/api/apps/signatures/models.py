@@ -8,7 +8,11 @@ from .validators import validate_file_sertificate, validate_file_archive
 
 
 class CertificationCenter(TrackChanges):
-    name = models.CharField(max_length=200, verbose_name="Название")
+    name = models.CharField(
+        max_length=200,
+        verbose_name="Название",
+        help_text="Введите название удостоверяющего центра",
+    )
     inn = models.CharField(
         max_length=10,
         validators=[
@@ -30,8 +34,10 @@ class CertificationCenter(TrackChanges):
 class Sertificate(TrackChanges):
     filename = models.CharField(max_length=200, verbose_name="Имя файла")
     file = models.FileField(
-        validators=[validate_file_sertificate], verbose_name="Сертификат",
+        validators=[validate_file_sertificate],
+        verbose_name="Сертификат",
         unique=True,
+        help_text="Загрузите файл сертификата"
     )
     position = models.ForeignKey(
         Position, on_delete=models.PROTECT, verbose_name="Должность"

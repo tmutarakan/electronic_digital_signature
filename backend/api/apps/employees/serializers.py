@@ -11,19 +11,19 @@ from .models import (
 class PassportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Passport
-        fields = "__all__"
+        fields = ["series", "number", "date_of_issue", "birthdate", "birthplace", "code"]
 
 
 class INNSerializer(serializers.ModelSerializer):
     class Meta:
         model = INN
-        fields = "__all__"
+        fields = ["value"]
 
 
 class SNILSSerializer(serializers.ModelSerializer):
     class Meta:
         model = SNILS
-        fields = "__all__"
+        fields = ["value"]
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
