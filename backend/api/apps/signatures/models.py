@@ -21,6 +21,7 @@ class CertificationCenter(TrackChanges):
         ],
         verbose_name="ИНН",
         unique=True,
+        help_text="Введите идентификационный номер налогоплательщика удостоверяющего центра",
     )
 
     def __str__(self):
@@ -32,26 +33,33 @@ class CertificationCenter(TrackChanges):
 
 
 class Sertificate(TrackChanges):
-    filename = models.CharField(max_length=200, verbose_name="Имя файла")
     file = models.FileField(
         validators=[validate_file_sertificate],
         verbose_name="Сертификат",
         unique=True,
-        help_text="Загрузите файл сертификата"
+        help_text="Загрузите файл сертификата",
     )
     position = models.ForeignKey(
-        Position, on_delete=models.PROTECT, verbose_name="Должность"
+        Position,
+        on_delete=models.PROTECT,
+        verbose_name="Должность",
+        help_text="Выберите должность",
     )
     certification_center = models.ForeignKey(
         CertificationCenter,
         on_delete=models.PROTECT,
         verbose_name="Удостоверяющий центр",
+        help_text="Выберите удостоверяющий центр",
     )
-    start_date = models.DateField(verbose_name="Дата начала действия")
-    end_date = models.DateField(verbose_name="Дата окончания")
+    start_date = models.DateField(
+        verbose_name="Дата начала действия", help_text="Введите дату начала действия"
+    )
+    end_date = models.DateField(
+        verbose_name="Дата окончания", help_text="Введите дату окончания"
+    )
 
     def __str__(self):
-        return str(self.filename)
+        return f"{self.position.name} - {self.certification_center.name} - {self.start_date} - {self.end_date}"
 
     def clean(self):
         if self.start_date > self.end_date:
@@ -63,13 +71,13 @@ class Sertificate(TrackChanges):
 
 
 class ElectronicDigitalSignature(TrackChanges):
-    filename = models.CharField(max_length=200, verbose_name="Имя файла")
     sertificate = models.OneToOneField(
         Sertificate,
         on_delete=models.PROTECT,
         verbose_name="Сертификат",
         null=True,
         blank=True,
+        help_text="Выберите сертификат",
     )
     archive = models.FileField(validators=[validate_file_archive], verbose_name="Архив")
     owner = models.ForeignKey(
@@ -79,12 +87,17 @@ class ElectronicDigitalSignature(TrackChanges):
         blank=True,
         verbose_name="Владелец",
         related_name="signatures",
+        help_text="Выберите владельца",
     )
-    start_date = models.DateField(verbose_name="Дата начала действия")
-    end_date = models.DateField(verbose_name="Дата окончания")
+    start_date = models.DateField(
+        verbose_name="Дата начала действия", help_text="Введите дату начала действия"
+    )
+    end_date = models.DateField(
+        verbose_name="Дата окончания", help_text="Введите дату окончания"
+    )
 
     def __str__(self):
-        return str(self.filename)
+        return f"{self.owner} - {self.start_date} - {self.end_date} - {self.archive}"
 
     def clean(self):
         if self.start_date > self.end_date:

@@ -4,7 +4,11 @@ from core.models import TrackChanges
 
 
 class Organization(TrackChanges):
-    name = models.CharField(max_length=200, verbose_name="Название")
+    name = models.CharField(
+        max_length=200,
+        verbose_name="Название",
+        help_text="Введите название организации",
+    )
     ogrn = models.CharField(
         max_length=13,
         validators=[
@@ -13,7 +17,8 @@ class Organization(TrackChanges):
         ],
         verbose_name="ОГРН",
         unique=True,
-    )  # Основной государственный регистрационный номер
+        help_text="Введите основной государственный регистрационный номер",
+    )
     inn = models.CharField(
         max_length=10,
         validators=[
@@ -22,7 +27,8 @@ class Organization(TrackChanges):
         ],
         verbose_name="ИНН",
         unique=True,
-    )  # Идентификационный номер налогоплательщика
+        help_text="Введите идентификационный номер налогоплательщика",
+    )
     kpp = models.CharField(
         max_length=9,
         validators=[
@@ -31,9 +37,12 @@ class Organization(TrackChanges):
         ],
         verbose_name="КПП",
         unique=True,
-    )  # Код причины постановки на учёт
+        help_text="Введите код причины постановки на учёт",
+    )
     registered_address = models.CharField(
-        max_length=200, verbose_name="Юридический адрес"
+        max_length=200,
+        verbose_name="Юридический адрес",
+        help_text="Введите юридический адрес",
     )
 
     def __str__(self):
@@ -45,9 +54,14 @@ class Organization(TrackChanges):
 
 
 class Position(TrackChanges):
-    name = models.CharField(max_length=200, verbose_name="Название")
+    name = models.CharField(
+        max_length=200, verbose_name="Название", help_text="Введите название должности"
+    )
     organization = models.ForeignKey(
-        Organization, on_delete=models.PROTECT, verbose_name="Организация"
+        Organization,
+        on_delete=models.PROTECT,
+        verbose_name="Организация",
+        help_text="Выберите организацию",
     )
 
     def __str__(self):
@@ -56,4 +70,7 @@ class Position(TrackChanges):
     class Meta:
         verbose_name = "Должность"
         verbose_name_plural = "Должности"
-        unique_together = ('name', 'organization',)
+        unique_together = (
+            "name",
+            "organization",
+        )

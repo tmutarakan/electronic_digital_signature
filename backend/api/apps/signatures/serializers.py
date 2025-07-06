@@ -12,7 +12,6 @@ class SertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sertificate
         fields = [
-            "filename",
             "file",
             "position",
             "certification_center",
@@ -32,4 +31,4 @@ class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ElectronicDigitalSignature
-        fields = ["filename", "archive", "start_date", "end_date", "sertificate"]
+        fields = ["archive", "start_date", "end_date", "sertificate"]
