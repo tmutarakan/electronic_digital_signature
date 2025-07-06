@@ -6,6 +6,10 @@ class CertificationCenterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CertificationCenter
         fields = ["name", "inn"]
+        read_only_fields = ["name", "inn"]
+        swagger_schema_fields = {
+            "description": "Центры сертификации",
+        }
 
 
 class SertificateSerializer(serializers.ModelSerializer):
@@ -18,6 +22,10 @@ class SertificateSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
         ]
+        read_only_fields = ["file", "position", "certification_center", "start_date", "end_date"]
+        swagger_schema_fields = {
+            "description": "Сертификаты",
+        }
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -32,3 +40,7 @@ class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ElectronicDigitalSignature
         fields = ["archive", "start_date", "end_date", "sertificate"]
+        read_only_fields = ["archive", "start_date", "end_date", "sertificate"]
+        swagger_schema_fields = {
+            "description": "Электронные цифровые подписи",
+        }
