@@ -5,6 +5,7 @@ from .models import Passport, INN, SNILS, Employee
 
 class SettingAdminPassport(BaseSettingAdmin):
     fields = ("title", "date_of_issue", "birthdate", "birthplace", "code")
+    ordering = ("series", "number")
 
     def get_list_display(self, request):
         return self.fields + super().get_list_display(request)

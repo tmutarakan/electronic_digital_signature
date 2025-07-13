@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
+from .models import Certificate, ElectronicDigitalSignature, CertificationCenter
 
 
 class CertificationCenterSerializer(serializers.ModelSerializer):
@@ -12,9 +12,9 @@ class CertificationCenterSerializer(serializers.ModelSerializer):
         }
 
 
-class SertificateSerializer(serializers.ModelSerializer):
+class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sertificate
+        model = Certificate
         fields = [
             "file",
             "position",
@@ -35,12 +35,12 @@ class SertificateSerializer(serializers.ModelSerializer):
 
 
 class ElectronicDigitalSignatureSerializer(serializers.ModelSerializer):
-    sertificate = SertificateSerializer(read_only=True)
+    certificate = CertificateSerializer(read_only=True)
 
     class Meta:
         model = ElectronicDigitalSignature
-        fields = ["archive", "start_date", "end_date", "sertificate"]
-        read_only_fields = ["archive", "start_date", "end_date", "sertificate"]
+        fields = ["archive", "start_date", "end_date", "certificate"]
+        read_only_fields = ["archive", "start_date", "end_date", "certificate"]
         swagger_schema_fields = {
             "description": "Электронные цифровые подписи",
         }

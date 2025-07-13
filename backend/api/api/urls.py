@@ -54,7 +54,7 @@ urlpatterns = [
             ("apps.organizations.urls", "organizations"), namespace="organizations"
         ),
     ),
-    # path("api/v1/", include('apps.signatures.urls')),
+    path("api/v1/", include(("apps.signatures.urls", "signatures"), namespace="signatures")),
     path("api/v1/token/", TokenObtainPairView.as_view(), name="token"),
     path("api/v1/refresh_token/", TokenRefreshView.as_view(), name="refresh_token"),
     path("api/v1/logout/", LogoutView.as_view(), name="logout"),

@@ -3,11 +3,11 @@ from rest_framework import viewsets, permissions
 from core.views import PageNumberSetPagination
 from drf_yasg.utils import swagger_auto_schema
 from .serializers import (
-    SertificateSerializer,
+    CertificateSerializer,
     ElectronicDigitalSignatureSerializer,
     CertificationCenterSerializer,
 )
-from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
+from .models import Certificate, ElectronicDigitalSignature, CertificationCenter
 
 
 @method_decorator(
@@ -58,9 +58,9 @@ from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
         operation_description="Удаляет запись о сертификате",
     ),
 )
-class SertificateViewSet(viewsets.ModelViewSet):
-    serializer_class = SertificateSerializer
-    queryset = Sertificate.objects.all()
+class CertificateViewSet(viewsets.ModelViewSet):
+    serializer_class = CertificateSerializer
+    queryset = Certificate.objects.all()
     lookup_field = "slug"
     pagination_class = PageNumberSetPagination
 

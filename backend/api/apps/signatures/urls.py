@@ -1,14 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    SertificateViewSet,
+    CertificateViewSet,
     ElectronicDigitalSignatureViewSet,
     CertificationCenterViewSet,
 )
 
 router = DefaultRouter()
 
-router.register("sertificate", SertificateViewSet, basename="sertificate")
+router.register("certificate", CertificateViewSet, basename="certificate")
 router.register(
     "electronic-digital-signature",
     ElectronicDigitalSignatureViewSet,

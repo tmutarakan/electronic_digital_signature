@@ -30,9 +30,10 @@ class CertificationCenter(TrackChanges):
     class Meta:
         verbose_name = "Удостоверяющий центр"
         verbose_name_plural = "Удостоверяющие центры"
+        ordering = ["name"]
 
 
-class Sertificate(TrackChanges):
+class Certificate(TrackChanges):
     file = models.FileField(
         validators=[validate_file_sertificate],
         verbose_name="Сертификат",
@@ -68,11 +69,12 @@ class Sertificate(TrackChanges):
     class Meta:
         verbose_name = "Сертификат"
         verbose_name_plural = "Сертификаты"
+        ordering = ["end_date"]
 
 
 class ElectronicDigitalSignature(TrackChanges):
-    sertificate = models.OneToOneField(
-        Sertificate,
+    certificate = models.OneToOneField(
+        Certificate,
         on_delete=models.PROTECT,
         verbose_name="Сертификат",
         null=True,
@@ -106,3 +108,4 @@ class ElectronicDigitalSignature(TrackChanges):
     class Meta:
         verbose_name = "ЭЦП"
         verbose_name_plural = "ЭЦП"
+        ordering = ["end_date"]

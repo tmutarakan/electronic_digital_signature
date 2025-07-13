@@ -1,33 +1,52 @@
+import pytest
 from django.urls import reverse
-from django.contrib.auth.models import User
-from rest_framework.test import APITestCase
 from rest_framework import status
-#from ..models import Employee
+from .factories import EmployeeFactory
 
 
-class EmplyeeCreateAPITestCase(APITestCase):
-    def setUp(self):
-        #self.employees = [{}]
-        self.user = User.objects.create_user(
-            username="testuser", password="testpassword"
-        )
-        url = reverse("token")
-        resp = self.client.post(
-            url, {"username": "testuser", "password": "testpassword"}, format="json"
-        )
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertTrue("access" in resp.data)
-        token = resp.data["access"]
-        self.client.credentials(HTTP_AUTHORIZATION="Bearer " + token)
-        #self.employee = Employee.objects.create()
+pytestmark = pytest.mark.django_db
 
-    def test_get_empoyee_list(self):
-        """
-        Тест получение списка сотрудников
-        """
-        url = reverse("employees:employee-list")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIsInstance(response.json(), dict)
-        self.assertTrue("results" in response.data)
-        self.assertIsInstance(response.json()["results"], list)
+
+class TestEmplyeeCRUD:
+    employee_list_url = reverse("employees:employee-list")
+
+    def test_create_employee_without_auth(self, api_client):
+        data = {
+            "surname": "Иванов",
+            "name": "Ивае",
+            "patronymic": "Иванович",
+            "gender": "М",
+            "passport": "123",
+            "inn": "123",
+            "snils": "123",
+        }
+        response = api_client.post(self.employee_list_url, data)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_retrieve_employee(self, api_client):
+        EmployeeFactory.create_batch(5)
+        response = api_client.get(self.employee_list_url)
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert len(data["results"]) == 5
+
+    def test_delete_employee_without_auth(self, api_client):
+        employee = EmployeeFactory()
+        url = reverse("employees:employee-detail", kwargs={"slug": employee.slug})
+        response = api_client.delete(url)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_update_employee_without_auth(self, api_client):
+        employee = EmployeeFactory()
+        data = {
+            "surname": "Иванов",
+            "name": "Ивае",
+            "patronymic": "Иванович",
+            "gender": "М",
+            "passport": "123",
+            "inn": "123",
+            "snils": "123",
+        }
+        url = reverse("employees:employee-detail", kwargs={"slug": employee.slug})
+        response = api_client.patch(url, data)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED

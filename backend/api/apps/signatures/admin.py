@@ -1,9 +1,9 @@
 from django.contrib import admin
 from core.admin import BaseSettingAdmin
-from .models import Sertificate, ElectronicDigitalSignature, CertificationCenter
+from .models import Certificate, ElectronicDigitalSignature, CertificationCenter
 
 
-class SettingAdminSertificate(BaseSettingAdmin):
+class SettingAdminCertificate(BaseSettingAdmin):
     fields = ("filename", "file", "position", "certification_center", "start_date", "end_date")
 
     def get_list_display(self, request):
@@ -27,6 +27,6 @@ class SettingAdminElectronicDigitalSignature(BaseSettingAdmin):
 
 
 
-admin.site.register(Sertificate, SettingAdminSertificate)
+admin.site.register(Certificate, SettingAdminCertificate)
 admin.site.register(ElectronicDigitalSignature, SettingAdminElectronicDigitalSignature)
 admin.site.register(CertificationCenter, SettingAdminCertificationCenter)
