@@ -137,6 +137,74 @@ export type NewPassword = {
 };
 
 /**
+ * OrganizationCreate
+ */
+export type OrganizationCreate = {
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * OrganizationPublic
+ */
+export type OrganizationPublic = {
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+};
+
+/**
+ * OrganizationUpdate
+ */
+export type OrganizationUpdate = {
+    /**
+     * Title
+     */
+    title?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * OrganizationsPublic
+ */
+export type OrganizationsPublic = {
+    /**
+     * Data
+     */
+    data: Array<OrganizationPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * PrivateUserCreate
  */
 export type PrivateUserCreate = {
@@ -920,6 +988,155 @@ export type itemsUpdateItemResponses = {
 };
 
 export type itemsUpdateItemResponse = itemsUpdateItemResponses[keyof itemsUpdateItemResponses];
+
+export type organizationsReadOrganizationsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/organizations/';
+};
+
+export type organizationsReadOrganizationsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type organizationsReadOrganizationsError = organizationsReadOrganizationsErrors[keyof organizationsReadOrganizationsErrors];
+
+export type organizationsReadOrganizationsResponses = {
+    /**
+     * Successful Response
+     */
+    200: OrganizationsPublic;
+};
+
+export type organizationsReadOrganizationsResponse = organizationsReadOrganizationsResponses[keyof organizationsReadOrganizationsResponses];
+
+export type organizationsCreateOrganizationData = {
+    body: OrganizationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/organizations/';
+};
+
+export type organizationsCreateOrganizationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type organizationsCreateOrganizationError = organizationsCreateOrganizationErrors[keyof organizationsCreateOrganizationErrors];
+
+export type organizationsCreateOrganizationResponses = {
+    /**
+     * Successful Response
+     */
+    200: OrganizationPublic;
+};
+
+export type organizationsCreateOrganizationResponse = organizationsCreateOrganizationResponses[keyof organizationsCreateOrganizationResponses];
+
+export type organizationsDeleteOrganizationData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/organizations/{id}';
+};
+
+export type organizationsDeleteOrganizationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type organizationsDeleteOrganizationError = organizationsDeleteOrganizationErrors[keyof organizationsDeleteOrganizationErrors];
+
+export type organizationsDeleteOrganizationResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type organizationsDeleteOrganizationResponse = organizationsDeleteOrganizationResponses[keyof organizationsDeleteOrganizationResponses];
+
+export type organizationsReadOrganizationData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/organizations/{id}';
+};
+
+export type organizationsReadOrganizationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type organizationsReadOrganizationError = organizationsReadOrganizationErrors[keyof organizationsReadOrganizationErrors];
+
+export type organizationsReadOrganizationResponses = {
+    /**
+     * Successful Response
+     */
+    200: OrganizationPublic;
+};
+
+export type organizationsReadOrganizationResponse = organizationsReadOrganizationResponses[keyof organizationsReadOrganizationResponses];
+
+export type organizationsUpdateOrganizationData = {
+    body: OrganizationUpdate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/organizations/{id}';
+};
+
+export type organizationsUpdateOrganizationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type organizationsUpdateOrganizationError = organizationsUpdateOrganizationErrors[keyof organizationsUpdateOrganizationErrors];
+
+export type organizationsUpdateOrganizationResponses = {
+    /**
+     * Successful Response
+     */
+    200: OrganizationPublic;
+};
+
+export type organizationsUpdateOrganizationResponse = organizationsUpdateOrganizationResponses[keyof organizationsUpdateOrganizationResponses];
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;
