@@ -136,10 +136,31 @@ class NewPassword(SQLModel):
     new_password: str = Field(min_length=8, max_length=128)
 
 
+class IDMixin(SQLModel):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+
+
+class CreatedAtMixin(SQLModel):
+    created_at: datetime | None = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+
+
+class UpdatedAtMixin(SQLModel):
+    updated_at: datetime | None = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+
+
+class TimestampsMixin(CreatedAtMixin, UpdatedAtMixin):
+    pass
+
+
 # Shared properties
 class OrganizationBase(SQLModel):
     title: str = Field(min_length=1, max_length=255)
-    description: str | None = Field(default=None, max_length=255)
 
 
 # Properties to receive on Organization creation
@@ -150,16 +171,10 @@ class OrganizationCreate(OrganizationBase):
 # Properties to receive on Organization update
 class OrganizationUpdate(SQLModel):
     title: str | None = Field(default=None, min_length=1, max_length=255)
-    description: str | None = Field(default=None, max_length=255)
 
 
 # Database model, database table inferred from class name
-class Organization(OrganizationBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    created_at: datetime | None = Field(
-        default_factory=get_datetime_utc,
-        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
-    )
+class Organization(OrganizationBase,IDMixin,TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -171,6 +186,7 @@ class OrganizationPublic(OrganizationBase):
     id: uuid.UUID
     owner_id: uuid.UUID
     created_at: datetime | None = None
+    updated_at: datetime | None = None
 
 
 class OrganizationsPublic(SQLModel):

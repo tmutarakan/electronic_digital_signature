@@ -45,10 +45,10 @@ export const columns: ColumnDef<OrganizationPublic>[] = [
     ),
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "created_at",
+    header: "CREATED AT",
     cell: ({ row }) => {
-      const description = row.original.description
+      const description = row.original.created_at
       return (
         <span
           className={cn(
@@ -61,6 +61,40 @@ export const columns: ColumnDef<OrganizationPublic>[] = [
       )
     },
   },
+  {
+    accessorKey: "updated_at",
+    header: "UPDATED AT",
+    cell: ({ row }) => {
+      const description = row.original.updated_at
+      return (
+        <span
+          className={cn(
+            "max-w-xs truncate block text-muted-foreground",
+            !description && "italic",
+          )}
+        >
+          {description || "No description"}
+        </span>
+      )
+    },
+  },
+  {
+      accessorKey: "owner_id",
+      header: "OWNER",
+      cell: ({ row }) => {
+        const description = row.original.owner_id
+        return (
+          <span
+            className={cn(
+              "max-w-xs truncate block text-muted-foreground",
+              !description && "italic",
+            )}
+          >
+            {description || "No description"}
+          </span>
+        )
+      },
+    },
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,

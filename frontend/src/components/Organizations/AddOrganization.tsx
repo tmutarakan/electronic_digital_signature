@@ -53,7 +53,8 @@ const AddOrganization = () => {
   })
 
   const mutation = useMutation({
-    mutationFn: (data: OrganizationCreate) => OrganizationsService.createOrganization({ body: data }),
+    mutationFn: (data: OrganizationCreate) =>
+      OrganizationsService.createOrganization({ body: data }),
     onSuccess: () => {
       showSuccessToast("Organization created successfully")
       form.reset()
@@ -102,20 +103,6 @@ const AddOrganization = () => {
                         {...field}
                         required
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

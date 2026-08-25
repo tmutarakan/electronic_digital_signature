@@ -12,7 +12,11 @@ import PendingOrganizations from "@/components/Pending/PendingOrganizations"
 function getOrganizationsQueryOptions() {
   return {
     queryFn: async () =>
-      (await OrganizationsService.readOrganizations({ query: { skip: 0, limit: 100 } })).data,
+      (
+        await OrganizationsService.readOrganizations({
+          query: { skip: 0, limit: 100 },
+        })
+      ).data,
     queryKey: ["organizations"],
   }
 }
@@ -29,7 +33,9 @@ export const Route = createFileRoute("/_layout/organizations")({
 })
 
 function OrganizationsTableContent() {
-  const { data: organizations } = useSuspenseQuery(getOrganizationsQueryOptions())
+  const { data: organizations } = useSuspenseQuery(
+    getOrganizationsQueryOptions(),
+  )
 
   if (organizations.data.length === 0) {
     return (
@@ -37,8 +43,12 @@ function OrganizationsTableContent() {
         <div className="rounded-full bg-muted p-4 mb-4">
           <Search className="h-8 w-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold">You don't have any organizations yet</h3>
-        <p className="text-muted-foreground">Add a new organization to get started</p>
+        <h3 className="text-lg font-semibold">
+          You don't have any organizations yet
+        </h3>
+        <p className="text-muted-foreground">
+          Add a new organization to get started
+        </p>
       </div>
     )
   }
@@ -60,7 +70,9 @@ function Organizations() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Organizations</h1>
-          <p className="text-muted-foreground">Create and manage your organizations</p>
+          <p className="text-muted-foreground">
+            Create and manage your organizations
+          </p>
         </div>
         <AddOrganization />
       </div>

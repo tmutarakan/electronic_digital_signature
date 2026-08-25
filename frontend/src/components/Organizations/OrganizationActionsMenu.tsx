@@ -15,7 +15,9 @@ interface OrganizationActionsMenuProps {
   organization: OrganizationPublic
 }
 
-export const OrganizationActionsMenu = ({ organization }: OrganizationActionsMenuProps) => {
+export const OrganizationActionsMenu = ({
+  organization,
+}: OrganizationActionsMenuProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -26,8 +28,14 @@ export const OrganizationActionsMenu = ({ organization }: OrganizationActionsMen
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <EditOrganization organization={organization} onSuccess={() => setOpen(false)} />
-        <DeleteOrganization id={organization.id} onSuccess={() => setOpen(false)} />
+        <EditOrganization
+          organization={organization}
+          onSuccess={() => setOpen(false)}
+        />
+        <DeleteOrganization
+          id={organization.id}
+          onSuccess={() => setOpen(false)}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   )

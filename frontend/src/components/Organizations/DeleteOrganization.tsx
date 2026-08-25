@@ -66,8 +66,8 @@ const DeleteOrganization = ({ id, onSuccess }: DeleteOrganizationProps) => {
           <DialogHeader>
             <DialogTitle>Delete Organization</DialogTitle>
             <DialogDescription>
-              This organization will be permanently deleted. Are you sure? You will not
-              be able to undo this action.
+              This organization will be permanently deleted. Are you sure? You
+              will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
 

@@ -14,7 +14,7 @@ const PendingOrganizations = () => (
       <TableRow>
         <TableHead>ID</TableHead>
         <TableHead>Title</TableHead>
-        <TableHead>Description</TableHead>
+        <TableHead>Created at</TableHead>
         <TableHead>
           <span className="sr-only">Actions</span>
         </TableHead>

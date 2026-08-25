@@ -144,10 +144,6 @@ export type OrganizationCreate = {
      * Title
      */
     title: string;
-    /**
-     * Description
-     */
-    description?: string | null;
 };
 
 /**
@@ -158,10 +154,6 @@ export type OrganizationPublic = {
      * Title
      */
     title: string;
-    /**
-     * Description
-     */
-    description?: string | null;
     /**
      * Id
      */
@@ -174,6 +166,10 @@ export type OrganizationPublic = {
      * Created At
      */
     created_at?: string | null;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
 };
 
 /**
@@ -184,10 +180,6 @@ export type OrganizationUpdate = {
      * Title
      */
     title?: string | null;
-    /**
-     * Description
-     */
-    description?: string | null;
 };
 
 /**

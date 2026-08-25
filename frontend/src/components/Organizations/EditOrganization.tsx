@@ -42,7 +42,10 @@ interface EditOrganizationProps {
   onSuccess: () => void
 }
 
-const EditOrganization = ({ organization, onSuccess }: EditOrganizationProps) => {
+const EditOrganization = ({
+  organization,
+  onSuccess,
+}: EditOrganizationProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -53,13 +56,15 @@ const EditOrganization = ({ organization, onSuccess }: EditOrganizationProps) =>
     criteriaMode: "all",
     defaultValues: {
       title: organization.title,
-      description: organization.description ?? undefined,
     },
   })
 
   const mutation = useMutation({
     mutationFn: (data: FormData) =>
-      OrganizationsService.updateOrganization({ path: { id: organization.id }, body: data }),
+      OrganizationsService.updateOrganization({
+        path: { id: organization.id },
+        body: data,
+      }),
     onSuccess: () => {
       showSuccessToast("Organization updated successfully")
       setIsOpen(false)
@@ -104,20 +109,6 @@ const EditOrganization = ({ organization, onSuccess }: EditOrganizationProps) =>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Title" type="text" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
