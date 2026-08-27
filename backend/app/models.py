@@ -1,13 +1,12 @@
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime
 
 from pydantic import EmailStr
 from sqlalchemy import DateTime
 from sqlmodel import Field, Relationship, SQLModel
 
-
-def get_datetime_utc() -> datetime:
-    return datetime.now(UTC)
+from .common import get_datetime_utc
+from .mixins import IDMixin, TimestampsMixin
 
 
 # Shared properties
@@ -134,28 +133,6 @@ class TokenPayload(SQLModel):
 class NewPassword(SQLModel):
     token: str
     new_password: str = Field(min_length=8, max_length=128)
-
-
-class IDMixin(SQLModel):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-
-
-class CreatedAtMixin(SQLModel):
-    created_at: datetime | None = Field(
-        default_factory=get_datetime_utc,
-        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
-    )
-
-
-class UpdatedAtMixin(SQLModel):
-    updated_at: datetime | None = Field(
-        default_factory=get_datetime_utc,
-        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
-    )
-
-
-class TimestampsMixin(CreatedAtMixin, UpdatedAtMixin):
-    pass
 
 
 # Shared properties
