@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import DeleteCertificationCenter from "./DeleteCertificationCenter"
-import EditCertificationCenter from "./EditCertificationCenters"
+import EditCertificationCenter from "./EditCertificationCenter"
 
 interface CertificationCenterActionsMenuProps {
   certificationCenter: CertificationCenterPublic

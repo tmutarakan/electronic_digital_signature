@@ -16,10 +16,11 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
-import { Route as LayoutCertificationCenterRouteImport } from './routes/_layout/certification-center'
+import { Route as LayoutCertificationCentersRouteImport } from './routes/_layout/certification-centers'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutOrganizationsRouteImport } from './routes/_layout/organizations'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutSignatureTypesRouteImport } from './routes/_layout/signature-types'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -55,10 +56,10 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutCertificationCenterRoute =
-  LayoutCertificationCenterRouteImport.update({
-    id: '/certification-center',
-    path: '/certification-center',
+const LayoutCertificationCentersRoute =
+  LayoutCertificationCentersRouteImport.update({
+    id: '/certification-centers',
+    path: '/certification-centers',
     getParentRoute: () => LayoutRoute,
   } as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
@@ -76,6 +77,11 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutSignatureTypesRoute = LayoutSignatureTypesRouteImport.update({
+  id: '/signature-types',
+  path: '/signature-types',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -84,10 +90,11 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/certification-center': typeof LayoutCertificationCenterRoute
+  '/certification-centers': typeof LayoutCertificationCentersRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/signature-types': typeof LayoutSignatureTypesRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -95,10 +102,11 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/certification-center': typeof LayoutCertificationCenterRoute
+  '/certification-centers': typeof LayoutCertificationCentersRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/signature-types': typeof LayoutSignatureTypesRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -109,10 +117,11 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
-  '/_layout/certification-center': typeof LayoutCertificationCenterRoute
+  '/_layout/certification-centers': typeof LayoutCertificationCentersRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/organizations': typeof LayoutOrganizationsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
+  '/_layout/signature-types': typeof LayoutSignatureTypesRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
@@ -124,10 +133,11 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/certification-center'
+    | '/certification-centers'
     | '/items'
     | '/organizations'
     | '/settings'
+    | '/signature-types'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -135,10 +145,11 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/certification-center'
+    | '/certification-centers'
     | '/items'
     | '/organizations'
     | '/settings'
+    | '/signature-types'
     | '/'
   id:
     | '__root__'
@@ -148,10 +159,11 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
-    | '/_layout/certification-center'
+    | '/_layout/certification-centers'
     | '/_layout/items'
     | '/_layout/organizations'
     | '/_layout/settings'
+    | '/_layout/signature-types'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -214,11 +226,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/certification-center': {
-      id: '/_layout/certification-center'
-      path: '/certification-center'
-      fullPath: '/certification-center'
-      preLoaderRoute: typeof LayoutCertificationCenterRouteImport
+    '/_layout/certification-centers': {
+      id: '/_layout/certification-centers'
+      path: '/certification-centers'
+      fullPath: '/certification-centers'
+      preLoaderRoute: typeof LayoutCertificationCentersRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/items': {
@@ -242,24 +254,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/signature-types': {
+      id: '/_layout/signature-types'
+      path: '/signature-types'
+      fullPath: '/signature-types'
+      preLoaderRoute: typeof LayoutSignatureTypesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
-  LayoutCertificationCenterRoute: typeof LayoutCertificationCenterRoute
+  LayoutCertificationCentersRoute: typeof LayoutCertificationCentersRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutOrganizationsRoute: typeof LayoutOrganizationsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
+  LayoutSignatureTypesRoute: typeof LayoutSignatureTypesRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
-  LayoutCertificationCenterRoute: LayoutCertificationCenterRoute,
+  LayoutCertificationCentersRoute: LayoutCertificationCentersRoute,
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutOrganizationsRoute: LayoutOrganizationsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
+  LayoutSignatureTypesRoute: LayoutSignatureTypesRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 

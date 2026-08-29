@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type CertificationCenterPublic, CertificationCentersService } from "@/client"
+import { type SignatureTypePublic, SignatureTypesService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -36,15 +36,15 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-interface EditCertificationCenterProps {
-  certificationCenter: CertificationCenterPublic
+interface EditSignatureTypeProps {
+  signatureType: SignatureTypePublic
   onSuccess: () => void
 }
 
-const EditCertificationCenter = ({
-  certificationCenter,
+const EditSignatureType = ({
+  signatureType,
   onSuccess,
-}:EditCertificationCenterProps) => {
+}:EditSignatureTypeProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -54,24 +54,24 @@ const EditCertificationCenter = ({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
-      name: certificationCenter.name,
+      name: signatureType.name,
     },
   })
 
   const mutation = useMutation({
     mutationFn: (data: FormData) =>
-      CertificationCentersService.centersUpdateCertificationCenter({
-        path: { id: certificationCenter.id },
+      SignatureTypesService.typesUpdateSignatureType({
+        path: { id: signatureType.id },
         body: data,
       }),
     onSuccess: () => {
-      showSuccessToast("Organization updated successfully")
+      showSuccessToast("Signature Types updated successfully")
       setIsOpen(false)
       onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["items"] })
+      queryClient.invalidateQueries({ queryKey: ["signature-types"] })
     },
   })
 
@@ -86,15 +86,15 @@ const EditCertificationCenter = ({
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Certification Center
+        Edit Signature Type
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Edit Certification Center</DialogTitle>
+              <DialogTitle>Edit Signature Type</DialogTitle>
               <DialogDescription>
-                Update the Certification Center details below.
+                Update the Signature Type details below.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -104,10 +104,10 @@ const EditCertificationCenter = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Title <span className="text-destructive">*</span>
+                      Name <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Title" type="text" {...field} />
+                      <Input placeholder="Name" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,4 +132,4 @@ const EditCertificationCenter = ({
   )
 }
 
-export default EditCertificationCenter
+export default EditSignatureType

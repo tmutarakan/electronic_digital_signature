@@ -5,7 +5,7 @@ import type { OrganizationPublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { cn } from "@/lib/utils"
-import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu"
+import { SignatureTypeActionsMenu } from "./SignatureTypeActionsMenu"
 
 function CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
@@ -100,7 +100,7 @@ export const columns: ColumnDef<OrganizationPublic>[] = [
     header: () => <span className="sr-only">Actions</span>,
     cell: ({ row }) => (
       <div className="flex justify-end">
-        <CertificationCenterActionsMenu certificationCenter={row.original} />
+        <SignatureTypeActionsMenu signatureType={row.original} />
       </div>
     ),
   },

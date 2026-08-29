@@ -3,38 +3,38 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Search } from "lucide-react"
 import { Suspense } from "react"
 
-import { CertificationCentersService } from "@/client"
+import { SignatureTypesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
-import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter"
-import { columns } from "@/components/Organizations/columns"
-import PendingCertificationCenters from "@/components/Pending/PendingCertificationCenters"
+import { columns } from "@/components/SignatureTypes/columns"
+import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
+import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
 
-function getCertificationCentersQueryOptions() {
+function getSignatureTypesQueryOptions() {
   return {
     queryFn: async () =>
       (
-        await CertificationCentersService.centersReadCertificationCenters({
+        await SignatureTypesService.typesReadSignatureTypes({
           query: { skip: 0, limit: 100 },
         })
       ).data,
-    queryKey: ["certification-centers"],
+    queryKey: ["signature-types"],
   }
 }
 
-export const Route = createFileRoute("/_layout/certification-center")({
-  component: CertificationCenters,
+export const Route = createFileRoute("/_layout/signature-types")({
+  component: SignatureTypes,
   head: () => ({
     meta: [
       {
-        title: "Certification Centers",
+        title: "Signature Types",
       },
     ],
   }),
 })
 
-function CertificationCentersTableContent() {
+function SignatureTypesTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
-    getCertificationCentersQueryOptions(),
+    getSignatureTypesQueryOptions(),
   )
 
   if (certificationCenters.data.length === 0) {
@@ -44,10 +44,10 @@ function CertificationCentersTableContent() {
           <Search className="h-8 w-8 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold">
-          You don't have any Certification Centers yet
+          You don't have any SignatureTypes yet
         </h3>
         <p className="text-muted-foreground">
-          Add a new Certification Center to get started
+          Add a new Signature Types to get started
         </p>
       </div>
     )
@@ -56,27 +56,27 @@ function CertificationCentersTableContent() {
   return <DataTable columns={columns} data={certificationCenters.data} />
 }
 
-function CertificationCentersTable() {
+function SignatureTypesTable() {
   return (
-    <Suspense fallback={<PendingCertificationCenters />}>
-      <CertificationCentersTableContent />
+    <Suspense fallback={<PendingSignatureTypes />}>
+      <SignatureTypesTableContent />
     </Suspense>
   )
 }
 
-function CertificationCenters() {
+function SignatureTypes() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Certification Center</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Signature Types</h1>
           <p className="text-muted-foreground">
-            Create and manage your Certification Center
+            Create and manage your Signature Type
           </p>
         </div>
-        <AddCertificationCenter />
+        <AddSignatureType />
       </div>
-      <CertificationCentersTable />
+      <SignatureTypesTable />
     </div>
   )
 }

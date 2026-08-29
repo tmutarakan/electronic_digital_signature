@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { CertificationCentersService } from "@/client"
+import { SignatureTypesService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -19,19 +19,19 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-interface DeleteCertificationCenterProps {
+interface DeleteSignatureTypeProps {
   id: string
   onSuccess: () => void
 }
 
-const DeleteCertificationCenter = ({ id, onSuccess }: DeleteCertificationCenterProps) => {
+const DeleteSignatureType = ({ id, onSuccess }: DeleteSignatureTypeProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
   const { handleSubmit } = useForm()
 
   const deleteOrganization = async (id: string) => {
-    await CertificationCentersService.centersDeleteCertificationCenter({ path: { id } })
+    await SignatureTypesService.typesDeleteSignatureType({ path: { id } })
   }
 
   const mutation = useMutation({
@@ -59,14 +59,14 @@ const DeleteCertificationCenter = ({ id, onSuccess }: DeleteCertificationCenterP
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Certification Center
+        Delete Signature Types
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>Delete Certification Center</DialogTitle>
+            <DialogTitle>Delete Signature Types</DialogTitle>
             <DialogDescription>
-              This Certification Center will be permanently deleted. Are you sure? You
+              This Signature Types will be permanently deleted. Are you sure? You
               will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
@@ -91,4 +91,4 @@ const DeleteCertificationCenter = ({ id, onSuccess }: DeleteCertificationCenterP
   )
 }
 
-export default DeleteCertificationCenter
+export default DeleteSignatureType

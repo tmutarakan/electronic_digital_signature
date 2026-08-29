@@ -16,7 +16,8 @@ const baseItems: Item[] = [
   { icon: Home, title: "Dashboard", path: "/" },
   { icon: Briefcase, title: "Items", path: "/items" },
   { icon: Building2, title: "Organizations", path: "/organizations" },
-  { icon: Building, title: "Certification Centers", path: "/certification-center" },
+  { icon: Building, title: "Certification Centers", path: "/certification-centers" },
+  { icon: Building, title: "Signature Types", path: "/signature-types" },
 ]
 
 export function AppSidebar() {
