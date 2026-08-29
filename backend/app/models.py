@@ -59,6 +59,18 @@ class User(UserBase, table=True):
     organizations: list[Organization] = Relationship(  # pyright: ignore[reportAny]
         back_populates="owner", cascade_delete=True
     )
+    certification_centers: list[CertificationCenter] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="owner", cascade_delete=True
+    )
+    signature_types: list[SignatureType] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="owner", cascade_delete=True
+    )
+    employees: list[Employee] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="owner", cascade_delete=True
+    )
+    electronic_digital_signatures: list[ElectronicDigitalSignature] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="owner", cascade_delete=True
+    )
 
 
 # Properties to return via API, id is always required
@@ -135,30 +147,28 @@ class NewPassword(SQLModel):
     new_password: str = Field(min_length=8, max_length=128)
 
 
-# Shared properties
+# --------------------------------------------------------------------------------
+# Организации
+# --------------------------------------------------------------------------------
 class OrganizationBase(SQLModel):
-    title: str = Field(min_length=1, max_length=255)
+    name: str = Field(min_length=1, max_length=255)
 
 
-# Properties to receive on Organization creation
 class OrganizationCreate(OrganizationBase):
     pass
 
 
-# Properties to receive on Organization update
 class OrganizationUpdate(SQLModel):
-    title: str | None = Field(default=None, min_length=1, max_length=255)
+    name: str | None = Field(default=None, min_length=1, max_length=255)
 
 
-# Database model, database table inferred from class name
-class Organization(OrganizationBase,IDMixin,TimestampsMixin, table=True):
+class Organization(OrganizationBase, IDMixin, TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
     owner: User | None = Relationship(back_populates="organizations")  # pyright: ignore[reportAny]
 
 
-# Properties to return via API, id is always required
 class OrganizationPublic(OrganizationBase):
     id: uuid.UUID
     owner_id: uuid.UUID
@@ -168,4 +178,144 @@ class OrganizationPublic(OrganizationBase):
 
 class OrganizationsPublic(SQLModel):
     data: list[OrganizationPublic]
+    count: int
+
+
+# --------------------------------------------------------------------------------
+# Удостоверяющий центр
+# --------------------------------------------------------------------------------
+class CertificationCenterBase(SQLModel):
+    name: str = Field(min_length=1, max_length=255)
+
+
+class CertificationCenterCreate(CertificationCenterBase):
+    pass
+
+
+class CertificationCenterUpdate(SQLModel):
+    name: str | None = Field(default=None, min_length=1, max_length=255)
+
+
+class CertificationCenter(
+    CertificationCenterBase, IDMixin, TimestampsMixin, table=True
+):
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+    )
+    owner: User | None = Relationship(back_populates="certification_centers")  # pyright: ignore[reportAny]
+
+
+class CertificationCenterPublic(CertificationCenterBase):
+    id: uuid.UUID
+    owner_id: uuid.UUID
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+
+class CertificationCentersPublic(SQLModel):
+    data: list[CertificationCenterPublic]
+    count: int
+
+
+# --------------------------------------------------------------------------------
+# Тип подписи
+# --------------------------------------------------------------------------------
+class SignatureTypeBase(SQLModel):
+    name: str = Field(min_length=1, max_length=255)
+
+
+class SignatureTypeCreate(SignatureTypeBase):
+    pass
+
+
+class SignatureTypeUpdate(SQLModel):
+    name: str | None = Field(default=None, min_length=1, max_length=255)
+
+
+class SignatureType(SignatureTypeBase, IDMixin, TimestampsMixin, table=True):
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+    )
+    owner: User | None = Relationship(back_populates="signature_types")  # pyright: ignore[reportAny]
+
+
+class SignatureTypePublic(SignatureTypeBase):
+    id: uuid.UUID
+    owner_id: uuid.UUID
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+
+class SignatureTypesPublic(SQLModel):
+    data: list[SignatureTypePublic]
+    count: int
+
+
+# --------------------------------------------------------------------------------
+# Сотрудники
+# --------------------------------------------------------------------------------
+class EmployeeBase(SQLModel):
+    name: str = Field(min_length=1, max_length=255)
+
+
+class EmployeeCreate(EmployeeBase):
+    pass
+
+
+class EmployeeUpdate(SQLModel):
+    name: str | None = Field(default=None, min_length=1, max_length=255)
+
+
+class Employee(EmployeeBase, IDMixin, TimestampsMixin, table=True):
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+    )
+    owner: User | None = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
+
+
+class EmployeePublic(EmployeeBase):
+    id: uuid.UUID
+    owner_id: uuid.UUID
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+
+class EmployeesPublic(SQLModel):
+    data: list[EmployeePublic]
+    count: int
+
+
+# --------------------------------------------------------------------------------
+# Электронная цифровая подпись
+# --------------------------------------------------------------------------------
+class ElectronicDigitalSignatureBase(SQLModel):
+    name: str = Field(min_length=1, max_length=255)
+
+
+class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
+    pass
+
+
+class ElectronicDigitalSignatureUpdate(SQLModel):
+    name: str | None = Field(default=None, min_length=1, max_length=255)
+
+
+class ElectronicDigitalSignature(
+    ElectronicDigitalSignatureBase, IDMixin, TimestampsMixin, table=True
+):
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+    )
+    owner: User | None = Relationship(back_populates="electronic_digital_signatures")  # pyright: ignore[reportAny]
+
+
+class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
+    id: uuid.UUID
+    owner_id: uuid.UUID
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+
+class ElectronicDigitalSignaturesPublic(SQLModel):
+    data: list[ElectronicDigitalSignaturePublic]
     count: int

@@ -5,10 +5,18 @@ from sqlmodel import Session, select
 
 from app.core.security import get_password_hash, verify_password
 from app.models import (
+    CertificationCenter,
+    CertificationCenterCreate,
+    ElectronicDigitalSignature,
+    ElectronicDigitalSignatureCreate,
+    Employee,
+    EmployeeCreate,
     Item,
     ItemCreate,
     Organization,
     OrganizationCreate,
+    SignatureType,
+    SignatureTypeCreate,
     User,
     UserCreate,
     UserUpdate,
@@ -86,3 +94,55 @@ def create_organization(
     session.commit()
     session.refresh(db_organization)
     return db_organization
+
+
+def create_certification_center(
+    *,
+    session: Session,
+    certification_center_in: CertificationCenterCreate,
+    owner_id: uuid.UUID,
+) -> CertificationCenter:
+    db_certification_center = CertificationCenter.model_validate(
+        certification_center_in, update={"owner_id": owner_id}
+    )
+    session.add(db_certification_center)
+    session.commit()
+    session.refresh(db_certification_center)
+    return db_certification_center
+
+
+def create_signature_type(
+    *, session: Session, signature_type_in: SignatureTypeCreate, owner_id: uuid.UUID
+) -> SignatureType:
+    db_signature_type = SignatureType.model_validate(
+        signature_type_in, update={"owner_id": owner_id}
+    )
+    session.add(db_signature_type)
+    session.commit()
+    session.refresh(db_signature_type)
+    return db_signature_type
+
+
+def create_employee(
+    *, session: Session, employee_in: EmployeeCreate, owner_id: uuid.UUID
+) -> Employee:
+    db_employee = Employee.model_validate(employee_in, update={"owner_id": owner_id})
+    session.add(db_employee)
+    session.commit()
+    session.refresh(db_employee)
+    return db_employee
+
+
+def create_electronic_digital_signature(
+    *,
+    session: Session,
+    electronic_digital_signature_in: ElectronicDigitalSignatureCreate,
+    owner_id: uuid.UUID,
+) -> ElectronicDigitalSignature:
+    db_electronic_digital_signature = ElectronicDigitalSignature.model_validate(
+        electronic_digital_signature_in, update={"owner_id": owner_id}
+    )
+    session.add(db_electronic_digital_signature)
+    session.commit()
+    session.refresh(db_electronic_digital_signature)
+    return db_electronic_digital_signature
