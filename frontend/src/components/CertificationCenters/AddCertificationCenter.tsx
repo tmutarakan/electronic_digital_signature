@@ -60,7 +60,7 @@ const AddCertificationCenter = () => {
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["certification_centers"] })
+      queryClient.invalidateQueries({ queryKey: ["certification-centers"] })
     },
   })
 
@@ -96,7 +96,7 @@ const AddCertificationCenter = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Title"
+                        placeholder="Name"
                         type="text"
                         {...field}
                         required

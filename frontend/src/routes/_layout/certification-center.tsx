@@ -21,7 +21,7 @@ function getCertificationCentersQueryOptions() {
   }
 }
 
-export const Route = createFileRoute("/_layout/certificationCenter")({
+export const Route = createFileRoute("/_layout/certification-center")({
   component: CertificationCenters,
   head: () => ({
     meta: [

@@ -16,7 +16,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
-import { Route as LayoutCertificationCenterRouteImport } from './routes/_layout/certificationCenter'
+import { Route as LayoutCertificationCenterRouteImport } from './routes/_layout/certification-center'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutOrganizationsRouteImport } from './routes/_layout/organizations'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
@@ -57,8 +57,8 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
 } as any)
 const LayoutCertificationCenterRoute =
   LayoutCertificationCenterRouteImport.update({
-    id: '/certificationCenter',
-    path: '/certificationCenter',
+    id: '/certification-center',
+    path: '/certification-center',
     getParentRoute: () => LayoutRoute,
   } as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
@@ -84,7 +84,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/certificationCenter': typeof LayoutCertificationCenterRoute
+  '/certification-center': typeof LayoutCertificationCenterRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -95,7 +95,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
-  '/certificationCenter': typeof LayoutCertificationCenterRoute
+  '/certification-center': typeof LayoutCertificationCenterRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -109,7 +109,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
-  '/_layout/certificationCenter': typeof LayoutCertificationCenterRoute
+  '/_layout/certification-center': typeof LayoutCertificationCenterRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/organizations': typeof LayoutOrganizationsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
@@ -124,7 +124,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/certificationCenter'
+    | '/certification-center'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -135,7 +135,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/certificationCenter'
+    | '/certification-center'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -148,7 +148,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
-    | '/_layout/certificationCenter'
+    | '/_layout/certification-center'
     | '/_layout/items'
     | '/_layout/organizations'
     | '/_layout/settings'
@@ -214,10 +214,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/certificationCenter': {
-      id: '/_layout/certificationCenter'
-      path: '/certificationCenter'
-      fullPath: '/certificationCenter'
+    '/_layout/certification-center': {
+      id: '/_layout/certification-center'
+      path: '/certification-center'
+      fullPath: '/certification-center'
       preLoaderRoute: typeof LayoutCertificationCenterRouteImport
       parentRoute: typeof LayoutRoute
     }
