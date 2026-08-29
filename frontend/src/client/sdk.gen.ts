@@ -2,7 +2,7 @@
 
 import { type Client, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, organizationsCreateOrganizationData, organizationsCreateOrganizationErrors, organizationsCreateOrganizationResponses, organizationsDeleteOrganizationData, organizationsDeleteOrganizationErrors, organizationsDeleteOrganizationResponses, organizationsReadOrganizationData, organizationsReadOrganizationErrors, organizationsReadOrganizationResponses, organizationsReadOrganizationsData, organizationsReadOrganizationsErrors, organizationsReadOrganizationsResponses, organizationsUpdateOrganizationData, organizationsUpdateOrganizationErrors, organizationsUpdateOrganizationResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { certificationCentersCreateCertificationCenterData, certificationCentersCreateCertificationCenterErrors, certificationCentersCreateCertificationCenterResponses, certificationCentersDeleteCertificationCenterData, certificationCentersDeleteCertificationCenterErrors, certificationCentersDeleteCertificationCenterResponses, certificationCentersReadCertificationCenterData, certificationCentersReadCertificationCenterErrors, certificationCentersReadCertificationCenterResponses, certificationCentersReadCertificationCentersData, certificationCentersReadCertificationCentersErrors, certificationCentersReadCertificationCentersResponses, certificationCentersUpdateCertificationCenterData, certificationCentersUpdateCertificationCenterErrors, certificationCentersUpdateCertificationCenterResponses, electronicDigitalSignaturesCreateElectronicDigitalSignatureData, electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors, electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses, electronicDigitalSignaturesDeleteElectronicDigitalSignatureData, electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors, electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignatureData, electronicDigitalSignaturesReadElectronicDigitalSignatureErrors, electronicDigitalSignaturesReadElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignaturesData, electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors, electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses, electronicDigitalSignaturesUpdateElectronicDigitalSignatureData, electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors, electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses, employeesCreateEmployeeData, employeesCreateEmployeeErrors, employeesCreateEmployeeResponses, employeesDeleteEmployeeData, employeesDeleteEmployeeErrors, employeesDeleteEmployeeResponses, employeesReadEmployeeData, employeesReadEmployeeErrors, employeesReadEmployeeResponses, employeesReadEmployeesData, employeesReadEmployeesErrors, employeesReadEmployeesResponses, employeesUpdateEmployeeData, employeesUpdateEmployeeErrors, employeesUpdateEmployeeResponses, itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, organizationsCreateOrganizationData, organizationsCreateOrganizationErrors, organizationsCreateOrganizationResponses, organizationsDeleteOrganizationData, organizationsDeleteOrganizationErrors, organizationsDeleteOrganizationResponses, organizationsReadOrganizationData, organizationsReadOrganizationErrors, organizationsReadOrganizationResponses, organizationsReadOrganizationsData, organizationsReadOrganizationsErrors, organizationsReadOrganizationsResponses, organizationsUpdateOrganizationData, organizationsUpdateOrganizationErrors, organizationsUpdateOrganizationResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, signatureTypesCreateSignatureTypeData, signatureTypesCreateSignatureTypeErrors, signatureTypesCreateSignatureTypeResponses, signatureTypesDeleteSignatureTypeData, signatureTypesDeleteSignatureTypeErrors, signatureTypesDeleteSignatureTypeResponses, signatureTypesReadSignatureTypeData, signatureTypesReadSignatureTypeErrors, signatureTypesReadSignatureTypeResponses, signatureTypesReadSignatureTypesData, signatureTypesReadSignatureTypesErrors, signatureTypesReadSignatureTypesResponses, signatureTypesUpdateSignatureTypeData, signatureTypesUpdateSignatureTypeErrors, signatureTypesUpdateSignatureTypeResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -435,6 +435,326 @@ export class OrganizationsService {
             responseType: 'json',
             security: [{ scheme: 'bearer', type: 'http' }],
             url: '/api/v1/organizations/{id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class CertificationCentersService {
+    /**
+     * Read Certification Centers
+     *
+     * Retrieve Certification Centers.
+     */
+    public static centersReadCertificationCenters<ThrowOnError extends boolean = true>(options?: Options<certificationCentersReadCertificationCentersData, ThrowOnError>) {
+        return (options?.client ?? client).get<certificationCentersReadCertificationCentersResponses, certificationCentersReadCertificationCentersErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/certification-centers/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Certification Center
+     *
+     * Create new certification center.
+     */
+    public static centersCreateCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersCreateCertificationCenterData, ThrowOnError>) {
+        return (options.client ?? client).post<certificationCentersCreateCertificationCenterResponses, certificationCentersCreateCertificationCenterErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/certification-centers/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Certification Center
+     *
+     * Delete an certification center.
+     */
+    public static centersDeleteCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersDeleteCertificationCenterData, ThrowOnError>) {
+        return (options.client ?? client).delete<certificationCentersDeleteCertificationCenterResponses, certificationCentersDeleteCertificationCenterErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/certification-centers/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Certification Center
+     *
+     * Get certification center by ID.
+     */
+    public static centersReadCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersReadCertificationCenterData, ThrowOnError>) {
+        return (options.client ?? client).get<certificationCentersReadCertificationCenterResponses, certificationCentersReadCertificationCenterErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/certification-centers/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Certification Center
+     *
+     * Update an certification center.
+     */
+    public static centersUpdateCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersUpdateCertificationCenterData, ThrowOnError>) {
+        return (options.client ?? client).put<certificationCentersUpdateCertificationCenterResponses, certificationCentersUpdateCertificationCenterErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/certification-centers/{id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class ElectronicDigitalSignaturesService {
+    /**
+     * Read Electronic Digital Signatures
+     *
+     * Retrieve electronic digital signatures.
+     */
+    public static digitalSignaturesReadElectronicDigitalSignatures<ThrowOnError extends boolean = true>(options?: Options<electronicDigitalSignaturesReadElectronicDigitalSignaturesData, ThrowOnError>) {
+        return (options?.client ?? client).get<electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses, electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/electronic-digital-signatures/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Electronic Digital Signature
+     *
+     * Create new electronic digital signature.
+     */
+    public static digitalSignaturesCreateElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesCreateElectronicDigitalSignatureData, ThrowOnError>) {
+        return (options.client ?? client).post<electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses, electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/electronic-digital-signatures/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Electronic Digital Signature
+     *
+     * Delete an electronic digital signature.
+     */
+    public static digitalSignaturesDeleteElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesDeleteElectronicDigitalSignatureData, ThrowOnError>) {
+        return (options.client ?? client).delete<electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses, electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/electronic-digital-signatures/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Electronic Digital Signature
+     *
+     * Get electronic digital signature by ID.
+     */
+    public static digitalSignaturesReadElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesReadElectronicDigitalSignatureData, ThrowOnError>) {
+        return (options.client ?? client).get<electronicDigitalSignaturesReadElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignatureErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/electronic-digital-signatures/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Electronic Digital Signature
+     *
+     * Update an electronic digital signature.
+     */
+    public static digitalSignaturesUpdateElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesUpdateElectronicDigitalSignatureData, ThrowOnError>) {
+        return (options.client ?? client).put<electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses, electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/electronic-digital-signatures/{id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class EmployeesService {
+    /**
+     * Read Employees
+     *
+     * Retrieve employees.
+     */
+    public static readEmployees<ThrowOnError extends boolean = true>(options?: Options<employeesReadEmployeesData, ThrowOnError>) {
+        return (options?.client ?? client).get<employeesReadEmployeesResponses, employeesReadEmployeesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/employees/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Employee
+     *
+     * Create new employee.
+     */
+    public static createEmployee<ThrowOnError extends boolean = true>(options: Options<employeesCreateEmployeeData, ThrowOnError>) {
+        return (options.client ?? client).post<employeesCreateEmployeeResponses, employeesCreateEmployeeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/employees/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Employee
+     *
+     * Delete an employee.
+     */
+    public static deleteEmployee<ThrowOnError extends boolean = true>(options: Options<employeesDeleteEmployeeData, ThrowOnError>) {
+        return (options.client ?? client).delete<employeesDeleteEmployeeResponses, employeesDeleteEmployeeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/employees/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Employee
+     *
+     * Get employee by ID.
+     */
+    public static readEmployee<ThrowOnError extends boolean = true>(options: Options<employeesReadEmployeeData, ThrowOnError>) {
+        return (options.client ?? client).get<employeesReadEmployeeResponses, employeesReadEmployeeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/employees/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Employee
+     *
+     * Update an employee.
+     */
+    public static updateEmployee<ThrowOnError extends boolean = true>(options: Options<employeesUpdateEmployeeData, ThrowOnError>) {
+        return (options.client ?? client).put<employeesUpdateEmployeeResponses, employeesUpdateEmployeeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/employees/{id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+}
+
+export class SignatureTypesService {
+    /**
+     * Read Signature Types
+     *
+     * Retrieve signature types.
+     */
+    public static typesReadSignatureTypes<ThrowOnError extends boolean = true>(options?: Options<signatureTypesReadSignatureTypesData, ThrowOnError>) {
+        return (options?.client ?? client).get<signatureTypesReadSignatureTypesResponses, signatureTypesReadSignatureTypesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/signature-types/',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Signature Type
+     *
+     * Create new signature type.
+     */
+    public static typesCreateSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesCreateSignatureTypeData, ThrowOnError>) {
+        return (options.client ?? client).post<signatureTypesCreateSignatureTypeResponses, signatureTypesCreateSignatureTypeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/signature-types/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Delete Signature Type
+     *
+     * Delete an signature type.
+     */
+    public static typesDeleteSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesDeleteSignatureTypeData, ThrowOnError>) {
+        return (options.client ?? client).delete<signatureTypesDeleteSignatureTypeResponses, signatureTypesDeleteSignatureTypeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/signature-types/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Signature Type
+     *
+     * Get signature type by ID.
+     */
+    public static typesReadSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesReadSignatureTypeData, ThrowOnError>) {
+        return (options.client ?? client).get<signatureTypesReadSignatureTypeResponses, signatureTypesReadSignatureTypeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/signature-types/{id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Signature Type
+     *
+     * Update an signature type.
+     */
+    public static typesUpdateSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesUpdateSignatureTypeData, ThrowOnError>) {
+        return (options.client ?? client).put<signatureTypesUpdateSignatureTypeResponses, signatureTypesUpdateSignatureTypeErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/signature-types/{id}',
             ...options,
             headers: {
                 'Content-Type': 'application/json',

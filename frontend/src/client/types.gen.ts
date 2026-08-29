@@ -35,6 +35,186 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * CertificationCenterCreate
+ */
+export type CertificationCenterCreate = {
+    /**
+     * Name
+     */
+    name: string;
+};
+
+/**
+ * CertificationCenterPublic
+ */
+export type CertificationCenterPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+};
+
+/**
+ * CertificationCenterUpdate
+ */
+export type CertificationCenterUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+};
+
+/**
+ * CertificationCentersPublic
+ */
+export type CertificationCentersPublic = {
+    /**
+     * Data
+     */
+    data: Array<CertificationCenterPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * ElectronicDigitalSignatureCreate
+ */
+export type ElectronicDigitalSignatureCreate = {
+    /**
+     * Name
+     */
+    name: string;
+};
+
+/**
+ * ElectronicDigitalSignaturePublic
+ */
+export type ElectronicDigitalSignaturePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+};
+
+/**
+ * ElectronicDigitalSignatureUpdate
+ */
+export type ElectronicDigitalSignatureUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+};
+
+/**
+ * ElectronicDigitalSignaturesPublic
+ */
+export type ElectronicDigitalSignaturesPublic = {
+    /**
+     * Data
+     */
+    data: Array<ElectronicDigitalSignaturePublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * EmployeeCreate
+ */
+export type EmployeeCreate = {
+    /**
+     * Name
+     */
+    name: string;
+};
+
+/**
+ * EmployeePublic
+ */
+export type EmployeePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+};
+
+/**
+ * EmployeeUpdate
+ */
+export type EmployeeUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+};
+
+/**
+ * EmployeesPublic
+ */
+export type EmployeesPublic = {
+    /**
+     * Data
+     */
+    data: Array<EmployeePublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -141,9 +321,9 @@ export type NewPassword = {
  */
 export type OrganizationCreate = {
     /**
-     * Title
+     * Name
      */
-    title: string;
+    name: string;
 };
 
 /**
@@ -151,9 +331,9 @@ export type OrganizationCreate = {
  */
 export type OrganizationPublic = {
     /**
-     * Title
+     * Name
      */
-    title: string;
+    name: string;
     /**
      * Id
      */
@@ -177,9 +357,9 @@ export type OrganizationPublic = {
  */
 export type OrganizationUpdate = {
     /**
-     * Title
+     * Name
      */
-    title?: string | null;
+    name?: string | null;
 };
 
 /**
@@ -216,6 +396,66 @@ export type PrivateUserCreate = {
      * Is Verified
      */
     is_verified?: boolean;
+};
+
+/**
+ * SignatureTypeCreate
+ */
+export type SignatureTypeCreate = {
+    /**
+     * Name
+     */
+    name: string;
+};
+
+/**
+ * SignatureTypePublic
+ */
+export type SignatureTypePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Updated At
+     */
+    updated_at?: string | null;
+};
+
+/**
+ * SignatureTypeUpdate
+ */
+export type SignatureTypeUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+};
+
+/**
+ * SignatureTypesPublic
+ */
+export type SignatureTypesPublic = {
+    /**
+     * Data
+     */
+    data: Array<SignatureTypePublic>;
+    /**
+     * Count
+     */
+    count: number;
 };
 
 /**
@@ -1129,6 +1369,602 @@ export type organizationsUpdateOrganizationResponses = {
 };
 
 export type organizationsUpdateOrganizationResponse = organizationsUpdateOrganizationResponses[keyof organizationsUpdateOrganizationResponses];
+
+export type certificationCentersReadCertificationCentersData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/certification-centers/';
+};
+
+export type certificationCentersReadCertificationCentersErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type certificationCentersReadCertificationCentersError = certificationCentersReadCertificationCentersErrors[keyof certificationCentersReadCertificationCentersErrors];
+
+export type certificationCentersReadCertificationCentersResponses = {
+    /**
+     * Successful Response
+     */
+    200: CertificationCentersPublic;
+};
+
+export type certificationCentersReadCertificationCentersResponse = certificationCentersReadCertificationCentersResponses[keyof certificationCentersReadCertificationCentersResponses];
+
+export type certificationCentersCreateCertificationCenterData = {
+    body: CertificationCenterCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/certification-centers/';
+};
+
+export type certificationCentersCreateCertificationCenterErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type certificationCentersCreateCertificationCenterError = certificationCentersCreateCertificationCenterErrors[keyof certificationCentersCreateCertificationCenterErrors];
+
+export type certificationCentersCreateCertificationCenterResponses = {
+    /**
+     * Successful Response
+     */
+    200: CertificationCenterPublic;
+};
+
+export type certificationCentersCreateCertificationCenterResponse = certificationCentersCreateCertificationCenterResponses[keyof certificationCentersCreateCertificationCenterResponses];
+
+export type certificationCentersDeleteCertificationCenterData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/certification-centers/{id}';
+};
+
+export type certificationCentersDeleteCertificationCenterErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type certificationCentersDeleteCertificationCenterError = certificationCentersDeleteCertificationCenterErrors[keyof certificationCentersDeleteCertificationCenterErrors];
+
+export type certificationCentersDeleteCertificationCenterResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type certificationCentersDeleteCertificationCenterResponse = certificationCentersDeleteCertificationCenterResponses[keyof certificationCentersDeleteCertificationCenterResponses];
+
+export type certificationCentersReadCertificationCenterData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/certification-centers/{id}';
+};
+
+export type certificationCentersReadCertificationCenterErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type certificationCentersReadCertificationCenterError = certificationCentersReadCertificationCenterErrors[keyof certificationCentersReadCertificationCenterErrors];
+
+export type certificationCentersReadCertificationCenterResponses = {
+    /**
+     * Successful Response
+     */
+    200: CertificationCenterPublic;
+};
+
+export type certificationCentersReadCertificationCenterResponse = certificationCentersReadCertificationCenterResponses[keyof certificationCentersReadCertificationCenterResponses];
+
+export type certificationCentersUpdateCertificationCenterData = {
+    body: CertificationCenterUpdate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/certification-centers/{id}';
+};
+
+export type certificationCentersUpdateCertificationCenterErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type certificationCentersUpdateCertificationCenterError = certificationCentersUpdateCertificationCenterErrors[keyof certificationCentersUpdateCertificationCenterErrors];
+
+export type certificationCentersUpdateCertificationCenterResponses = {
+    /**
+     * Successful Response
+     */
+    200: CertificationCenterPublic;
+};
+
+export type certificationCentersUpdateCertificationCenterResponse = certificationCentersUpdateCertificationCenterResponses[keyof certificationCentersUpdateCertificationCenterResponses];
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignaturesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/electronic-digital-signatures/';
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignaturesError = electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors[keyof electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors];
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturesPublic;
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignaturesResponse = electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses[keyof electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses];
+
+export type electronicDigitalSignaturesCreateElectronicDigitalSignatureData = {
+    body: ElectronicDigitalSignatureCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/';
+};
+
+export type electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesCreateElectronicDigitalSignatureError = electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors[keyof electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors];
+
+export type electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturePublic;
+};
+
+export type electronicDigitalSignaturesCreateElectronicDigitalSignatureResponse = electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses];
+
+export type electronicDigitalSignaturesDeleteElectronicDigitalSignatureData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}';
+};
+
+export type electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesDeleteElectronicDigitalSignatureError = electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors[keyof electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors];
+
+export type electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponse = electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses];
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignatureData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}';
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignatureErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignatureError = electronicDigitalSignaturesReadElectronicDigitalSignatureErrors[keyof electronicDigitalSignaturesReadElectronicDigitalSignatureErrors];
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignatureResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturePublic;
+};
+
+export type electronicDigitalSignaturesReadElectronicDigitalSignatureResponse = electronicDigitalSignaturesReadElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesReadElectronicDigitalSignatureResponses];
+
+export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureData = {
+    body: ElectronicDigitalSignatureUpdate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}';
+};
+
+export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureError = electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors[keyof electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors];
+
+export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturePublic;
+};
+
+export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponse = electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses];
+
+export type employeesReadEmployeesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/employees/';
+};
+
+export type employeesReadEmployeesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type employeesReadEmployeesError = employeesReadEmployeesErrors[keyof employeesReadEmployeesErrors];
+
+export type employeesReadEmployeesResponses = {
+    /**
+     * Successful Response
+     */
+    200: EmployeesPublic;
+};
+
+export type employeesReadEmployeesResponse = employeesReadEmployeesResponses[keyof employeesReadEmployeesResponses];
+
+export type employeesCreateEmployeeData = {
+    body: EmployeeCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/employees/';
+};
+
+export type employeesCreateEmployeeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type employeesCreateEmployeeError = employeesCreateEmployeeErrors[keyof employeesCreateEmployeeErrors];
+
+export type employeesCreateEmployeeResponses = {
+    /**
+     * Successful Response
+     */
+    200: EmployeePublic;
+};
+
+export type employeesCreateEmployeeResponse = employeesCreateEmployeeResponses[keyof employeesCreateEmployeeResponses];
+
+export type employeesDeleteEmployeeData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/employees/{id}';
+};
+
+export type employeesDeleteEmployeeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type employeesDeleteEmployeeError = employeesDeleteEmployeeErrors[keyof employeesDeleteEmployeeErrors];
+
+export type employeesDeleteEmployeeResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type employeesDeleteEmployeeResponse = employeesDeleteEmployeeResponses[keyof employeesDeleteEmployeeResponses];
+
+export type employeesReadEmployeeData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/employees/{id}';
+};
+
+export type employeesReadEmployeeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type employeesReadEmployeeError = employeesReadEmployeeErrors[keyof employeesReadEmployeeErrors];
+
+export type employeesReadEmployeeResponses = {
+    /**
+     * Successful Response
+     */
+    200: EmployeePublic;
+};
+
+export type employeesReadEmployeeResponse = employeesReadEmployeeResponses[keyof employeesReadEmployeeResponses];
+
+export type employeesUpdateEmployeeData = {
+    body: EmployeeUpdate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/employees/{id}';
+};
+
+export type employeesUpdateEmployeeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type employeesUpdateEmployeeError = employeesUpdateEmployeeErrors[keyof employeesUpdateEmployeeErrors];
+
+export type employeesUpdateEmployeeResponses = {
+    /**
+     * Successful Response
+     */
+    200: EmployeePublic;
+};
+
+export type employeesUpdateEmployeeResponse = employeesUpdateEmployeeResponses[keyof employeesUpdateEmployeeResponses];
+
+export type signatureTypesReadSignatureTypesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/signature-types/';
+};
+
+export type signatureTypesReadSignatureTypesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type signatureTypesReadSignatureTypesError = signatureTypesReadSignatureTypesErrors[keyof signatureTypesReadSignatureTypesErrors];
+
+export type signatureTypesReadSignatureTypesResponses = {
+    /**
+     * Successful Response
+     */
+    200: SignatureTypesPublic;
+};
+
+export type signatureTypesReadSignatureTypesResponse = signatureTypesReadSignatureTypesResponses[keyof signatureTypesReadSignatureTypesResponses];
+
+export type signatureTypesCreateSignatureTypeData = {
+    body: SignatureTypeCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/signature-types/';
+};
+
+export type signatureTypesCreateSignatureTypeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type signatureTypesCreateSignatureTypeError = signatureTypesCreateSignatureTypeErrors[keyof signatureTypesCreateSignatureTypeErrors];
+
+export type signatureTypesCreateSignatureTypeResponses = {
+    /**
+     * Successful Response
+     */
+    200: SignatureTypePublic;
+};
+
+export type signatureTypesCreateSignatureTypeResponse = signatureTypesCreateSignatureTypeResponses[keyof signatureTypesCreateSignatureTypeResponses];
+
+export type signatureTypesDeleteSignatureTypeData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/signature-types/{id}';
+};
+
+export type signatureTypesDeleteSignatureTypeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type signatureTypesDeleteSignatureTypeError = signatureTypesDeleteSignatureTypeErrors[keyof signatureTypesDeleteSignatureTypeErrors];
+
+export type signatureTypesDeleteSignatureTypeResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type signatureTypesDeleteSignatureTypeResponse = signatureTypesDeleteSignatureTypeResponses[keyof signatureTypesDeleteSignatureTypeResponses];
+
+export type signatureTypesReadSignatureTypeData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/signature-types/{id}';
+};
+
+export type signatureTypesReadSignatureTypeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type signatureTypesReadSignatureTypeError = signatureTypesReadSignatureTypeErrors[keyof signatureTypesReadSignatureTypeErrors];
+
+export type signatureTypesReadSignatureTypeResponses = {
+    /**
+     * Successful Response
+     */
+    200: SignatureTypePublic;
+};
+
+export type signatureTypesReadSignatureTypeResponse = signatureTypesReadSignatureTypeResponses[keyof signatureTypesReadSignatureTypeResponses];
+
+export type signatureTypesUpdateSignatureTypeData = {
+    body: SignatureTypeUpdate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/signature-types/{id}';
+};
+
+export type signatureTypesUpdateSignatureTypeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type signatureTypesUpdateSignatureTypeError = signatureTypesUpdateSignatureTypeErrors[keyof signatureTypesUpdateSignatureTypeErrors];
+
+export type signatureTypesUpdateSignatureTypeResponses = {
+    /**
+     * Successful Response
+     */
+    200: SignatureTypePublic;
+};
+
+export type signatureTypesUpdateSignatureTypeResponse = signatureTypesUpdateSignatureTypeResponses[keyof signatureTypesUpdateSignatureTypeResponses];
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;

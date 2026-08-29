@@ -16,6 +16,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
+import { Route as LayoutCertificationCenterRouteImport } from './routes/_layout/certificationCenter'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutOrganizationsRouteImport } from './routes/_layout/organizations'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
@@ -54,6 +55,12 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutCertificationCenterRoute =
+  LayoutCertificationCenterRouteImport.update({
+    id: '/certificationCenter',
+    path: '/certificationCenter',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
   id: '/items',
   path: '/items',
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/certificationCenter': typeof LayoutCertificationCenterRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -87,6 +95,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/certificationCenter': typeof LayoutCertificationCenterRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -100,6 +109,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/certificationCenter': typeof LayoutCertificationCenterRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/organizations': typeof LayoutOrganizationsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/certificationCenter'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/certificationCenter'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
+    | '/_layout/certificationCenter'
     | '/_layout/items'
     | '/_layout/organizations'
     | '/_layout/settings'
@@ -201,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/certificationCenter': {
+      id: '/_layout/certificationCenter'
+      path: '/certificationCenter'
+      fullPath: '/certificationCenter'
+      preLoaderRoute: typeof LayoutCertificationCenterRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
@@ -227,6 +247,7 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutCertificationCenterRoute: typeof LayoutCertificationCenterRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutOrganizationsRoute: typeof LayoutOrganizationsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
@@ -235,6 +256,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
+  LayoutCertificationCenterRoute: LayoutCertificationCenterRoute,
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutOrganizationsRoute: LayoutOrganizationsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,

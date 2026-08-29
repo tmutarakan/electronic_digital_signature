@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Pencil } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type OrganizationPublic, OrganizationsService } from "@/client"
+import { type CertificationCenterCreate, CertificationCentersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,8 +15,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import {
   Form,
   FormControl,
@@ -31,20 +31,12 @@ import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "Title is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
 })
 
 type FormData = z.infer<typeof formSchema>
 
-interface EditOrganizationProps {
-  organization: OrganizationPublic
-  onSuccess: () => void
-}
-
-const EditOrganization = ({
-  organization,
-  onSuccess,
-}: EditOrganizationProps) => {
+const AddCertificationCenter = () => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -54,24 +46,21 @@ const EditOrganization = ({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
-      name: organization.name,
+      name: "",
     },
   })
 
   const mutation = useMutation({
-    mutationFn: (data: FormData) =>
-      OrganizationsService.updateOrganization({
-        path: { id: organization.id },
-        body: data,
-      }),
+    mutationFn: (data: CertificationCenterCreate) =>
+      CertificationCentersService.centersCreateCertificationCenter({ body: data }),
     onSuccess: () => {
-      showSuccessToast("Organization updated successfully")
+      showSuccessToast("Certification Center created successfully")
+      form.reset()
       setIsOpen(false)
-      onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["organizations"] })
+      queryClient.invalidateQueries({ queryKey: ["certification_centers"] })
     },
   })
 
@@ -81,22 +70,21 @@ const EditOrganization = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuItem
-        onSelect={(e) => e.preventDefault()}
-        onClick={() => setIsOpen(true)}
-      >
-        <Pencil />
-        Edit Organization
-      </DropdownMenuItem>
+      <DialogTrigger asChild>
+        <Button className="my-4">
+          <Plus className="mr-2" />
+          Add Certification Center
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Add Certification Center</DialogTitle>
+          <DialogDescription>
+            Fill in the details to add a new certification center.
+          </DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>Edit Organization</DialogTitle>
-              <DialogDescription>
-                Update the organizaion details below.
-              </DialogDescription>
-            </DialogHeader>
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}
@@ -107,7 +95,12 @@ const EditOrganization = ({
                       Name <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Name" type="text" {...field} />
+                      <Input
+                        placeholder="Title"
+                        type="text"
+                        {...field}
+                        required
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,4 +125,4 @@ const EditOrganization = ({
   )
 }
 
-export default EditOrganization
+export default AddCertificationCenter

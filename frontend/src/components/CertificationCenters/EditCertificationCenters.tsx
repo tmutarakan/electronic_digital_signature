@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type OrganizationPublic, OrganizationsService } from "@/client"
+import { type CertificationCenterPublic, CertificationCentersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -36,15 +36,15 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-interface EditOrganizationProps {
-  organization: OrganizationPublic
+interface EditCertificationCenterProps {
+  certificationCenter: CertificationCenterPublic
   onSuccess: () => void
 }
 
-const EditOrganization = ({
-  organization,
+const EditCertificationCenter = ({
+  certificationCenter,
   onSuccess,
-}: EditOrganizationProps) => {
+}:EditCertificationCenterProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -54,14 +54,14 @@ const EditOrganization = ({
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
-      name: organization.name,
+      name: certificationCenter.name,
     },
   })
 
   const mutation = useMutation({
     mutationFn: (data: FormData) =>
-      OrganizationsService.updateOrganization({
-        path: { id: organization.id },
+      CertificationCentersService.centersUpdateCertificationCenter({
+        path: { id: certificationCenter.id },
         body: data,
       }),
     onSuccess: () => {
@@ -71,7 +71,7 @@ const EditOrganization = ({
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["organizations"] })
+      queryClient.invalidateQueries({ queryKey: ["items"] })
     },
   })
 
@@ -86,15 +86,15 @@ const EditOrganization = ({
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Organization
+        Edit Certification Center
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Edit Organization</DialogTitle>
+              <DialogTitle>Edit Certification Center</DialogTitle>
               <DialogDescription>
-                Update the organizaion details below.
+                Update the Certification Center details below.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -104,10 +104,10 @@ const EditOrganization = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      Title <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Name" type="text" {...field} />
+                      <Input placeholder="Title" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,4 +132,4 @@ const EditOrganization = ({
   )
 }
 
-export default EditOrganization
+export default EditCertificationCenter
