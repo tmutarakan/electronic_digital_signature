@@ -17,6 +17,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 import { Route as LayoutCertificationCentersRouteImport } from './routes/_layout/certification-centers'
+import { Route as LayoutEmployeesRouteImport } from './routes/_layout/employees'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutOrganizationsRouteImport } from './routes/_layout/organizations'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
@@ -62,6 +63,11 @@ const LayoutCertificationCentersRoute =
     path: '/certification-centers',
     getParentRoute: () => LayoutRoute,
   } as any)
+const LayoutEmployeesRoute = LayoutEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
   id: '/items',
   path: '/items',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/certification-centers': typeof LayoutCertificationCentersRoute
+  '/employees': typeof LayoutEmployeesRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
   '/certification-centers': typeof LayoutCertificationCentersRoute
+  '/employees': typeof LayoutEmployeesRoute
   '/items': typeof LayoutItemsRoute
   '/organizations': typeof LayoutOrganizationsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/certification-centers': typeof LayoutCertificationCentersRoute
+  '/_layout/employees': typeof LayoutEmployeesRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/organizations': typeof LayoutOrganizationsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/certification-centers'
+    | '/employees'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/certification-centers'
+    | '/employees'
     | '/items'
     | '/organizations'
     | '/settings'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_layout/admin'
     | '/_layout/certification-centers'
+    | '/_layout/employees'
     | '/_layout/items'
     | '/_layout/organizations'
     | '/_layout/settings'
@@ -233,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCertificationCentersRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/employees': {
+      id: '/_layout/employees'
+      path: '/employees'
+      fullPath: '/employees'
+      preLoaderRoute: typeof LayoutEmployeesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
@@ -267,6 +286,7 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutCertificationCentersRoute: typeof LayoutCertificationCentersRoute
+  LayoutEmployeesRoute: typeof LayoutEmployeesRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutOrganizationsRoute: typeof LayoutOrganizationsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
@@ -277,6 +297,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutCertificationCentersRoute: LayoutCertificationCentersRoute,
+  LayoutEmployeesRoute: LayoutEmployeesRoute,
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutOrganizationsRoute: LayoutOrganizationsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,

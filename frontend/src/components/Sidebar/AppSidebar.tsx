@@ -1,4 +1,4 @@
-import { Briefcase,Building, Building2, Home, Users } from "lucide-react"
+import { Briefcase,Building, Building2, Home, Users, Type, IdCardLanyard } from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
@@ -17,7 +17,8 @@ const baseItems: Item[] = [
   { icon: Briefcase, title: "Items", path: "/items" },
   { icon: Building2, title: "Organizations", path: "/organizations" },
   { icon: Building, title: "Certification Centers", path: "/certification-centers" },
-  { icon: Building, title: "Signature Types", path: "/signature-types" },
+  { icon: Type, title: "Signature Types", path: "/signature-types" },
+  { icon: IdCardLanyard, title: "Employees", path: "/employees" },
 ]
 
 export function AppSidebar() {
