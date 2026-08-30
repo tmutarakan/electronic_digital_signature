@@ -44,7 +44,7 @@ import { handleError } from "@/utils";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   position: z.string().min(1, { message: "Position is required" }),
-  organization_id: z.string().uuid({ message: "Organization is required" }),
+  organization_id: z.uuid({ message: "Organization is required" }),
 });
 
 type FormData = z.infer<typeof formSchema>;
