@@ -19,6 +19,7 @@ const baseItems: Item[] = [
   { icon: Building, title: "Certification Centers", path: "/certification-centers" },
   { icon: Type, title: "Signature Types", path: "/signature-types" },
   { icon: IdCardLanyard, title: "Employees", path: "/employees" },
+  { icon: IdCardLanyard, title: "Electronic Digital Signatures", path: "/electronic-digital-signatures" },
 ]
 
 export function AppSidebar() {
