@@ -44,7 +44,7 @@ interface EditSignatureTypeProps {
 const EditSignatureType = ({
   signatureType,
   onSuccess,
-}:EditSignatureTypeProps) => {
+}: EditSignatureTypeProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()

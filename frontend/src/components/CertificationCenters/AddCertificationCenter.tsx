@@ -5,7 +5,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type CertificationCenterCreate, CertificationCentersService } from "@/client"
+import {
+  type CertificationCenterCreate,
+  CertificationCentersService,
+} from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -52,7 +55,9 @@ const AddCertificationCenter = () => {
 
   const mutation = useMutation({
     mutationFn: (data: CertificationCenterCreate) =>
-      CertificationCentersService.centersCreateCertificationCenter({ body: data }),
+      CertificationCentersService.centersCreateCertificationCenter({
+        body: data,
+      }),
     onSuccess: () => {
       showSuccessToast("Certification Center created successfully")
       form.reset()

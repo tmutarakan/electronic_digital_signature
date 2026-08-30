@@ -5,7 +5,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type CertificationCenterPublic, CertificationCentersService } from "@/client"
+import {
+  type CertificationCenterPublic,
+  CertificationCentersService,
+} from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -44,7 +47,7 @@ interface EditCertificationCenterProps {
 const EditCertificationCenter = ({
   certificationCenter,
   onSuccess,
-}:EditCertificationCenterProps) => {
+}: EditCertificationCenterProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()

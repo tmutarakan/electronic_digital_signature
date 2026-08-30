@@ -162,6 +162,14 @@ export type EmployeeCreate = {
      * Name
      */
     name: string;
+    /**
+     * Position
+     */
+    position: string;
+    /**
+     * Organization Id
+     */
+    organization_id: string;
 };
 
 /**
@@ -173,21 +181,23 @@ export type EmployeePublic = {
      */
     name: string;
     /**
+     * Position
+     */
+    position: string;
+    /**
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
+    owner: UserPublic;
+    organization: OrganizationPublic;
     /**
      * Created At
      */
-    created_at?: string | null;
+    created_at: string;
     /**
      * Updated At
      */
-    updated_at?: string | null;
+    updated_at: string;
 };
 
 /**
@@ -198,6 +208,10 @@ export type EmployeeUpdate = {
      * Name
      */
     name?: string | null;
+    /**
+     * Position
+     */
+    position?: string | null;
 };
 
 /**
@@ -338,18 +352,15 @@ export type OrganizationPublic = {
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
+    owner: UserPublic;
     /**
      * Created At
      */
-    created_at?: string | null;
+    created_at: string;
     /**
      * Updated At
      */
-    updated_at?: string | null;
+    updated_at: string;
 };
 
 /**

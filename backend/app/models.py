@@ -167,13 +167,16 @@ class Organization(OrganizationBase, IDMixin, TimestampsMixin, table=True):
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
     owner: User | None = Relationship(back_populates="organizations")  # pyright: ignore[reportAny]
+    employees: list[Employee] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="organization", cascade_delete=True
+    )
 
 
 class OrganizationPublic(OrganizationBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    owner: UserPublic
+    created_at: datetime
+    updated_at: datetime
 
 
 class OrganizationsPublic(SQLModel):
@@ -256,28 +259,35 @@ class SignatureTypesPublic(SQLModel):
 # --------------------------------------------------------------------------------
 class EmployeeBase(SQLModel):
     name: str = Field(min_length=1, max_length=255)
+    position: str = Field(min_length=1, max_length=255)
 
 
 class EmployeeCreate(EmployeeBase):
-    pass
+    organization_id: uuid.UUID
 
 
 class EmployeeUpdate(SQLModel):
     name: str | None = Field(default=None, min_length=1, max_length=255)
+    position: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class Employee(EmployeeBase, IDMixin, TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
-        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+        foreign_key="user.id", nullable=False, ondelete="CASCADE",index=True
     )
     owner: User | None = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
+    organization_id: uuid.UUID = Field(
+        foreign_key="organization.id", nullable=False, ondelete="CASCADE",index=True
+    )
+    organization: Organization | None = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
 
 
 class EmployeePublic(EmployeeBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    owner: UserPublic
+    organization: OrganizationPublic
+    created_at: datetime
+    updated_at: datetime
 
 
 class EmployeesPublic(SQLModel):

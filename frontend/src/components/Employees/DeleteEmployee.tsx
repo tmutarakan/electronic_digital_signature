@@ -66,8 +66,8 @@ const DeleteEmployee = ({ id, onSuccess }: DeleteEmployeeProps) => {
           <DialogHeader>
             <DialogTitle>Delete Employee</DialogTitle>
             <DialogDescription>
-              This Employee will be permanently deleted. Are you sure? You
-              will not be able to undo this action.
+              This Employee will be permanently deleted. Are you sure? You will
+              not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
 

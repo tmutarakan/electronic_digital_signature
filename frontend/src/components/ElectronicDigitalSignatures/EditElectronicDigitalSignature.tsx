@@ -5,7 +5,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type ElectronicDigitalSignaturePublic, ElectronicDigitalSignaturesService } from "@/client"
+import {
+  type ElectronicDigitalSignaturePublic,
+  ElectronicDigitalSignaturesService,
+} from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -44,7 +47,7 @@ interface EditElectronicDigitalSignatureProps {
 const EditElectronicDigitalSignature = ({
   employee,
   onSuccess,
-}:EditElectronicDigitalSignatureProps) => {
+}: EditElectronicDigitalSignatureProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -60,10 +63,12 @@ const EditElectronicDigitalSignature = ({
 
   const mutation = useMutation({
     mutationFn: (data: FormData) =>
-      ElectronicDigitalSignaturesService.digitalSignaturesUpdateElectronicDigitalSignature({
-        path: { id: employee.id },
-        body: data,
-      }),
+      ElectronicDigitalSignaturesService.digitalSignaturesUpdateElectronicDigitalSignature(
+        {
+          path: { id: employee.id },
+          body: data,
+        },
+      ),
     onSuccess: () => {
       showSuccessToast("Electronic Digital Signature updated successfully")
       setIsOpen(false)
@@ -71,7 +76,9 @@ const EditElectronicDigitalSignature = ({
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["electronic-digital-signatures"] })
+      queryClient.invalidateQueries({
+        queryKey: ["electronic-digital-signatures"],
+      })
     },
   })
 

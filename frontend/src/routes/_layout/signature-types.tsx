@@ -5,9 +5,9 @@ import { Suspense } from "react"
 
 import { SignatureTypesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
-import { columns } from "@/components/SignatureTypes/columns"
-import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
 import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
+import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
+import { columns } from "@/components/SignatureTypes/columns"
 
 function getSignatureTypesQueryOptions() {
   return {

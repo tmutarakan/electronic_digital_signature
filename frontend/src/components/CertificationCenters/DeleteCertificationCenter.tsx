@@ -24,14 +24,19 @@ interface DeleteCertificationCenterProps {
   onSuccess: () => void
 }
 
-const DeleteCertificationCenter = ({ id, onSuccess }: DeleteCertificationCenterProps) => {
+const DeleteCertificationCenter = ({
+  id,
+  onSuccess,
+}: DeleteCertificationCenterProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
   const { handleSubmit } = useForm()
 
   const deleteOrganization = async (id: string) => {
-    await CertificationCentersService.centersDeleteCertificationCenter({ path: { id } })
+    await CertificationCentersService.centersDeleteCertificationCenter({
+      path: { id },
+    })
   }
 
   const mutation = useMutation({
@@ -66,8 +71,8 @@ const DeleteCertificationCenter = ({ id, onSuccess }: DeleteCertificationCenterP
           <DialogHeader>
             <DialogTitle>Delete Certification Center</DialogTitle>
             <DialogDescription>
-              This Certification Center will be permanently deleted. Are you sure? You
-              will not be able to undo this action.
+              This Certification Center will be permanently deleted. Are you
+              sure? You will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
 

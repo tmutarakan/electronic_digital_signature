@@ -9,14 +9,15 @@ import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatu
 import { columns } from "@/components/ElectronicDigitalSignatures/columns"
 import PendingElectronicDigitalSignatures from "@/components/Pending/PendingElectronicDigitalSignatures"
 
-
 function getElectronicDigitalSignaturesQueryOptions() {
   return {
     queryFn: async () =>
       (
-        await ElectronicDigitalSignaturesService.digitalSignaturesReadElectronicDigitalSignatures({
-          query: { skip: 0, limit: 100 },
-        })
+        await ElectronicDigitalSignaturesService.digitalSignaturesReadElectronicDigitalSignatures(
+          {
+            query: { skip: 0, limit: 100 },
+          },
+        )
       ).data,
     queryKey: ["electronic-digital-signatures"],
   }
@@ -70,7 +71,9 @@ function ElectronicDigitalSignatures() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Electronic Digital Signature</h1>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Electronic Digital Signature
+          </h1>
           <p className="text-muted-foreground">
             Create and manage your Electronic Digital Signature
           </p>

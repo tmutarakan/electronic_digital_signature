@@ -124,9 +124,15 @@ def create_signature_type(
 
 
 def create_employee(
-    *, session: Session, employee_in: EmployeeCreate, owner_id: uuid.UUID
+    *,
+    session: Session,
+    employee_in: EmployeeCreate,
+    owner_id: uuid.UUID,
+    organization_id: uuid.UUID,
 ) -> Employee:
-    db_employee = Employee.model_validate(employee_in, update={"owner_id": owner_id})
+    db_employee = Employee.model_validate(
+        employee_in, update={"owner_id": owner_id, "organization_id": organization_id}
+    )
     session.add(db_employee)
     session.commit()
     session.refresh(db_employee)

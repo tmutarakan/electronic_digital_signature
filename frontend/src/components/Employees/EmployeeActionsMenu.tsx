@@ -15,9 +15,7 @@ interface EmployeeActionsMenuProps {
   employee: EmployeePublic
 }
 
-export const EmployeeActionsMenu = ({
-  employee,
-}: EmployeeActionsMenuProps) => {
+export const EmployeeActionsMenu = ({ employee }: EmployeeActionsMenuProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -28,14 +26,8 @@ export const EmployeeActionsMenu = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <EditEmployee
-          employee={employee}
-          onSuccess={() => setOpen(false)}
-        />
-        <DeleteEmployee
-          id={employee.id}
-          onSuccess={() => setOpen(false)}
-        />
+        <EditEmployee employee={employee} onSuccess={() => setOpen(false)} />
+        <DeleteEmployee id={employee.id} onSuccess={() => setOpen(false)} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

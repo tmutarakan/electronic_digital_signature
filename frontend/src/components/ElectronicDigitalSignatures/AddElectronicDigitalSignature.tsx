@@ -5,7 +5,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type ElectronicDigitalSignatureCreate, ElectronicDigitalSignaturesService } from "@/client"
+import {
+  type ElectronicDigitalSignatureCreate,
+  ElectronicDigitalSignaturesService,
+} from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -52,7 +55,9 @@ const AddElectronicDigitalSignature = () => {
 
   const mutation = useMutation({
     mutationFn: (data: ElectronicDigitalSignatureCreate) =>
-      ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature({ body: data }),
+      ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature(
+        { body: data },
+      ),
     onSuccess: () => {
       showSuccessToast("Electronic Digital Signature created successfully")
       form.reset()
@@ -60,7 +65,9 @@ const AddElectronicDigitalSignature = () => {
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["electronic-digital-signatures"] })
+      queryClient.invalidateQueries({
+        queryKey: ["electronic-digital-signatures"],
+      })
     },
   })
 

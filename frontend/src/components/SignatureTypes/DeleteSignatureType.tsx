@@ -66,8 +66,8 @@ const DeleteSignatureType = ({ id, onSuccess }: DeleteSignatureTypeProps) => {
           <DialogHeader>
             <DialogTitle>Delete Signature Types</DialogTitle>
             <DialogDescription>
-              This Signature Types will be permanently deleted. Are you sure? You
-              will not be able to undo this action.
+              This Signature Types will be permanently deleted. Are you sure?
+              You will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
 

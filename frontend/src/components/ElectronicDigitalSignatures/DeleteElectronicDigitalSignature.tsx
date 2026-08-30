@@ -24,20 +24,27 @@ interface DeleteElectronicDigitalSignatureProps {
   onSuccess: () => void
 }
 
-const DeleteElectronicDigitalSignature = ({ id, onSuccess }: DeleteElectronicDigitalSignatureProps) => {
+const DeleteElectronicDigitalSignature = ({
+  id,
+  onSuccess,
+}: DeleteElectronicDigitalSignatureProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
   const { handleSubmit } = useForm()
 
   const deleteOrganization = async (id: string) => {
-    await ElectronicDigitalSignaturesService.digitalSignaturesDeleteElectronicDigitalSignature({ path: { id } })
+    await ElectronicDigitalSignaturesService.digitalSignaturesDeleteElectronicDigitalSignature(
+      { path: { id } },
+    )
   }
 
   const mutation = useMutation({
     mutationFn: deleteOrganization,
     onSuccess: () => {
-      showSuccessToast("The Electronic Digital Signature was deleted successfully")
+      showSuccessToast(
+        "The Electronic Digital Signature was deleted successfully",
+      )
       setIsOpen(false)
       onSuccess()
     },
@@ -66,8 +73,8 @@ const DeleteElectronicDigitalSignature = ({ id, onSuccess }: DeleteElectronicDig
           <DialogHeader>
             <DialogTitle>Delete Electronic Digital Signature</DialogTitle>
             <DialogDescription>
-              This Electronic Digital Signature will be permanently deleted. Are you sure? You
-              will not be able to undo this action.
+              This Electronic Digital Signature will be permanently deleted. Are
+              you sure? You will not be able to undo this action.
             </DialogDescription>
           </DialogHeader>
 
