@@ -4,7 +4,6 @@ import { Check, Copy } from "lucide-react"
 import type { OrganizationPublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { cn } from "@/lib/utils"
 import { OrganizationActionsMenu } from "./OrganizationActionsMenu"
 
 function CopyId({ id }: { id: string }) {
@@ -43,55 +42,19 @@ export const columns: ColumnDef<OrganizationPublic>[] = [
     cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {
+    accessorKey: "owner",
+    header: "OWNER",
+    cell: ({ row }) => <span className="font-light">{row.original.owner.email}</span>,
+  },
+  {
     accessorKey: "created_at",
     header: "CREATED AT",
-    cell: ({ row }) => {
-      const description = row.original.created_at
-      return (
-        <span
-          className={cn(
-            "max-w-xs truncate block text-muted-foreground",
-            !description && "italic",
-          )}
-        >
-          {description || "No description"}
-        </span>
-      )
-    },
+    cell: ({ row }) => <span className="font-light">{new Date(row.original.created_at).toLocaleString()}</span>,
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
-    cell: ({ row }) => {
-      const description = row.original.updated_at
-      return (
-        <span
-          className={cn(
-            "max-w-xs truncate block text-muted-foreground",
-            !description && "italic",
-          )}
-        >
-          {description || "No description"}
-        </span>
-      )
-    },
-  },
-  {
-    accessorKey: "owner_id",
-    header: "OWNER",
-    cell: ({ row }) => {
-      const description = row.original.owner_id
-      return (
-        <span
-          className={cn(
-            "max-w-xs truncate block text-muted-foreground",
-            !description && "italic",
-          )}
-        >
-          {description || "No description"}
-        </span>
-      )
-    },
+    cell: ({ row }) => <span className="font-light">{new Date(row.original.updated_at).toLocaleString()}</span>,
   },
   {
     id: "actions",

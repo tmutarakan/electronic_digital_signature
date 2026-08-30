@@ -31,7 +31,8 @@ import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "Title is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
+  position: z.string().min(1, { message: "Position is required" }),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -52,6 +53,7 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
     criteriaMode: "all",
     defaultValues: {
       name: employee.name,
+      position: employee.position,
     },
   })
 
@@ -105,6 +107,22 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Name" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="position"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Position <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Position" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
