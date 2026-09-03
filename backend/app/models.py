@@ -2,8 +2,8 @@ import uuid
 from datetime import datetime
 
 from pydantic import EmailStr
-from sqlalchemy import DateTime
-from sqlmodel import Field, Relationship, SQLModel
+from sqlalchemy import DateTime, LargeBinary
+from sqlmodel import Column, Field, Relationship, SQLModel
 
 from .common import get_datetime_utc
 from .mixins import IDMixin, TimestampsMixin
@@ -166,8 +166,11 @@ class Organization(OrganizationBase, IDMixin, TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
-    owner: User | None = Relationship(back_populates="organizations")  # pyright: ignore[reportAny]
+    owner: User = Relationship(back_populates="organizations")  # pyright: ignore[reportAny]
     employees: list[Employee] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="organization", cascade_delete=True
+    )
+    electronic_digital_signatures: list[ElectronicDigitalSignature] = Relationship(  # pyright: ignore[reportAny]
         back_populates="organization", cascade_delete=True
     )
 
@@ -205,14 +208,17 @@ class CertificationCenter(
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
-    owner: User | None = Relationship(back_populates="certification_centers")  # pyright: ignore[reportAny]
+    owner: User = Relationship(back_populates="certification_centers")  # pyright: ignore[reportAny]
+    electronic_digital_signatures: list[ElectronicDigitalSignature] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="certification_center", cascade_delete=True
+    )
 
 
 class CertificationCenterPublic(CertificationCenterBase):
     id: uuid.UUID
     owner_id: uuid.UUID
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    created_at: datetime
+    updated_at: datetime
 
 
 class CertificationCentersPublic(SQLModel):
@@ -239,14 +245,17 @@ class SignatureType(SignatureTypeBase, IDMixin, TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
-    owner: User | None = Relationship(back_populates="signature_types")  # pyright: ignore[reportAny]
+    owner: User = Relationship(back_populates="signature_types")  # pyright: ignore[reportAny]
+    electronic_digital_signatures: list[ElectronicDigitalSignature] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="signature_type", cascade_delete=True
+    )
 
 
 class SignatureTypePublic(SignatureTypeBase):
     id: uuid.UUID
     owner_id: uuid.UUID
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    created_at: datetime
+    updated_at: datetime
 
 
 class SignatureTypesPublic(SQLModel):
@@ -273,13 +282,16 @@ class EmployeeUpdate(SQLModel):
 
 class Employee(EmployeeBase, IDMixin, TimestampsMixin, table=True):
     owner_id: uuid.UUID = Field(
-        foreign_key="user.id", nullable=False, ondelete="CASCADE",index=True
+        foreign_key="user.id", nullable=False, ondelete="CASCADE", index=True
     )
-    owner: User | None = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
+    owner: User = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
     organization_id: uuid.UUID = Field(
-        foreign_key="organization.id", nullable=False, ondelete="CASCADE",index=True
+        foreign_key="organization.id", nullable=False, ondelete="CASCADE", index=True
     )
     organization: Organization | None = Relationship(back_populates="employees")  # pyright: ignore[reportAny]
+    electronic_digital_signatures: list[ElectronicDigitalSignature] = Relationship(  # pyright: ignore[reportAny]
+        back_populates="employee", cascade_delete=True
+    )
 
 
 class EmployeePublic(EmployeeBase):
@@ -299,7 +311,16 @@ class EmployeesPublic(SQLModel):
 # Электронная цифровая подпись
 # --------------------------------------------------------------------------------
 class ElectronicDigitalSignatureBase(SQLModel):
-    name: str = Field(min_length=1, max_length=255)
+    date_certificate: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+    file_certificate: bytes = Field(sa_column=Column(LargeBinary))
+    date_container: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+    file_container: bytes = Field(sa_column=Column(LargeBinary))
 
 
 class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
@@ -316,14 +337,38 @@ class ElectronicDigitalSignature(
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
-    owner: User | None = Relationship(back_populates="electronic_digital_signatures")  # pyright: ignore[reportAny]
+    owner: User = Relationship(back_populates="electronic_digital_signatures")  # pyright: ignore[reportAny]
+    organization_id: uuid.UUID = Field(
+        foreign_key="organization.id", nullable=False, ondelete="CASCADE"
+    )
+    organization: Organization | None = Relationship(  # pyright: ignore[reportAny]
+        back_populates="electronic_digital_signatures"
+    )
+    signature_type_id: uuid.UUID = Field(
+        foreign_key="signaturetype.id", nullable=False, ondelete="CASCADE"
+    )
+    signature_type: SignatureType | None = Relationship(  # pyright: ignore[reportAny]
+        back_populates="electronic_digital_signatures"
+    )
+    employee_id: uuid.UUID = Field(
+        foreign_key="employee.id", nullable=True, ondelete="CASCADE"
+    )
+    employee: Employee | None = Relationship(  # pyright: ignore[reportAny]
+        back_populates="electronic_digital_signatures"
+    )
+    certification_center_id: uuid.UUID = Field(
+        foreign_key="certificationcenter.id", nullable=False, ondelete="CASCADE"
+    )
+    certification_center: CertificationCenter | None = Relationship(  # pyright: ignore[reportAny]
+        back_populates="electronic_digital_signatures"
+    )
 
 
 class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
     id: uuid.UUID
     owner_id: uuid.UUID
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    created_at: datetime
+    updated_at: datetime
 
 
 class ElectronicDigitalSignaturesPublic(SQLModel):

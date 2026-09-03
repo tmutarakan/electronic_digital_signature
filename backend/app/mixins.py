@@ -12,14 +12,14 @@ class IDMixin(SQLModel):
 
 
 class CreatedAtMixin(SQLModel):
-    created_at: datetime | None = Field(
+    created_at: datetime = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
     )
 
 
 class UpdatedAtMixin(SQLModel):
-    updated_at: datetime | None = Field(
+    updated_at: datetime = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
     )
