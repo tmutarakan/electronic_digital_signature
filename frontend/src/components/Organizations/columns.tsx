@@ -44,17 +44,27 @@ export const columns: ColumnDef<OrganizationPublic>[] = [
   {
     accessorKey: "owner",
     header: "OWNER",
-    cell: ({ row }) => <span className="font-light">{row.original.owner.email}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.owner.email}</span>
+    ),
   },
   {
     accessorKey: "created_at",
     header: "CREATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.created_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.created_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.updated_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.updated_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     id: "actions",

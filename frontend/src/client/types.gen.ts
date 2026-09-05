@@ -56,18 +56,15 @@ export type CertificationCenterPublic = {
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
+    owner: UserPublic;
     /**
      * Created At
      */
-    created_at?: string | null;
+    created_at: string;
     /**
      * Updated At
      */
-    updated_at?: string | null;
+    updated_at: string;
 };
 
 /**
@@ -99,9 +96,37 @@ export type CertificationCentersPublic = {
  */
 export type ElectronicDigitalSignatureCreate = {
     /**
-     * Name
+     * Date Certificate
      */
-    name: string;
+    date_certificate?: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: Blob | File;
+    /**
+     * Date Container
+     */
+    date_container?: string;
+    /**
+     * File Container
+     */
+    file_container: Blob | File;
+    /**
+     * Organization Id
+     */
+    organization_id: string;
+    /**
+     * Signature Type Id
+     */
+    signature_type_id: string;
+    /**
+     * Employee Id
+     */
+    employee_id: string;
+    /**
+     * Certification Center Id
+     */
+    certification_center_id: string;
 };
 
 /**
@@ -109,25 +134,38 @@ export type ElectronicDigitalSignatureCreate = {
  */
 export type ElectronicDigitalSignaturePublic = {
     /**
-     * Name
+     * Date Certificate
      */
-    name: string;
+    date_certificate?: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: Blob | File;
+    /**
+     * Date Container
+     */
+    date_container?: string;
+    /**
+     * File Container
+     */
+    file_container: Blob | File;
     /**
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
+    owner: UserPublic;
+    organization: OrganizationPublic;
+    signature_type: SignatureTypePublic;
+    employee: EmployeePublic;
+    certification_center: CertificationCenterPublic;
     /**
      * Created At
      */
-    created_at?: string | null;
+    created_at: string;
     /**
      * Updated At
      */
-    updated_at?: string | null;
+    updated_at: string;
 };
 
 /**
@@ -135,9 +173,21 @@ export type ElectronicDigitalSignaturePublic = {
  */
 export type ElectronicDigitalSignatureUpdate = {
     /**
-     * Name
+     * Date Certificate
      */
-    name?: string | null;
+    date_certificate?: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: Blob | File;
+    /**
+     * Date Container
+     */
+    date_container?: string;
+    /**
+     * File Container
+     */
+    file_container: Blob | File;
 };
 
 /**
@@ -431,18 +481,15 @@ export type SignatureTypePublic = {
      * Id
      */
     id: string;
-    /**
-     * Owner Id
-     */
-    owner_id: string;
+    owner: UserPublic;
     /**
      * Created At
      */
-    created_at?: string | null;
+    created_at: string;
     /**
      * Updated At
      */
-    updated_at?: string | null;
+    updated_at: string;
 };
 
 /**

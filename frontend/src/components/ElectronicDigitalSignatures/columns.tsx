@@ -4,7 +4,6 @@ import { Check, Copy } from "lucide-react"
 import type { ElectronicDigitalSignaturePublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { cn } from "@/lib/utils"
 import { ElectronicDigitalSignatureActionsMenu } from "./ElectronicDigitalSignatureActionsMenu"
 
 function CopyId({ id }: { id: string }) {
@@ -38,24 +37,67 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     cell: ({ row }) => <CopyId id={row.original.id} />,
   },
   {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
+    accessorKey: "date_certificate",
+    header: "Date Certificate",
+    cell: ({ row }) => <span className="font-medium">{new Date(row.original.date_certificate).toLocaleString()}</span>,
   },
   {
-    accessorKey: "owner_id",
+    accessorKey: "date_container",
+    header: "Date Container",
+    cell: ({ row }) => <span className="font-medium">{new Date(row.original.date_container).toLocaleString()}</span>,
+  },
+  {
+    accessorKey: "owner",
     header: "OWNER",
-    cell: ({ row }) => <span className="font-light">{row.original.owner_id}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.owner.email}</span>
+    ),
+  },
+  {
+    accessorKey: "organization",
+    header: "Organization",
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.organization.name}</span>
+    ),
+  },
+  {
+    accessorKey: "signature_type",
+    header: "Signature Type",
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.signature_type.name}</span>
+    ),
+  },
+  {
+    accessorKey: "employee",
+    header: "Employee",
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.employee.name}</span>
+    ),
+  },
+  {
+    accessorKey: "certification_center",
+    header: "Certification Center",
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.certification_center.name}</span>
+    ),
   },
   {
     accessorKey: "created_at",
     header: "CREATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.created_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.created_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.updated_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.updated_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     id: "actions",

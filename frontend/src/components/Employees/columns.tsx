@@ -4,7 +4,6 @@ import { Check, Copy } from "lucide-react"
 import type { EmployeePublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { cn } from "@/lib/utils"
 import { EmployeeActionsMenu } from "./EmployeeActionsMenu"
 
 function CopyId({ id }: { id: string }) {
@@ -45,27 +44,41 @@ export const columns: ColumnDef<EmployeePublic>[] = [
   {
     accessorKey: "position",
     header: "Position",
-    cell: ({ row }) => <span className="font-light">{row.original.position}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.position}</span>
+    ),
   },
   {
     accessorKey: "organization",
     header: "Organization",
-    cell: ({ row }) => <span className="font-light">{row.original.organization.name}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.organization.name}</span>
+    ),
   },
   {
     accessorKey: "owner",
     header: "OWNER",
-    cell: ({ row }) => <span className="font-light">{row.original.owner.email}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.owner.email}</span>
+    ),
   },
   {
     accessorKey: "created_at",
     header: "CREATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.created_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.created_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.updated_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.updated_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     id: "actions",

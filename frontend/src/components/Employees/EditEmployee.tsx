@@ -1,11 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type EmployeePublic, EmployeesService,OrganizationsService } from "@/client"
+import {
+  type EmployeePublic,
+  EmployeesService,
+  OrganizationsService,
+} from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -33,7 +37,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
@@ -59,12 +63,12 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
       queryFn: async () => {
         const response = await OrganizationsService.readOrganizations({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["organizations"],
-    });
-  const organizations = organizationsData?.data || [];
+    })
+  const organizations = organizationsData?.data || []
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),

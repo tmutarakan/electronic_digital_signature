@@ -1,16 +1,16 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { Plus } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Plus } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import {
   type EmployeeCreate,
   EmployeesService,
   OrganizationsService,
-} from "@/client";
-import { Button } from "@/components/ui/button";
+} from "@/client"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -20,7 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -28,42 +28,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { LoadingButton } from "@/components/ui/loading-button";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { LoadingButton } from "@/components/ui/loading-button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import useCustomToast from "@/hooks/useCustomToast";
-import { handleError } from "@/utils";
+} from "@/components/ui/select"
+import useCustomToast from "@/hooks/useCustomToast"
+import { handleError } from "@/utils"
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   position: z.string().min(1, { message: "Position is required" }),
   organization_id: z.uuid({ message: "Organization is required" }),
-});
+})
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof formSchema>
 
 const AddEmployee = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
-  const { showSuccessToast, showErrorToast } = useCustomToast();
+  const [isOpen, setIsOpen] = useState(false)
+  const queryClient = useQueryClient()
+  const { showSuccessToast, showErrorToast } = useCustomToast()
   const { data: organizationsData, isLoading: isLoadingOrganizations } =
     useQuery({
       queryFn: async () => {
         const response = await OrganizationsService.readOrganizations({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["organizations"],
-    });
-  const organizations = organizationsData?.data || [];
+    })
+  const organizations = organizationsData?.data || []
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -74,25 +74,25 @@ const AddEmployee = () => {
       position: "",
       organization_id: "",
     },
-  });
+  })
 
   const mutation = useMutation({
     mutationFn: (data: EmployeeCreate) =>
       EmployeesService.createEmployee({ body: data }),
     onSuccess: () => {
-      showSuccessToast("Employee created successfully");
-      form.reset();
-      setIsOpen(false);
+      showSuccessToast("Employee created successfully")
+      form.reset()
+      setIsOpen(false)
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      queryClient.invalidateQueries({ queryKey: ["employees"] })
     },
-  });
+  })
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate(data);
-  };
+    mutation.mutate(data)
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -200,7 +200,7 @@ const AddEmployee = () => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default AddEmployee;
+export default AddEmployee

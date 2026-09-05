@@ -4,7 +4,6 @@ import { Check, Copy } from "lucide-react"
 import type { CertificationCenterPublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { cn } from "@/lib/utils"
 import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu"
 
 function CopyId({ id }: { id: string }) {
@@ -43,19 +42,29 @@ export const columns: ColumnDef<CertificationCenterPublic>[] = [
     cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {
-    accessorKey: "owner_id",
+    accessorKey: "owner",
     header: "OWNER",
-    cell: ({ row }) => <span className="font-light">{row.original.owner_id}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">{row.original.owner.email}</span>
+    ),
   },
   {
     accessorKey: "created_at",
     header: "CREATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.created_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.created_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     accessorKey: "updated_at",
     header: "UPDATED AT",
-    cell: ({ row }) => <span className="font-light">{new Date(row.original.updated_at).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-light">
+        {new Date(row.original.updated_at).toLocaleString()}
+      </span>
+    ),
   },
   {
     id: "actions",
