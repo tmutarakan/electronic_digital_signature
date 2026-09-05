@@ -44,8 +44,8 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "file_certificate",
     header: "File Certificate",
     cell: ({ row }) => (
-      <span className="font-medium">{row.original.file_certificate}</span>
-    ),
+      <span className="font-medium block truncate max-w-50">{row.original.file_certificate}</span>
+    )
   },
   {
     accessorKey: "date_container",
@@ -60,7 +60,7 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "file_container",
     header: "File Container",
     cell: ({ row }) => (
-      <span className="font-medium">{row.original.file_container}</span>
+      <span className="font-medium block truncate max-w-50">{row.original.file_container}</span>
     ),
   },
   {

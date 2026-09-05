@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter, HTTPException, File, UploadFile
+from fastapi import APIRouter, File, HTTPException, UploadFile
 from sqlmodel import col, func, select
 
 from app.api.deps import CurrentUser, SessionDep
