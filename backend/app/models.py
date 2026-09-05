@@ -216,7 +216,7 @@ class CertificationCenter(
 
 class CertificationCenterPublic(CertificationCenterBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
+    owner: UserPublic
     created_at: datetime
     updated_at: datetime
 
@@ -253,7 +253,7 @@ class SignatureType(SignatureTypeBase, IDMixin, TimestampsMixin, table=True):
 
 class SignatureTypePublic(SignatureTypeBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
+    owner: UserPublic
     created_at: datetime
     updated_at: datetime
 
@@ -324,11 +324,23 @@ class ElectronicDigitalSignatureBase(SQLModel):
 
 
 class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
-    pass
+    organization_id: uuid.UUID
+    signature_type_id: uuid.UUID
+    employee_id: uuid.UUID
+    certification_center_id: uuid.UUID
 
 
 class ElectronicDigitalSignatureUpdate(SQLModel):
-    name: str | None = Field(default=None, min_length=1, max_length=255)
+    date_certificate: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+    file_certificate: bytes = Field(sa_column=Column(LargeBinary))
+    date_container: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+    )
+    file_container: bytes = Field(sa_column=Column(LargeBinary))
 
 
 class ElectronicDigitalSignature(
@@ -366,7 +378,11 @@ class ElectronicDigitalSignature(
 
 class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
     id: uuid.UUID
-    owner_id: uuid.UUID
+    owner: UserPublic
+    organization: OrganizationPublic
+    signature_type: SignatureTypePublic
+    employee: EmployeePublic
+    certification_center: CertificationCenterPublic
     created_at: datetime
     updated_at: datetime
 

@@ -144,9 +144,20 @@ def create_electronic_digital_signature(
     session: Session,
     electronic_digital_signature_in: ElectronicDigitalSignatureCreate,
     owner_id: uuid.UUID,
+    organization_id: uuid.UUID,
+    signature_type_id: uuid.UUID,
+    employee_id: uuid.UUID,
+    certification_center_id: uuid.UUID,
 ) -> ElectronicDigitalSignature:
     db_electronic_digital_signature = ElectronicDigitalSignature.model_validate(
-        electronic_digital_signature_in, update={"owner_id": owner_id}
+        electronic_digital_signature_in,
+        update={
+            "owner_id": owner_id,
+            "organization_id": organization_id,
+            "signature_type_id": signature_type_id,
+            "employee_id": employee_id,
+            "certification_center_id": certification_center_id
+        },
     )
     session.add(db_electronic_digital_signature)
     session.commit()

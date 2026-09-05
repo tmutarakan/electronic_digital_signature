@@ -7,15 +7,17 @@ from sqlmodel import col, func, select
 
 from app.api.deps import CurrentUser, SessionDep
 from app.models import (
-    Message,
     ElectronicDigitalSignature,
     ElectronicDigitalSignatureCreate,
     ElectronicDigitalSignaturePublic,
     ElectronicDigitalSignaturesPublic,
     ElectronicDigitalSignatureUpdate,
+    Message,
 )
 
-router = APIRouter(prefix="/electronic-digital-signatures", tags=["electronic-digital-signatures"])
+router = APIRouter(
+    prefix="/electronic-digital-signatures", tags=["electronic-digital-signatures"]
+)
 
 
 @router.get("/", response_model=ElectronicDigitalSignaturesPublic)
@@ -56,7 +58,9 @@ def read_electronic_digital_signatures(
         ElectronicDigitalSignaturePublic.model_validate(electronic_digital_signature)
         for electronic_digital_signature in electronic_digital_signatures
     ]
-    return ElectronicDigitalSignaturesPublic(data=electronic_digital_signatures_public, count=count)
+    return ElectronicDigitalSignaturesPublic(
+        data=electronic_digital_signatures_public, count=count
+    )
 
 
 @router.get("/{id}", response_model=ElectronicDigitalSignaturePublic)
@@ -68,8 +72,12 @@ def read_electronic_digital_signature(
     """
     electronic_digital_signature = session.get(ElectronicDigitalSignature, id)
     if not electronic_digital_signature:
-        raise HTTPException(status_code=404, detail="Electronic Digital Signature not found")
-    if not current_user.is_superuser and (electronic_digital_signature.owner_id != current_user.id):
+        raise HTTPException(
+            status_code=404, detail="Electronic Digital Signature not found"
+        )
+    if not current_user.is_superuser and (
+        electronic_digital_signature.owner_id != current_user.id
+    ):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     return electronic_digital_signature
 
@@ -106,11 +114,17 @@ def update_electronic_digital_signature(
     """
     electronic_digital_signature = session.get(ElectronicDigitalSignature, id)
     if not electronic_digital_signature:
-        raise HTTPException(status_code=404, detail="Electronic Digital Signature not found")
-    if not current_user.is_superuser and (electronic_digital_signature.owner_id != current_user.id):
+        raise HTTPException(
+            status_code=404, detail="Electronic Digital Signature not found"
+        )
+    if not current_user.is_superuser and (
+        electronic_digital_signature.owner_id != current_user.id
+    ):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     update_dict = electronic_digital_signature_in.model_dump(exclude_unset=True)
-    _ = electronic_digital_signature.sqlmodel_update(update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))})
+    _ = electronic_digital_signature.sqlmodel_update(
+        update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))}
+    )
     session.add(electronic_digital_signature)
     session.commit()
     session.refresh(electronic_digital_signature)
@@ -126,8 +140,12 @@ def delete_electronic_digital_signature(
     """
     electronic_digital_signature = session.get(ElectronicDigitalSignature, id)
     if not electronic_digital_signature:
-        raise HTTPException(status_code=404, detail="Electronic Digital Signature not found")
-    if not current_user.is_superuser and (electronic_digital_signature.owner_id != current_user.id):
+        raise HTTPException(
+            status_code=404, detail="Electronic Digital Signature not found"
+        )
+    if not current_user.is_superuser and (
+        electronic_digital_signature.owner_id != current_user.id
+    ):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     session.delete(electronic_digital_signature)
     session.commit()
