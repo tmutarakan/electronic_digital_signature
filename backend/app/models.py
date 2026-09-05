@@ -1,8 +1,8 @@
 import uuid
 from datetime import datetime
 
-from pydantic import EmailStr
-from sqlalchemy import DateTime, LargeBinary
+from pydantic import EmailStr, field_validator
+from sqlalchemy import DateTime, LargeBinary, Text
 from sqlmodel import Column, Field, Relationship, SQLModel
 
 from .common import get_datetime_utc
@@ -314,19 +314,27 @@ class ElectronicDigitalSignatureBase(SQLModel):
     date_certificate: datetime = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+        description="Дата окончания срока действия сертификата",
     )
-    file_certificate: bytes = Field(sa_column=Column(LargeBinary))
+    file_certificate: str = Field(
+        sa_column=Column(Text),
+        description="Сертификат в формате Base64"
+    )
     date_container: datetime = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+        description="Дата окончания срока действия контейнера",
     )
-    file_container: bytes = Field(sa_column=Column(LargeBinary))
+    file_container: str = Field(
+            sa_column=Column(Text),
+            description="Контейнер в формате Base64"
+        )
 
 
 class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
     organization_id: uuid.UUID
     signature_type_id: uuid.UUID
-    employee_id: uuid.UUID
+    employee_id: uuid.UUID | None = None
     certification_center_id: uuid.UUID
 
 

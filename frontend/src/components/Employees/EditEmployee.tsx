@@ -77,7 +77,7 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
     defaultValues: {
       name: employee.name,
       position: employee.position,
-      organization_id: employee.organization.id
+      organization_id: employee.organization.id,
     },
   })
 

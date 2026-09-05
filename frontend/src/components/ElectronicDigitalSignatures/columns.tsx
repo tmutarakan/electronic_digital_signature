@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { ElectronicDigitalSignatureActionsMenu } from "./ElectronicDigitalSignatureActionsMenu"
 
-function CopyId({ id }: { id: string }) {
+function _CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
   const isCopied = copiedText === id
 
@@ -34,12 +34,34 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
   {
     accessorKey: "date_certificate",
     header: "Date Certificate",
-    cell: ({ row }) => <span className="font-medium">{new Date(row.original.date_certificate).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-medium">
+        {new Date(row.original.date_certificate).toLocaleString()}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "file_certificate",
+    header: "File Certificate",
+    cell: ({ row }) => (
+      <span className="font-medium">{row.original.file_certificate}</span>
+    ),
   },
   {
     accessorKey: "date_container",
     header: "Date Container",
-    cell: ({ row }) => <span className="font-medium">{new Date(row.original.date_container).toLocaleString()}</span>,
+    cell: ({ row }) => (
+      <span className="font-medium">
+        {new Date(row.original.date_container).toLocaleString()}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "file_container",
+    header: "File Container",
+    cell: ({ row }) => (
+      <span className="font-medium">{row.original.file_container}</span>
+    ),
   },
   {
     accessorKey: "owner",
@@ -73,7 +95,9 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "certification_center",
     header: "Certification Center",
     cell: ({ row }) => (
-      <span className="font-light">{row.original.certification_center.name}</span>
+      <span className="font-light">
+        {row.original.certification_center.name}
+      </span>
     ),
   },
   {

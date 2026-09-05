@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { OrganizationActionsMenu } from "./OrganizationActionsMenu"
 
-function CopyId({ id }: { id: string }) {
+function _CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
   const isCopied = copiedText === id
 

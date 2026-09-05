@@ -1,17 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQueryClient ,useQuery} from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import {
+  CertificationCentersService,
   type ElectronicDigitalSignaturePublic,
   ElectronicDigitalSignaturesService,
+  EmployeesService,
   OrganizationsService,
   SignatureTypesService,
-  EmployeesService,
-  CertificationCentersService,
 } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
@@ -40,17 +40,21 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
   date_certificate: z.iso.datetime({
+    local: true,
     message: "Must be a valid ISO datetime string",
   }),
+  file_certificate: z.base64({ message: "Invalid Base64 format" }),
   date_container: z.iso.datetime({
+    local: true,
     message: "Must be a valid ISO datetime string",
   }),
+  file_container: z.base64({ message: "Invalid Base64 format" }),
   organization_id: z.uuid({ message: "Organization is required" }),
   signature_type_id: z.uuid({ message: "Signature type is required" }),
   employee_id: z.uuid({ message: "Employee is required" }),
@@ -78,35 +82,35 @@ const EditElectronicDigitalSignature = ({
       queryFn: async () => {
         const response = await OrganizationsService.readOrganizations({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["organizations"],
-    });
-  const organizations = organizationsData?.data || [];
+    })
+  const organizations = organizationsData?.data || []
 
   const { data: signatureTypesData, isLoading: isLoadingSignatureTypes } =
     useQuery({
       queryFn: async () => {
         const response = await SignatureTypesService.typesReadSignatureTypes({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["signature-types"],
-    });
-  const signatureTypes = signatureTypesData?.data || [];
+    })
+  const signatureTypes = signatureTypesData?.data || []
 
   const { data: employeesData, isLoading: isLoadingEmployees } = useQuery({
     queryFn: async () => {
       const response = await EmployeesService.readEmployees({
         query: { skip: 0, limit: 100 },
-      });
-      return response.data; // или response, в зависимости от вашего API
+      })
+      return response.data // или response, в зависимости от вашего API
     },
     queryKey: ["employees"],
-  });
-  const employees = employeesData?.data || [];
+  })
+  const employees = employeesData?.data || []
 
   const {
     data: certificationCentersData,
@@ -116,13 +120,12 @@ const EditElectronicDigitalSignature = ({
       const response =
         await CertificationCentersService.centersReadCertificationCenters({
           query: { skip: 0, limit: 100 },
-        });
-      return response.data; // или response, в зависимости от вашего API
+        })
+      return response.data // или response, в зависимости от вашего API
     },
     queryKey: ["certification-centers"],
-  });
-  const certificationCenters = certificationCentersData?.data || [];
-
+  })
+  const certificationCenters = certificationCentersData?.data || []
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -130,11 +133,14 @@ const EditElectronicDigitalSignature = ({
     criteriaMode: "all",
     defaultValues: {
       date_certificate: electronicDigitalSignature?.date_certificate,
+      file_certificate: electronicDigitalSignature?.file_certificate,
       date_container: electronicDigitalSignature?.date_container,
+      file_container: electronicDigitalSignature?.file_container,
       organization_id: electronicDigitalSignature?.organization.id,
       signature_type_id: electronicDigitalSignature?.signature_type.id,
       employee_id: electronicDigitalSignature?.employee.id,
-      certification_center_id: electronicDigitalSignature?.certification_center.id,
+      certification_center_id:
+        electronicDigitalSignature?.certification_center.id,
     },
   })
 
@@ -206,6 +212,28 @@ const EditElectronicDigitalSignature = ({
 
               <FormField
                 control={form.control}
+                name="file_certificate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      File Certificate
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="File Certificate"
+                        type="text"
+                        {...field}
+                        required
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="date_container"
                 render={({ field }) => (
                   <FormItem>
@@ -216,6 +244,28 @@ const EditElectronicDigitalSignature = ({
                       <Input
                         placeholder="Date Container"
                         type="datetime-local"
+                        {...field}
+                        required
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="file_container"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      File Container
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="File Container"
+                        type="text"
                         {...field}
                         required
                       />

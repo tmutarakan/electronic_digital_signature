@@ -97,20 +97,28 @@ export type CertificationCentersPublic = {
 export type ElectronicDigitalSignatureCreate = {
     /**
      * Date Certificate
+     *
+     * Дата окончания срока действия сертификата
      */
     date_certificate?: string;
     /**
      * File Certificate
+     *
+     * Сертификат в формате Base64
      */
-    file_certificate: Blob | File;
+    file_certificate: string;
     /**
      * Date Container
+     *
+     * Дата окончания срока действия контейнера
      */
     date_container?: string;
     /**
      * File Container
+     *
+     * Контейнер в формате Base64
      */
-    file_container: Blob | File;
+    file_container: string;
     /**
      * Organization Id
      */
@@ -122,7 +130,7 @@ export type ElectronicDigitalSignatureCreate = {
     /**
      * Employee Id
      */
-    employee_id: string;
+    employee_id?: string | null;
     /**
      * Certification Center Id
      */
@@ -135,20 +143,28 @@ export type ElectronicDigitalSignatureCreate = {
 export type ElectronicDigitalSignaturePublic = {
     /**
      * Date Certificate
+     *
+     * Дата окончания срока действия сертификата
      */
     date_certificate?: string;
     /**
      * File Certificate
+     *
+     * Сертификат в формате Base64
      */
-    file_certificate: Blob | File;
+    file_certificate: string;
     /**
      * Date Container
+     *
+     * Дата окончания срока действия контейнера
      */
     date_container?: string;
     /**
      * File Container
+     *
+     * Контейнер в формате Base64
      */
-    file_container: Blob | File;
+    file_container: string;
     /**
      * Id
      */
