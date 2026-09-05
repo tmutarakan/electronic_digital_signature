@@ -40,7 +40,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import useCustomToast from "@/hooks/useCustomToast";
 import { handleError } from "@/utils";
 
@@ -75,7 +75,7 @@ const AddElectronicDigitalSignature = () => {
       },
       queryKey: ["organizations"],
     });
-  const organizations = organizationsData?.data || []
+  const organizations = organizationsData?.data || [];
 
   const { data: signatureTypesData, isLoading: isLoadingSignatureTypes } =
     useQuery({
@@ -87,31 +87,33 @@ const AddElectronicDigitalSignature = () => {
       },
       queryKey: ["signature-types"],
     });
-  const signatureTypes = signatureTypesData?.data || []
+  const signatureTypes = signatureTypesData?.data || [];
 
-  const { data: employeesData, isLoading: isLoadingEmployees } =
-    useQuery({
-      queryFn: async () => {
-        const response = await EmployeesService.readEmployees({
+  const { data: employeesData, isLoading: isLoadingEmployees } = useQuery({
+    queryFn: async () => {
+      const response = await EmployeesService.readEmployees({
+        query: { skip: 0, limit: 100 },
+      });
+      return response.data; // или response, в зависимости от вашего API
+    },
+    queryKey: ["employees"],
+  });
+  const employees = employeesData?.data || [];
+
+  const {
+    data: certificationCentersData,
+    isLoading: isLoadingCertificationCenters,
+  } = useQuery({
+    queryFn: async () => {
+      const response =
+        await CertificationCentersService.centersReadCertificationCenters({
           query: { skip: 0, limit: 100 },
         });
-        return response.data; // или response, в зависимости от вашего API
-      },
-      queryKey: ["employees"],
-    });
-  const employees = employeesData?.data || []
-
-  const { data: certificationCentersData, isLoading: isLoadingCertificationCenters } =
-    useQuery({
-      queryFn: async () => {
-        const response = await CertificationCentersService.centersReadCertificationCenters({
-          query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
-      },
-      queryKey: ["certification-centers"],
-    });
-  const certificationCenters = certificationCentersData?.data || []
+      return response.data; // или response, в зависимости от вашего API
+    },
+    queryKey: ["certification-centers"],
+  });
+  const certificationCenters = certificationCentersData?.data || [];
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -173,7 +175,8 @@ const AddElectronicDigitalSignature = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Date Certificate <span className="text-destructive">*</span>
+                      Date Certificate{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -251,7 +254,7 @@ const AddElectronicDigitalSignature = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={isLoadingOrganizations}
+                      disabled={isLoadingSignatureTypes}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -260,7 +263,10 @@ const AddElectronicDigitalSignature = () => {
                       </FormControl>
                       <SelectContent>
                         {signatureTypes.map((signatureType) => (
-                          <SelectItem key={signatureType.id} value={signatureType.id}>
+                          <SelectItem
+                            key={signatureType.id}
+                            value={signatureType.id}
+                          >
                             {signatureType.name}
                           </SelectItem>
                         ))}
@@ -282,7 +288,7 @@ const AddElectronicDigitalSignature = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={isLoadingOrganizations}
+                      disabled={isLoadingEmployees}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -308,12 +314,13 @@ const AddElectronicDigitalSignature = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Certification Center <span className="text-destructive">*</span>
+                      Certification Center{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={isLoadingOrganizations}
+                      disabled={isLoadingCertificationCenters}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -322,7 +329,10 @@ const AddElectronicDigitalSignature = () => {
                       </FormControl>
                       <SelectContent>
                         {certificationCenters.map((certificationCenter) => (
-                          <SelectItem key={certificationCenter.id} value={certificationCenter.id}>
+                          <SelectItem
+                            key={certificationCenter.id}
+                            value={certificationCenter.id}
+                          >
                             {certificationCenter.name}
                           </SelectItem>
                         ))}
