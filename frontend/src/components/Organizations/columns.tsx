@@ -32,11 +32,6 @@ function CopyId({ id }: { id: string }) {
 
 export const columns: ColumnDef<OrganizationPublic>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <CopyId id={row.original.id} />,
-  },
-  {
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,

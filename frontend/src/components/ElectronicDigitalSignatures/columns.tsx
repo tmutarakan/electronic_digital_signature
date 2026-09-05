@@ -32,11 +32,6 @@ function CopyId({ id }: { id: string }) {
 
 export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <CopyId id={row.original.id} />,
-  },
-  {
     accessorKey: "date_certificate",
     header: "Date Certificate",
     cell: ({ row }) => <span className="font-medium">{new Date(row.original.date_certificate).toLocaleString()}</span>,
