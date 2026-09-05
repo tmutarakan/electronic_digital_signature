@@ -317,8 +317,7 @@ class ElectronicDigitalSignatureBase(SQLModel):
         description="Дата окончания срока действия сертификата",
     )
     file_certificate: str = Field(
-        sa_column=Column(Text),
-        description="Сертификат в формате Base64"
+        sa_column=Column(Text), description="Сертификат в формате Base64"
     )
     date_container: datetime = Field(
         default_factory=get_datetime_utc,
@@ -326,9 +325,8 @@ class ElectronicDigitalSignatureBase(SQLModel):
         description="Дата окончания срока действия контейнера",
     )
     file_container: str = Field(
-            sa_column=Column(Text),
-            description="Контейнер в формате Base64"
-        )
+        sa_column=Column(Text), description="Контейнер в формате Base64"
+    )
 
 
 class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
