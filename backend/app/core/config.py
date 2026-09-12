@@ -87,5 +87,7 @@ class Settings(BaseSettings):
 
         return self
 
+    UPLOAD_DIR: str = "uploads"
+
 
 settings = Settings()  # type: ignore

@@ -1,10 +1,12 @@
 import uuid
 from datetime import datetime
 
-from pydantic import EmailStr, field_validator
-from sqlalchemy import DateTime, LargeBinary, Text
-from sqlmodel import Column, Field, Relationship, SQLModel
+from pydantic import EmailStr
+from sqlalchemy import DateTime
+from sqlmodel import Field, Relationship, SQLModel
+from pydantic import computed_field
 
+from app.core.config import settings
 from .common import get_datetime_utc
 from .mixins import IDMixin, TimestampsMixin
 
@@ -317,15 +319,13 @@ class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
     signature_type_id: uuid.UUID
     employee_id: uuid.UUID
     certification_center_id: uuid.UUID
-    file_certificate: str
-    file_container: str
+    file_certificate: str = Field(max_length=1024)
+    file_container: str = Field(max_length=1024)
 
 
 class ElectronicDigitalSignatureUpdate(SQLModel):
     date_certificate: datetime | None = None
     date_container: datetime | None = None
-    file_certificate: str | None = None
-    file_container: str | None = None
     organization_id: uuid.UUID | None = None
     signature_type_id: uuid.UUID | None = None
     employee_id: uuid.UUID | None = None
@@ -373,12 +373,20 @@ class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
     owner: UserPublic
     organization: OrganizationPublic
     signature_type: SignatureTypePublic
-    employee: EmployeePublic | None
+    employee: EmployeePublic
     certification_center: CertificationCenterPublic
     created_at: datetime
     updated_at: datetime
-    file_certificate: str | None = None
-    file_container: str | None = None
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def certificate_url(self) -> str:
+        return f"{settings.API_V1_STR}/electronic-digital-signatures/{self.id}/certificate"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def container_url(self) -> str:
+        return f"{settings.API_V1_STR}/electronic-digital-signatures/{self.id}/container"
 
 
 class ElectronicDigitalSignaturesPublic(SQLModel):

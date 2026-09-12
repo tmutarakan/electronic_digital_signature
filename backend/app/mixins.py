@@ -22,6 +22,7 @@ class UpdatedAtMixin(SQLModel):
     updated_at: datetime = Field(
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
+        sa_column_kwargs={"onupdate": get_datetime_utc},
     )
 
 

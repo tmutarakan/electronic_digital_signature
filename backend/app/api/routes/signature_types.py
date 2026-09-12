@@ -110,7 +110,7 @@ def update_signature_type(
     if not current_user.is_superuser and (signature_type.owner_id != current_user.id):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     update_dict = signature_type_in.model_dump(exclude_unset=True)
-    _ = signature_type.sqlmodel_update(update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))})
+    _ = signature_type.sqlmodel_update(update_dict)
     session.add(signature_type)
     session.commit()
     session.refresh(signature_type)

@@ -110,7 +110,7 @@ def update_employee(
     if not current_user.is_superuser and (employee.owner_id != current_user.id):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     update_dict = employee_in.model_dump(exclude_unset=True)
-    _ = employee.sqlmodel_update(update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))})
+    _ = employee.sqlmodel_update(update_dict)
     session.add(employee)
     session.commit()
     session.refresh(employee)

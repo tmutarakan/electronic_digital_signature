@@ -110,7 +110,7 @@ def update_certification_center(
     if not current_user.is_superuser and (certification_center.owner_id != current_user.id):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     update_dict = certification_center_in.model_dump(exclude_unset=True)
-    _ = certification_center.sqlmodel_update(update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))})
+    _ = certification_center.sqlmodel_update(update_dict)
     session.add(certification_center)
     session.commit()
     session.refresh(certification_center)

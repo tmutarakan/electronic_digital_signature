@@ -110,7 +110,7 @@ def update_organization(
     if not current_user.is_superuser and (organization.owner_id != current_user.id):
         raise HTTPException(status_code=403, detail="Not enough permissions")
     update_dict = organization_in.model_dump(exclude_unset=True)
-    _ = organization.sqlmodel_update(update_dict | {"updated_at": datetime.now(ZoneInfo("Europe/Moscow"))})
+    _ = organization.sqlmodel_update(update_dict)
     session.add(organization)
     session.commit()
     session.refresh(organization)
