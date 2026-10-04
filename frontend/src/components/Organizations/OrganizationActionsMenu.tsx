@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import DeleteOrganization from "../Organizations/DeleteOrganization"
 import EditOrganization from "../Organizations/EditOrganization"
@@ -32,6 +33,7 @@ export const OrganizationActionsMenu = ({
           organization={organization}
           onSuccess={() => setOpen(false)}
         />
+        <DropdownMenuSeparator />
         <DeleteOrganization
           id={organization.id}
           onSuccess={() => setOpen(false)}
