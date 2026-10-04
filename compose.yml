@@ -83,6 +83,32 @@ services:
       # Route HTTP traffic for this domain
       - traefik.http.routers.backend-http.rule=Host(`${DOMAIN:-localhost}`)
       - traefik.http.routers.backend-http.entrypoints=http
+ 
+  garage:
+      image: dxflrs/garage:v2.4.1
+      volumes:
+        - ./garage.toml:/etc/garage.toml
+        - ./garage-storage:/var/lib/garage
+      restart: unless-stopped
+      ports:
+        - 3900:3900 #S3 traffic to clients
+        - 3901:3901 #Garage cluster traffic between nodes
+        - 3902:3902 #S3 web traffic
+        - 3903:3903 #Garage admin API
+ 
+  garage-webui:
+    image: khairul169/garage-webui:1.1.0
+    restart: unless-stopped
+    #    tmpfs:
+    #      - /tmp
+    volumes:
+      - ./garage.toml:/etc/garage.toml:ro
+      - /opt/garage/tmp:/tmp
+    ports:
+      - 3909:3909
+    environment:
+      API_BASE_URL: http://garage:3903
+      S3_ENDPOINT_URL: http://garage:3900
 
 volumes:
   app-db-data:

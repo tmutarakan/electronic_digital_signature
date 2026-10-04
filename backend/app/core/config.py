@@ -19,6 +19,7 @@ class Settings(BaseSettings):
         env_ignore_empty=True,
         extra="ignore",
     )
+    BACKEND_URL: str
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str
     # 60 minutes * 24 hours * 8 days = 8 days
@@ -88,6 +89,13 @@ class Settings(BaseSettings):
         return self
 
     UPLOAD_DIR: str = "uploads"
+
+    S3_ENDPOINT: str = "http://localhost:3900"
+    S3_ACCESS_KEY: str = ""
+    S3_SECRET_KEY: str = ""
+    S3_BUCKET: str = "edc-files"
+    S3_REGION: str = "garage"
+    S3_USE_PATH_STYLE: bool = True  # для Railway обязательно
 
 
 settings = Settings()  # type: ignore

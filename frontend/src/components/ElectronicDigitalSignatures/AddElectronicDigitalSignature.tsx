@@ -7,7 +7,6 @@ import { z } from "zod"
 
 import {
   CertificationCentersService,
-  type ElectronicDigitalSignatureCreate,
   ElectronicDigitalSignaturesService,
   EmployeesService,
   OrganizationsService,
@@ -45,25 +44,17 @@ import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
-  date_certificate: z.iso.datetime({
-    local: true,
-    message: "Must be a valid ISO datetime string",
-  }),
-  file_certificate: z.base64({ message: "Invalid Base64 format" }),
-  date_container: z.iso.datetime({
-    local: true,
-    message: "Must be a valid ISO datetime string",
-  }),
-  file_container: z.base64({ message: "Invalid Base64 format" }),
+  date_certificate: z.string().min(1, "Required"),
+  date_container: z.string().min(1, "Required"),
   organization_id: z.uuid({ message: "Organization is required" }),
   signature_type_id: z.uuid({ message: "Signature type is required" }),
   employee_id: z.uuid({ message: "Employee is required" }),
-  certification_center_id: z.uuid({
-    message: "Certification Center is required",
-  }),
+  certification_center_id: z.uuid({ message: "Certification Center is required" }),
+  file_certificate: z.instanceof(File, { message: "Certificate file is required" }),
+  file_container: z.instanceof(File, { message: "Container file is required" }),
 })
 
-type FormData = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof formSchema>
 
 const AddElectronicDigitalSignature = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -119,15 +110,15 @@ const AddElectronicDigitalSignature = () => {
   })
   const certificationCenters = certificationCentersData?.data || []
 
-  const form = useForm<FormData>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
       date_certificate: "",
-      file_certificate: "",
+      file_certificate: undefined,
       date_container: "",
-      file_container: "",
+      file_container: undefined,
       organization_id: "",
       signature_type_id: "",
       employee_id: "",
@@ -136,10 +127,30 @@ const AddElectronicDigitalSignature = () => {
   })
 
   const mutation = useMutation({
-    mutationFn: (data: ElectronicDigitalSignatureCreate) =>
-      ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature(
-        { body: data },
-      ),
+    mutationFn: (data: FormValues) => {
+      const formData = new FormData()
+      formData.append("date_certificate", new Date(data.date_certificate).toISOString())
+      formData.append("date_container", new Date(data.date_container).toISOString())
+      formData.append("organization_id", data.organization_id)
+      formData.append("signature_type_id", data.signature_type_id)
+      formData.append("employee_id", data.employee_id)
+      formData.append("certification_center_id", data.certification_center_id)
+      formData.append("file_certificate", data.file_certificate)
+      formData.append("file_container", data.file_container)
+
+      return ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature({
+        body: {
+          date_certificate: new Date(data.date_certificate).toISOString(),
+          date_container: new Date(data.date_container).toISOString(),
+          organization_id: data.organization_id,
+          signature_type_id: data.signature_type_id,
+          employee_id: data.employee_id,
+          certification_center_id: data.certification_center_id,
+          file_certificate: data.file_certificate,   // File
+          file_container: data.file_container,       // File
+        },
+      })
+    },
     onSuccess: () => {
       showSuccessToast("Electronic Digital Signature created successfully")
       form.reset()
@@ -147,13 +158,11 @@ const AddElectronicDigitalSignature = () => {
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["electronic-digital-signatures"],
-      })
+      queryClient.invalidateQueries({ queryKey: ["electronic-digital-signatures"] })
     },
   })
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: FormValues) => {
     mutation.mutate(data)
   }
 
@@ -203,14 +212,14 @@ const AddElectronicDigitalSignature = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      File Certificate
-                      <span className="text-destructive">*</span>
+                      File Certificate <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="File Certificate"
-                        type="text"
-                        {...field}
+                        type="file"
+                        accept=".cer,.crt,.pem,.der"
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
                         required
                       />
                     </FormControl>
@@ -252,8 +261,9 @@ const AddElectronicDigitalSignature = () => {
                     <FormControl>
                       <Input
                         placeholder="File Container"
-                        type="text"
-                        {...field}
+                        type="file"
+                        accept=".zip,.pfx,.p12"
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
                         required
                       />
                     </FormControl>

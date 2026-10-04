@@ -1,12 +1,13 @@
 import uuid
 from datetime import datetime
+from pathlib import Path
 
-from pydantic import EmailStr
+from pydantic import EmailStr, computed_field
 from sqlalchemy import DateTime
 from sqlmodel import Field, Relationship, SQLModel
-from pydantic import computed_field
 
-from app.core.config import settings
+from app.core.s3 import generate_presigned_url
+
 from .common import get_datetime_utc
 from .mixins import IDMixin, TimestampsMixin
 
@@ -319,8 +320,8 @@ class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
     signature_type_id: uuid.UUID
     employee_id: uuid.UUID
     certification_center_id: uuid.UUID
-    file_certificate: str = Field(max_length=1024)
-    file_container: str = Field(max_length=1024)
+    file_certificate: str = Field(max_length=1024, nullable=False)
+    file_container: str = Field(max_length=1024, nullable=False)
 
 
 class ElectronicDigitalSignatureUpdate(SQLModel):
@@ -370,6 +371,8 @@ class ElectronicDigitalSignature(
 
 class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
     id: uuid.UUID
+    file_certificate: str
+    file_container: str
     owner: UserPublic
     organization: OrganizationPublic
     signature_type: SignatureTypePublic
@@ -378,15 +381,23 @@ class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
     created_at: datetime
     updated_at: datetime
 
-    @computed_field  # type: ignore[prop-decorator]
+    @computed_field
     @property
     def certificate_url(self) -> str:
-        return f"{settings.API_V1_STR}/electronic-digital-signatures/{self.id}/certificate"
+        ext = Path(self.file_certificate).suffix
+        return generate_presigned_url(
+            self.file_certificate,
+            filename=f"certificate_{self.id}{ext}",
+        )
 
-    @computed_field  # type: ignore[prop-decorator]
+    @computed_field
     @property
     def container_url(self) -> str:
-        return f"{settings.API_V1_STR}/electronic-digital-signatures/{self.id}/container"
+        ext = Path(self.file_container).suffix
+        return generate_presigned_url(
+            self.file_container,
+            filename=f"container_{self.id}{ext}",
+        )
 
 
 class ElectronicDigitalSignaturesPublic(SQLModel):

@@ -169,6 +169,14 @@ export type ElectronicDigitalSignaturePublic = {
      * Id
      */
     id: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: string;
+    /**
+     * File Container
+     */
+    file_container: string;
     owner: UserPublic;
     organization: OrganizationPublic;
     signature_type: SignatureTypePublic;
@@ -747,6 +755,14 @@ export type ElectronicDigitalSignaturePublicWritable = {
      * Id
      */
     id: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: string;
+    /**
+     * File Container
+     */
+    file_container: string;
     owner: UserPublic;
     organization: OrganizationPublic;
     signature_type: SignatureTypePublic;
@@ -1802,34 +1818,6 @@ export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses
 
 export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponse = electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses];
 
-export type electronicDigitalSignaturesDownloadCertificateData = {
-    body?: never;
-    path: {
-        /**
-         * Id
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/api/v1/electronic-digital-signatures/{id}/certificate';
-};
-
-export type electronicDigitalSignaturesDownloadCertificateErrors = {
-    /**
-     * Validation Error
-     */
-    422: HTTPValidationError;
-};
-
-export type electronicDigitalSignaturesDownloadCertificateError = electronicDigitalSignaturesDownloadCertificateErrors[keyof electronicDigitalSignaturesDownloadCertificateErrors];
-
-export type electronicDigitalSignaturesDownloadCertificateResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
-
 export type electronicDigitalSignaturesReplaceCertificateData = {
     body: Body_electronic_digital_signatures_replace_certificate;
     path: {
@@ -1859,34 +1847,6 @@ export type electronicDigitalSignaturesReplaceCertificateResponses = {
 };
 
 export type electronicDigitalSignaturesReplaceCertificateResponse = electronicDigitalSignaturesReplaceCertificateResponses[keyof electronicDigitalSignaturesReplaceCertificateResponses];
-
-export type electronicDigitalSignaturesDownloadContainerData = {
-    body?: never;
-    path: {
-        /**
-         * Id
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/api/v1/electronic-digital-signatures/{id}/container';
-};
-
-export type electronicDigitalSignaturesDownloadContainerErrors = {
-    /**
-     * Validation Error
-     */
-    422: HTTPValidationError;
-};
-
-export type electronicDigitalSignaturesDownloadContainerError = electronicDigitalSignaturesDownloadContainerErrors[keyof electronicDigitalSignaturesDownloadContainerErrors];
-
-export type electronicDigitalSignaturesDownloadContainerResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
 
 export type electronicDigitalSignaturesReplaceContainerData = {
     body: Body_electronic_digital_signatures_replace_container;
