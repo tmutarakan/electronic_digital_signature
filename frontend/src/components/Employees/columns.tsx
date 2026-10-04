@@ -1,12 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { Check, Copy } from "lucide-react"
 
 import type { EmployeePublic } from "@/client"
-import { Button } from "@/components/ui/button"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { EmployeeActionsMenu } from "./EmployeeActionsMenu"
 
-function _CopyId({ id }: { id: string }) {
+/*function _CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
   const isCopied = copiedText === id
 
@@ -28,7 +25,7 @@ function _CopyId({ id }: { id: string }) {
       </Button>
     </div>
   )
-}
+}*/
 
 export const columns: ColumnDef<EmployeePublic>[] = [
   {
@@ -41,13 +38,6 @@ export const columns: ColumnDef<EmployeePublic>[] = [
     header: "Position",
     cell: ({ row }) => (
       <span className="font-light">{row.original.position}</span>
-    ),
-  },
-  {
-    accessorKey: "organization",
-    header: "Organization",
-    cell: ({ row }) => (
-      <span className="font-light">{row.original.organization.name}</span>
     ),
   },
   {

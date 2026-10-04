@@ -12,11 +12,11 @@ import DeleteElectronicDigitalSignature from "./DeleteElectronicDigitalSignature
 import EditElectronicDigitalSignature from "./EditElectronicDigitalSignature"
 
 interface ElectronicDigitalSignatureActionsMenuProps {
-  employee: ElectronicDigitalSignaturePublic
+  signature: ElectronicDigitalSignaturePublic
 }
 
 export const ElectronicDigitalSignatureActionsMenu = ({
-  employee,
+  signature,
 }: ElectronicDigitalSignatureActionsMenuProps) => {
   const [open, setOpen] = useState(false)
 
@@ -29,11 +29,11 @@ export const ElectronicDigitalSignatureActionsMenu = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <EditElectronicDigitalSignature
-          employee={employee}
+          electronicDigitalSignature={signature}
           onSuccess={() => setOpen(false)}
         />
         <DeleteElectronicDigitalSignature
-          id={employee.id}
+          id={signature.id}
           onSuccess={() => setOpen(false)}
         />
       </DropdownMenuContent>

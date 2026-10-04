@@ -5,6 +5,64 @@ export type ClientOptions = {
 };
 
 /**
+ * Body_electronic-digital-signatures-create_electronic_digital_signature
+ */
+export type Body_electronic_digital_signatures_create_electronic_digital_signature = {
+    /**
+     * Date Certificate
+     */
+    date_certificate: string;
+    /**
+     * Date Container
+     */
+    date_container: string;
+    /**
+     * Organization Id
+     */
+    organization_id: string;
+    /**
+     * Signature Type Id
+     */
+    signature_type_id: string;
+    /**
+     * Employee Id
+     */
+    employee_id: string;
+    /**
+     * Certification Center Id
+     */
+    certification_center_id: string;
+    /**
+     * File Certificate
+     */
+    file_certificate: Blob | File;
+    /**
+     * File Container
+     */
+    file_container: Blob | File;
+};
+
+/**
+ * Body_electronic-digital-signatures-replace_certificate
+ */
+export type Body_electronic_digital_signatures_replace_certificate = {
+    /**
+     * File
+     */
+    file: Blob | File;
+};
+
+/**
+ * Body_electronic-digital-signatures-replace_container
+ */
+export type Body_electronic_digital_signatures_replace_container = {
+    /**
+     * File
+     */
+    file: Blob | File;
+};
+
+/**
  * Body_login-login_access_token
  */
 export type Body_login_login_access_token = {
@@ -92,52 +150,6 @@ export type CertificationCentersPublic = {
 };
 
 /**
- * ElectronicDigitalSignatureCreate
- */
-export type ElectronicDigitalSignatureCreate = {
-    /**
-     * Date Certificate
-     *
-     * Дата окончания срока действия сертификата
-     */
-    date_certificate?: string;
-    /**
-     * File Certificate
-     *
-     * Сертификат в формате Base64
-     */
-    file_certificate: string;
-    /**
-     * Date Container
-     *
-     * Дата окончания срока действия контейнера
-     */
-    date_container?: string;
-    /**
-     * File Container
-     *
-     * Контейнер в формате Base64
-     */
-    file_container: string;
-    /**
-     * Organization Id
-     */
-    organization_id: string;
-    /**
-     * Signature Type Id
-     */
-    signature_type_id: string;
-    /**
-     * Employee Id
-     */
-    employee_id?: string | null;
-    /**
-     * Certification Center Id
-     */
-    certification_center_id: string;
-};
-
-/**
  * ElectronicDigitalSignaturePublic
  */
 export type ElectronicDigitalSignaturePublic = {
@@ -146,25 +158,13 @@ export type ElectronicDigitalSignaturePublic = {
      *
      * Дата окончания срока действия сертификата
      */
-    date_certificate?: string;
-    /**
-     * File Certificate
-     *
-     * Сертификат в формате Base64
-     */
-    file_certificate: string;
+    date_certificate: string;
     /**
      * Date Container
      *
      * Дата окончания срока действия контейнера
      */
-    date_container?: string;
-    /**
-     * File Container
-     *
-     * Контейнер в формате Base64
-     */
-    file_container: string;
+    date_container: string;
     /**
      * Id
      */
@@ -182,6 +182,14 @@ export type ElectronicDigitalSignaturePublic = {
      * Updated At
      */
     updated_at: string;
+    /**
+     * Certificate Url
+     */
+    readonly certificate_url: string;
+    /**
+     * Container Url
+     */
+    readonly container_url: string;
 };
 
 /**
@@ -191,19 +199,27 @@ export type ElectronicDigitalSignatureUpdate = {
     /**
      * Date Certificate
      */
-    date_certificate?: string;
-    /**
-     * File Certificate
-     */
-    file_certificate: Blob | File;
+    date_certificate?: string | null;
     /**
      * Date Container
      */
-    date_container?: string;
+    date_container?: string | null;
     /**
-     * File Container
+     * Organization Id
      */
-    file_container: Blob | File;
+    organization_id?: string | null;
+    /**
+     * Signature Type Id
+     */
+    signature_type_id?: string | null;
+    /**
+     * Employee Id
+     */
+    employee_id?: string | null;
+    /**
+     * Certification Center Id
+     */
+    certification_center_id?: string | null;
 };
 
 /**
@@ -232,10 +248,6 @@ export type EmployeeCreate = {
      * Position
      */
     position: string;
-    /**
-     * Organization Id
-     */
-    organization_id: string;
 };
 
 /**
@@ -255,7 +267,6 @@ export type EmployeePublic = {
      */
     id: string;
     owner: UserPublic;
-    organization: OrganizationPublic;
     /**
      * Created At
      */
@@ -714,6 +725,55 @@ export type ValidationError = {
     ctx?: {
         [key: string]: unknown;
     };
+};
+
+/**
+ * ElectronicDigitalSignaturePublic
+ */
+export type ElectronicDigitalSignaturePublicWritable = {
+    /**
+     * Date Certificate
+     *
+     * Дата окончания срока действия сертификата
+     */
+    date_certificate: string;
+    /**
+     * Date Container
+     *
+     * Дата окончания срока действия контейнера
+     */
+    date_container: string;
+    /**
+     * Id
+     */
+    id: string;
+    owner: UserPublic;
+    organization: OrganizationPublic;
+    signature_type: SignatureTypePublic;
+    employee: EmployeePublic;
+    certification_center: CertificationCenterPublic;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * ElectronicDigitalSignaturesPublic
+ */
+export type ElectronicDigitalSignaturesPublicWritable = {
+    /**
+     * Data
+     */
+    data: Array<ElectronicDigitalSignaturePublicWritable>;
+    /**
+     * Count
+     */
+    count: number;
 };
 
 export type loginLoginAccessTokenData = {
@@ -1628,7 +1688,7 @@ export type electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses 
 export type electronicDigitalSignaturesReadElectronicDigitalSignaturesResponse = electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses[keyof electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses];
 
 export type electronicDigitalSignaturesCreateElectronicDigitalSignatureData = {
-    body: ElectronicDigitalSignatureCreate;
+    body: Body_electronic_digital_signatures_create_electronic_digital_signature;
     path?: never;
     query?: never;
     url: '/api/v1/electronic-digital-signatures/';
@@ -1741,6 +1801,122 @@ export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses
 };
 
 export type electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponse = electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses[keyof electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses];
+
+export type electronicDigitalSignaturesDownloadCertificateData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}/certificate';
+};
+
+export type electronicDigitalSignaturesDownloadCertificateErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesDownloadCertificateError = electronicDigitalSignaturesDownloadCertificateErrors[keyof electronicDigitalSignaturesDownloadCertificateErrors];
+
+export type electronicDigitalSignaturesDownloadCertificateResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type electronicDigitalSignaturesReplaceCertificateData = {
+    body: Body_electronic_digital_signatures_replace_certificate;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}/certificate';
+};
+
+export type electronicDigitalSignaturesReplaceCertificateErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesReplaceCertificateError = electronicDigitalSignaturesReplaceCertificateErrors[keyof electronicDigitalSignaturesReplaceCertificateErrors];
+
+export type electronicDigitalSignaturesReplaceCertificateResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturePublic;
+};
+
+export type electronicDigitalSignaturesReplaceCertificateResponse = electronicDigitalSignaturesReplaceCertificateResponses[keyof electronicDigitalSignaturesReplaceCertificateResponses];
+
+export type electronicDigitalSignaturesDownloadContainerData = {
+    body?: never;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}/container';
+};
+
+export type electronicDigitalSignaturesDownloadContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesDownloadContainerError = electronicDigitalSignaturesDownloadContainerErrors[keyof electronicDigitalSignaturesDownloadContainerErrors];
+
+export type electronicDigitalSignaturesDownloadContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type electronicDigitalSignaturesReplaceContainerData = {
+    body: Body_electronic_digital_signatures_replace_container;
+    path: {
+        /**
+         * Id
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/v1/electronic-digital-signatures/{id}/container';
+};
+
+export type electronicDigitalSignaturesReplaceContainerErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type electronicDigitalSignaturesReplaceContainerError = electronicDigitalSignaturesReplaceContainerErrors[keyof electronicDigitalSignaturesReplaceContainerErrors];
+
+export type electronicDigitalSignaturesReplaceContainerResponses = {
+    /**
+     * Successful Response
+     */
+    200: ElectronicDigitalSignaturePublic;
+};
+
+export type electronicDigitalSignaturesReplaceContainerResponse = electronicDigitalSignaturesReplaceContainerResponses[keyof electronicDigitalSignaturesReplaceContainerResponses];
 
 export type employeesReadEmployeesData = {
     body?: never;

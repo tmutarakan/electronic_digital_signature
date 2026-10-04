@@ -1,12 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { Check, Copy } from "lucide-react"
 
 import type { ElectronicDigitalSignaturePublic } from "@/client"
-import { Button } from "@/components/ui/button"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { ElectronicDigitalSignatureActionsMenu } from "./ElectronicDigitalSignatureActionsMenu"
 
-function _CopyId({ id }: { id: string }) {
+/*function _CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
   const isCopied = copiedText === id
 
@@ -28,7 +25,7 @@ function _CopyId({ id }: { id: string }) {
       </Button>
     </div>
   )
-}
+}*/
 
 export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
   {
@@ -44,8 +41,15 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "file_certificate",
     header: "File Certificate",
     cell: ({ row }) => (
-      <span className="font-medium block truncate max-w-50">{row.original.file_certificate}</span>
-    )
+      <a
+        href={row.original.certificate_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
+      >
+        Download Certificate
+      </a>
+    ),
   },
   {
     accessorKey: "date_container",
@@ -60,7 +64,14 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "file_container",
     header: "File Container",
     cell: ({ row }) => (
-      <span className="font-medium block truncate max-w-50">{row.original.file_container}</span>
+      <a
+        href={row.original.container_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
+      >
+        Download Container
+      </a>
     ),
   },
   {
@@ -123,7 +134,7 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     header: () => <span className="sr-only">Actions</span>,
     cell: ({ row }) => (
       <div className="flex justify-end">
-        <ElectronicDigitalSignatureActionsMenu employee={row.original} />
+        <ElectronicDigitalSignatureActionsMenu signature={row.original} />
       </div>
     ),
   },

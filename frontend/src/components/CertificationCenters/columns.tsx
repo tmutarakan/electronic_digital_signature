@@ -1,12 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { Check, Copy } from "lucide-react"
 
 import type { CertificationCenterPublic } from "@/client"
-import { Button } from "@/components/ui/button"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu"
 
-function _CopyId({ id }: { id: string }) {
+/*function _CopyId({ id }: { id: string }) {
   const [copiedText, copy] = useCopyToClipboard()
   const isCopied = copiedText === id
 
@@ -28,7 +25,7 @@ function _CopyId({ id }: { id: string }) {
       </Button>
     </div>
   )
-}
+}*/
 
 export const columns: ColumnDef<CertificationCenterPublic>[] = [
   {
