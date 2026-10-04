@@ -9,46 +9,18 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     accessorKey: "date_certificate",
     header: "Date Certificate",
     cell: ({ row }) => (
-      <span className="font-medium">
+      <span className="font-medium whitespace-normal">
         {new Date(row.original.date_certificate).toLocaleString()}
       </span>
-    ),
-  },
-  {
-    accessorKey: "file_certificate",
-    header: "File Certificate",
-    cell: ({ row }) => (
-      <a
-        href={row.original.certificate_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
-      >
-        Download Certificate
-      </a>
     ),
   },
   {
     accessorKey: "date_container",
     header: "Date Container",
     cell: ({ row }) => (
-      <span className="font-medium">
+      <span className="font-medium whitespace-normal">
         {new Date(row.original.date_container).toLocaleString()}
       </span>
-    ),
-  },
-  {
-    accessorKey: "file_container",
-    header: "File Container",
-    cell: ({ row }) => (
-      <a
-        href={row.original.container_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
-      >
-        Download Container
-      </a>
     ),
   },
   {

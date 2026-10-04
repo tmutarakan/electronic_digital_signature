@@ -1,4 +1,4 @@
-import { EllipsisVertical } from "lucide-react"
+import { Download, EllipsisVertical } from "lucide-react"
 import { useState } from "react"
 
 import type { ElectronicDigitalSignaturePublic } from "@/client"
@@ -33,6 +33,31 @@ export const ElectronicDigitalSignatureActionsMenu = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem asChild>
+            <a
+              href={signature.certificate_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <Download className="size-4" />
+              Download Certificate
+            </a>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <a
+              href={signature.container_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <Download className="size-4" />
+              Download Container
+            </a>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem
             onSelect={(e) => {
               // preventDefault — чтобы Radix не «съел» открытие диалога
