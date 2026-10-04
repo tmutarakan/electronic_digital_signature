@@ -49,8 +49,12 @@ const formSchema = z.object({
   organization_id: z.uuid({ message: "Organization is required" }),
   signature_type_id: z.uuid({ message: "Signature type is required" }),
   employee_id: z.uuid({ message: "Employee is required" }),
-  certification_center_id: z.uuid({ message: "Certification Center is required" }),
-  file_certificate: z.instanceof(File, { message: "Certificate file is required" }),
+  certification_center_id: z.uuid({
+    message: "Certification Center is required",
+  }),
+  file_certificate: z.instanceof(File, {
+    message: "Certificate file is required",
+  }),
   file_container: z.instanceof(File, { message: "Container file is required" }),
 })
 
@@ -129,8 +133,14 @@ const AddElectronicDigitalSignature = () => {
   const mutation = useMutation({
     mutationFn: (data: FormValues) => {
       const formData = new FormData()
-      formData.append("date_certificate", new Date(data.date_certificate).toISOString())
-      formData.append("date_container", new Date(data.date_container).toISOString())
+      formData.append(
+        "date_certificate",
+        new Date(data.date_certificate).toISOString(),
+      )
+      formData.append(
+        "date_container",
+        new Date(data.date_container).toISOString(),
+      )
       formData.append("organization_id", data.organization_id)
       formData.append("signature_type_id", data.signature_type_id)
       formData.append("employee_id", data.employee_id)
@@ -138,18 +148,20 @@ const AddElectronicDigitalSignature = () => {
       formData.append("file_certificate", data.file_certificate)
       formData.append("file_container", data.file_container)
 
-      return ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature({
-        body: {
-          date_certificate: new Date(data.date_certificate).toISOString(),
-          date_container: new Date(data.date_container).toISOString(),
-          organization_id: data.organization_id,
-          signature_type_id: data.signature_type_id,
-          employee_id: data.employee_id,
-          certification_center_id: data.certification_center_id,
-          file_certificate: data.file_certificate,   // File
-          file_container: data.file_container,       // File
+      return ElectronicDigitalSignaturesService.digitalSignaturesCreateElectronicDigitalSignature(
+        {
+          body: {
+            date_certificate: new Date(data.date_certificate).toISOString(),
+            date_container: new Date(data.date_container).toISOString(),
+            organization_id: data.organization_id,
+            signature_type_id: data.signature_type_id,
+            employee_id: data.employee_id,
+            certification_center_id: data.certification_center_id,
+            file_certificate: data.file_certificate, // File
+            file_container: data.file_container, // File
+          },
         },
-      })
+      )
     },
     onSuccess: () => {
       showSuccessToast("Electronic Digital Signature created successfully")
@@ -158,7 +170,9 @@ const AddElectronicDigitalSignature = () => {
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["electronic-digital-signatures"] })
+      queryClient.invalidateQueries({
+        queryKey: ["electronic-digital-signatures"],
+      })
     },
   })
 
@@ -212,7 +226,8 @@ const AddElectronicDigitalSignature = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      File Certificate <span className="text-destructive">*</span>
+                      File Certificate{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input

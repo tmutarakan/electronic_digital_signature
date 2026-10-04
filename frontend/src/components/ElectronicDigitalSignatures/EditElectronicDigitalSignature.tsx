@@ -1,9 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Pencil } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Pencil } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   CertificationCentersService,
@@ -12,8 +12,8 @@ import {
   EmployeesService,
   OrganizationsService,
   SignatureTypesService,
-} from "@/client"
-import { Button } from "@/components/ui/button"
+} from "@/client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -22,8 +22,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -31,86 +31,90 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { LoadingButton } from "@/components/ui/loading-button"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { LoadingButton } from "@/components/ui/loading-button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import useCustomToast from "@/hooks/useCustomToast"
-import { handleError } from "@/utils"
+} from "@/components/ui/select";
+import useCustomToast from "@/hooks/useCustomToast";
+import { handleError } from "@/utils";
 
 const formSchema = z.object({
   date_certificate: z.iso.datetime({
     local: true,
     message: "Must be a valid ISO datetime string",
   }),
-  file_certificate: z.base64({ message: "Invalid Base64 format" }),
   date_container: z.iso.datetime({
     local: true,
     message: "Must be a valid ISO datetime string",
   }),
-  file_container: z.base64({ message: "Invalid Base64 format" }),
   organization_id: z.uuid({ message: "Organization is required" }),
   signature_type_id: z.uuid({ message: "Signature type is required" }),
   employee_id: z.uuid({ message: "Employee is required" }),
   certification_center_id: z.uuid({
     message: "Certification Center is required",
   }),
-})
+  file_certificate: z.instanceof(File).optional(),
+  file_container: z.instanceof(File).optional(),
+});
 
-type FormData = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof formSchema>;
 
 interface EditElectronicDigitalSignatureProps {
-  electronicDigitalSignature: ElectronicDigitalSignaturePublic
-  onSuccess: () => void
+  electronicDigitalSignature: ElectronicDigitalSignaturePublic;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSuccess: () => void;
 }
 
 const EditElectronicDigitalSignature = ({
   electronicDigitalSignature,
+  open,
+  onOpenChange,
   onSuccess,
 }: EditElectronicDigitalSignatureProps) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const queryClient = useQueryClient()
-  const { showSuccessToast, showErrorToast } = useCustomToast()
+  const queryClient = useQueryClient();
+  const { showSuccessToast, showErrorToast } = useCustomToast();
+
   const { data: organizationsData, isLoading: isLoadingOrganizations } =
     useQuery({
       queryFn: async () => {
         const response = await OrganizationsService.readOrganizations({
           query: { skip: 0, limit: 100 },
-        })
-        return response.data // или response, в зависимости от вашего API
+        });
+        return response.data; // или response, в зависимости от вашего API
       },
       queryKey: ["organizations"],
-    })
-  const organizations = organizationsData?.data || []
+    });
+  const organizations = organizationsData?.data || [];
 
   const { data: signatureTypesData, isLoading: isLoadingSignatureTypes } =
     useQuery({
       queryFn: async () => {
         const response = await SignatureTypesService.typesReadSignatureTypes({
           query: { skip: 0, limit: 100 },
-        })
-        return response.data // или response, в зависимости от вашего API
+        });
+        return response.data; // или response, в зависимости от вашего API
       },
       queryKey: ["signature-types"],
-    })
-  const signatureTypes = signatureTypesData?.data || []
+    });
+  const signatureTypes = signatureTypesData?.data || [];
 
   const { data: employeesData, isLoading: isLoadingEmployees } = useQuery({
     queryFn: async () => {
       const response = await EmployeesService.readEmployees({
         query: { skip: 0, limit: 100 },
-      })
-      return response.data // или response, в зависимости от вашего API
+      });
+      return response.data; // или response, в зависимости от вашего API
     },
     queryKey: ["employees"],
-  })
-  const employees = employeesData?.data || []
+  });
+  const employees = employeesData?.data || [];
 
   const {
     data: certificationCentersData,
@@ -120,64 +124,88 @@ const EditElectronicDigitalSignature = ({
       const response =
         await CertificationCentersService.centersReadCertificationCenters({
           query: { skip: 0, limit: 100 },
-        })
-      return response.data // или response, в зависимости от вашего API
+        });
+      return response.data; // или response, в зависимости от вашего API
     },
     queryKey: ["certification-centers"],
-  })
-  const certificationCenters = certificationCentersData?.data || []
+  });
+  const certificationCenters = certificationCentersData?.data || [];
 
-  const form = useForm<FormData>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
       date_certificate: electronicDigitalSignature?.date_certificate,
-      file_certificate: electronicDigitalSignature?.file_certificate,
       date_container: electronicDigitalSignature?.date_container,
-      file_container: electronicDigitalSignature?.file_container,
       organization_id: electronicDigitalSignature?.organization.id,
       signature_type_id: electronicDigitalSignature?.signature_type.id,
       employee_id: electronicDigitalSignature?.employee.id,
       certification_center_id:
         electronicDigitalSignature?.certification_center.id,
+      file_certificate: undefined,
+      file_container: undefined,
     },
-  })
+  });
 
   const mutation = useMutation({
-    mutationFn: (data: FormData) =>
-      ElectronicDigitalSignaturesService.digitalSignaturesUpdateElectronicDigitalSignature(
+    mutationFn: async (data: FormValues) => {
+      await ElectronicDigitalSignaturesService.digitalSignaturesUpdateElectronicDigitalSignature(
         {
           path: { id: electronicDigitalSignature.id },
-          body: data,
+          body: {
+            date_certificate: new Date(data.date_certificate).toISOString(),
+            date_container: new Date(data.date_container).toISOString(),
+            organization_id: data.organization_id,
+            signature_type_id: data.signature_type_id,
+            employee_id: data.employee_id,
+            certification_center_id: data.certification_center_id,
+          },
         },
-      ),
+      );
+
+      if (data.file_certificate) {
+        await ElectronicDigitalSignaturesService.digitalSignaturesReplaceCertificate(
+          {
+            path: { id: electronicDigitalSignature.id },
+            body: {
+              file: data.file_certificate, // File
+            },
+          },
+        );
+      }
+
+      if (data.file_container) {
+        await ElectronicDigitalSignaturesService.digitalSignaturesReplaceContainer(
+          {
+            path: { id: electronicDigitalSignature.id },
+            body: {
+              file: data.file_container, // File
+            },
+          },
+        );
+      }
+    },
     onSuccess: () => {
-      showSuccessToast("Electronic Digital Signature updated successfully")
-      setIsOpen(false)
-      onSuccess()
+      showSuccessToast("Electronic Digital Signature updated successfully");
+      onOpenChange(false);
+      form.reset();
+      onSuccess();
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ["electronic-digital-signatures"],
-      })
+      });
     },
-  })
+  });
 
-  const onSubmit = (data: FormData) => {
-    mutation.mutate(data)
-  }
+  const onSubmit = (data: FormValues) => {
+    mutation.mutate(data);
+  };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuItem
-        onSelect={(e) => e.preventDefault()}
-        onClick={() => setIsOpen(true)}
-      >
-        <Pencil />
-        Edit ElectronicDigitalSignature
-      </DropdownMenuItem>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -202,7 +230,6 @@ const EditElectronicDigitalSignature = ({
                         placeholder="Date Certificate"
                         type="datetime-local"
                         {...field}
-                        required
                       />
                     </FormControl>
                     <FormMessage />
@@ -215,16 +242,15 @@ const EditElectronicDigitalSignature = ({
                 name="file_certificate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      File Certificate
-                      <span className="text-destructive">*</span>
-                    </FormLabel>
+                    <FormLabel>File Certificate</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="File Certificate"
-                        type="text"
-                        {...field}
-                        required
+                        type="file"
+                        accept=".cer,.crt,.pem,.der"
+                        onChange={(e) => {
+                          console.log("file selected:", e.target.files?.[0]);
+                          field.onChange(e.target.files?.[0]);
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -245,7 +271,6 @@ const EditElectronicDigitalSignature = ({
                         placeholder="Date Container"
                         type="datetime-local"
                         {...field}
-                        required
                       />
                     </FormControl>
                     <FormMessage />
@@ -258,16 +283,12 @@ const EditElectronicDigitalSignature = ({
                 name="file_container"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      File Container
-                      <span className="text-destructive">*</span>
-                    </FormLabel>
+                    <FormLabel>File Container</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="File Container"
-                        type="text"
-                        {...field}
-                        required
+                        type="file"
+                        accept=".zip,.pfx,.p12"
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
                       />
                     </FormControl>
                     <FormMessage />
@@ -285,7 +306,7 @@ const EditElectronicDigitalSignature = ({
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={isLoadingOrganizations}
                     >
                       <FormControl>
@@ -316,7 +337,7 @@ const EditElectronicDigitalSignature = ({
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={isLoadingSignatureTypes}
                     >
                       <FormControl>
@@ -350,7 +371,7 @@ const EditElectronicDigitalSignature = ({
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={isLoadingEmployees}
                     >
                       <FormControl>
@@ -382,7 +403,7 @@ const EditElectronicDigitalSignature = ({
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={isLoadingCertificationCenters}
                     >
                       <FormControl>
@@ -421,7 +442,7 @@ const EditElectronicDigitalSignature = ({
         </Form>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default EditElectronicDigitalSignature
+export default EditElectronicDigitalSignature;

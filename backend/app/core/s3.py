@@ -20,13 +20,6 @@ s3_client = boto3.client(
 )
 
 
-def ensure_bucket():
-    try:
-        s3_client.head_bucket(Bucket=settings.S3_BUCKET)
-    except Exception:
-        s3_client.create_bucket(Bucket=settings.S3_BUCKET)
-
-
 async def save_upload_s3(file, owner_id, subdir, allowed_types, allowed_ext) -> str:
     """Загружает файл в S3, возвращает ключ объекта."""
     if file.content_type not in allowed_types:

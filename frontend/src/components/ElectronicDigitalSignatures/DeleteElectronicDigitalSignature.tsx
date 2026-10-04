@@ -21,36 +21,41 @@ import { handleError } from "@/utils"
 
 interface DeleteElectronicDigitalSignatureProps {
   id: string
+  open: boolean
+  onOpenChange: (open: boolean) => void
   onSuccess: () => void
 }
 
 const DeleteElectronicDigitalSignature = ({
   id,
+  open,
+  onOpenChange,
   onSuccess,
 }: DeleteElectronicDigitalSignatureProps) => {
-  const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
   const { handleSubmit } = useForm()
 
-  const deleteOrganization = async (id: string) => {
+  const deleteSignature = async (id: string) => {
     await ElectronicDigitalSignaturesService.digitalSignaturesDeleteElectronicDigitalSignature(
       { path: { id } },
     )
   }
 
   const mutation = useMutation({
-    mutationFn: deleteOrganization,
+    mutationFn: deleteSignature,
     onSuccess: () => {
       showSuccessToast(
         "The Electronic Digital Signature was deleted successfully",
       )
-      setIsOpen(false)
+      onOpenChange(false)
       onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
-      queryClient.invalidateQueries()
+      queryClient.invalidateQueries({
+        queryKey: ["electronic-digital-signatures"],
+      })
     },
   })
 
@@ -59,15 +64,7 @@ const DeleteElectronicDigitalSignature = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuItem
-        variant="destructive"
-        onSelect={(e) => e.preventDefault()}
-        onClick={() => setIsOpen(true)}
-      >
-        <Trash2 />
-        Delete ElectronicDigitalSignature
-      </DropdownMenuItem>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>

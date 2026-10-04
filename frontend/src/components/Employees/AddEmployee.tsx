@@ -8,7 +8,6 @@ import { z } from "zod"
 import {
   type EmployeeCreate,
   EmployeesService,
-  OrganizationsService,
 } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
@@ -31,20 +30,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   position: z.string().min(1, { message: "Position is required" }),
-  organization_id: z.uuid({ message: "Organization is required" }),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -53,17 +44,6 @@ const AddEmployee = () => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { data: organizationsData, isLoading: isLoadingOrganizations } =
-    useQuery({
-      queryFn: async () => {
-        const response = await OrganizationsService.readOrganizations({
-          query: { skip: 0, limit: 100 },
-        })
-        return response.data // или response, в зависимости от вашего API
-      },
-      queryKey: ["organizations"],
-    })
-  const organizations = organizationsData?.data || []
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -72,7 +52,6 @@ const AddEmployee = () => {
     defaultValues: {
       name: "",
       position: "",
-      organization_id: "",
     },
   })
 
@@ -154,36 +133,6 @@ const AddEmployee = () => {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="organization_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Organization <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      disabled={isLoadingOrganizations}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select organization" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {organizations.map((org) => (
-                          <SelectItem key={org.id} value={org.id}>
-                            {org.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
 
             <DialogFooter>

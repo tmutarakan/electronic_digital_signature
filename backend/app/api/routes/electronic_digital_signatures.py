@@ -15,7 +15,7 @@ from app.core.files import (
 from app.core.s3 import delete_upload_s3, save_upload_s3
 from app.models import (
     ElectronicDigitalSignature,
-    ElectronicDigitalSignatureCreate,
+    # ElectronicDigitalSignatureCreate,
     ElectronicDigitalSignaturePublic,
     ElectronicDigitalSignaturesPublic,
     ElectronicDigitalSignatureUpdate,
