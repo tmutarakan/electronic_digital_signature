@@ -39,19 +39,19 @@ const formatDate = (value: string | null | undefined) => {
   return dateFormatter.format(date);
 };
 
-interface Details {
+interface MetaData {
   id: string;
   owner?: { email: string } | null;
   created_at: string | null | undefined;
   updated_at: string | null | undefined;
 }
 
-interface DetailsCellProps {
-  details: Details;
+interface MetaDataCellProps {
+  metadata: MetaData;
 }
 
-export const DetailsCell = ({ details }: DetailsCellProps) => {
-  const { id, owner, created_at, updated_at } = details;
+export const MetaDataCell = ({ metadata }: MetaDataCellProps) => {
+  const { id, owner, created_at, updated_at } = metadata;
 
   return (
     <div className="flex flex-col gap-0.5 text-sm font-light">

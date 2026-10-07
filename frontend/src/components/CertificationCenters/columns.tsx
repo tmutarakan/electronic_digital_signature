@@ -2,7 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 
 import type { CertificationCenterPublic } from "@/client"
 import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu"
-import { DetailsCell } from "../Common/columns"
+import { MetaDataCell } from "../Common/columns"
 
 export const columns: ColumnDef<CertificationCenterPublic>[] = [
   {
@@ -11,10 +11,10 @@ export const columns: ColumnDef<CertificationCenterPublic>[] = [
     cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {
-    id: "details",
-    header: "details",
+    id: "metadata",
+    header: "metadata",
     enableSorting: false,
-    cell: ({ row }) => <DetailsCell details={row.original} />,
+    cell: ({ row }) => <MetaDataCell metadata={row.original} />,
   },
   {
     id: "actions",

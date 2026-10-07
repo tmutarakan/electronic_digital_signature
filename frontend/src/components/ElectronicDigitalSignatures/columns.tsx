@@ -2,7 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 
 import type { ElectronicDigitalSignaturePublic } from "@/client"
 import { ElectronicDigitalSignatureActionsMenu } from "./ElectronicDigitalSignatureActionsMenu"
-import { DetailsCell } from "../Common/columns"
+import { MetaDataCell } from "../Common/columns"
 
 export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
   {
@@ -54,10 +54,10 @@ export const columns: ColumnDef<ElectronicDigitalSignaturePublic>[] = [
     ),
   },
   {
-    id: "details",
-    header: "details",
+    id: "metadata",
+    header: "metadata",
     enableSorting: false,
-    cell: ({ row }) => <DetailsCell details={row.original} />,
+    cell: ({ row }) => <MetaDataCell metadata={row.original} />,
   },
   {
     id: "actions",

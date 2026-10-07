@@ -2,7 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 
 import type { EmployeePublic } from "@/client"
 import { EmployeeActionsMenu } from "./EmployeeActionsMenu"
-import { DetailsCell } from "../Common/columns"
+import { MetaDataCell } from "../Common/columns"
 
 export const columns: ColumnDef<EmployeePublic>[] = [
   {
@@ -18,10 +18,10 @@ export const columns: ColumnDef<EmployeePublic>[] = [
     ),
   },
   {
-    id: "details",
-    header: "details",
+    id: "metadata",
+    header: "metadata",
     enableSorting: false,
-    cell: ({ row }) => <DetailsCell details={row.original} />,
+    cell: ({ row }) => <MetaDataCell metadata={row.original} />,
   },
   {
     id: "actions",
