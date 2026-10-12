@@ -1,14 +1,12 @@
 import uuid
-from typing import Any
 
-from sqlmodel import Session, select
+from fastapi import HTTPException
+from sqlmodel import Session, SQLModel, col, func, select
 
 from app.core.security import get_password_hash, verify_password
 from app.models import (
     CertificationCenter,
     CertificationCenterCreate,
-    ElectronicDigitalSignature,
-    ElectronicDigitalSignatureCreate,
     Employee,
     EmployeeCreate,
     Item,
@@ -21,6 +19,8 @@ from app.models import (
     UserCreate,
     UserUpdate,
 )
+
+# ---------- Users ----------
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:
@@ -38,8 +38,7 @@ def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> User
     extra_data: dict[str, str] = {}
     if "password" in user_data:
         password: str = user_data["password"]
-        hashed_password = get_password_hash(password)
-        extra_data["hashed_password"] = hashed_password
+        extra_data["hashed_password"] = get_password_hash(password)
     _ = db_user.sqlmodel_update(user_data, update=extra_data)
     session.add(db_user)
     session.commit()
@@ -48,21 +47,15 @@ def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> User
 
 
 def get_user_by_email(*, session: Session, email: str) -> User | None:
-    statement = select(User).where(User.email == email)
-    session_user = session.exec(statement).first()
-    return session_user
+    return session.exec(select(User).where(User.email == email)).first()
 
 
-# Dummy hash to use for timing attack prevention when user is not found
-# This is an Argon2 hash of a random password, used to ensure constant-time comparison
 DUMMY_HASH = "$argon2id$v=19$m=65536,t=3,p=4$MjQyZWE1MzBjYjJlZTI0Yw$YTU4NGM5ZTZmYjE2NzZlZjY0ZWY3ZGRkY2U2OWFjNjk"
 
 
 def authenticate(*, session: Session, email: str, password: str) -> User | None:
     db_user = get_user_by_email(session=session, email=email)
     if not db_user:
-        # Prevent timing attacks by running password verification even when user doesn't exist
-        # This ensures the response time is similar whether or not the email exists
         _ = verify_password(password, DUMMY_HASH)
         return None
     verified, updated_password_hash = verify_password(password, db_user.hashed_password)
@@ -74,6 +67,56 @@ def authenticate(*, session: Session, email: str, password: str) -> User | None:
         session.commit()
         session.refresh(db_user)
     return db_user
+
+
+# ---------- Общие хелперы чтения ----------
+
+
+def get_or_404[ModelT: SQLModel](
+    session: Session, model: type[ModelT], id: uuid.UUID
+) -> ModelT:
+    """Получить запись по ID или 404. Без проверки прав (для справочников)."""
+    obj = session.get(model, id)
+    if not obj:
+        raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
+    return obj
+
+
+def list_all[ModelT: SQLModel](
+    session: Session, model: type[ModelT], skip: int = 0, limit: int = 100
+) -> tuple[list[ModelT], int]:
+    """Список всех записей (для справочников)."""
+    count = session.exec(select(func.count()).select_from(model)).one()
+    statement = (
+        select(model)
+        .order_by(col(model.created_at).desc()) # pyright:ignore[reportAttributeAccessIssue]
+        .offset(skip)
+        .limit(limit)
+    )
+    return list(session.exec(statement).all()), count
+
+
+# ---------- Общие хелперы записи ----------
+
+
+def update_obj[ModelT: SQLModel](
+    session: Session, obj: ModelT, update_in: SQLModel
+) -> ModelT:
+    """Частичное обновление объекта по схеме с exclude_unset."""
+    obj.sqlmodel_update(update_in.model_dump(exclude_unset=True))
+    session.add(obj)
+    session.commit()
+    session.refresh(obj)
+    return obj
+
+
+def delete_obj(session: Session, obj: SQLModel) -> None:
+    """Удаление объекта."""
+    session.delete(obj)
+    session.commit()
+
+
+# ---------- Создание сущностей ----------
 
 
 def create_item(*, session: Session, item_in: ItemCreate, owner_id: uuid.UUID) -> Item:
@@ -128,38 +171,9 @@ def create_employee(
     session: Session,
     employee_in: EmployeeCreate,
     owner_id: uuid.UUID,
-    organization_id: uuid.UUID,
 ) -> Employee:
-    db_employee = Employee.model_validate(
-        employee_in, update={"owner_id": owner_id, "organization_id": organization_id}
-    )
+    db_employee = Employee.model_validate(employee_in, update={"owner_id": owner_id})
     session.add(db_employee)
     session.commit()
     session.refresh(db_employee)
     return db_employee
-
-
-def create_electronic_digital_signature(
-    *,
-    session: Session,
-    electronic_digital_signature_in: ElectronicDigitalSignatureCreate,
-    owner_id: uuid.UUID,
-    organization_id: uuid.UUID,
-    signature_type_id: uuid.UUID,
-    employee_id: uuid.UUID,
-    certification_center_id: uuid.UUID,
-) -> ElectronicDigitalSignature:
-    db_electronic_digital_signature = ElectronicDigitalSignature.model_validate(
-        electronic_digital_signature_in,
-        update={
-            "owner_id": owner_id,
-            "organization_id": organization_id,
-            "signature_type_id": signature_type_id,
-            "employee_id": employee_id,
-            "certification_center_id": certification_center_id
-        },
-    )
-    session.add(db_electronic_digital_signature)
-    session.commit()
-    session.refresh(db_electronic_digital_signature)
-    return db_electronic_digital_signature

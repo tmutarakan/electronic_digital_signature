@@ -13,7 +13,7 @@ import logging
 import os
 import random
 import uuid
-from collections.abc import Sequence, Iterable
+from collections.abc import Iterable, Sequence
 from datetime import datetime, timedelta, timezone
 
 from botocore.exceptions import ClientError

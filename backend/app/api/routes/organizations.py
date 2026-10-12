@@ -1,11 +1,9 @@
 import uuid
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter, HTTPException
-from sqlmodel import col, func, select
+from fastapi import APIRouter
 
-from app.api.deps import CurrentUser, SessionDep
+from app import crud
+from app.api.deps import CurrentUser, SessionDep, SuperUser
 from app.models import (
     Message,
     Organization,
@@ -20,115 +18,76 @@ router = APIRouter(prefix="/organizations", tags=["organizations"])
 
 @router.get("/", response_model=OrganizationsPublic)
 def read_organizations(
-    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
+    session: SessionDep,
+    _current_user: CurrentUser,
+    skip: int = 0,
+    limit: int = 100,
 ) -> OrganizationsPublic:
     """
-    Retrieve organizations.
+    Retrieve organizations. Доступно всем аутентифицированным пользователям.
     """
-
-    if current_user.is_superuser:
-        count_statement = select(func.count()).select_from(Organization)
-        count = session.exec(count_statement).one()
-        statement = (
-            select(Organization)
-            .order_by(col(Organization.created_at).desc())
-            .offset(skip)
-            .limit(limit)
-        )
-        organizations = session.exec(statement).all()
-    else:
-        count_statement = (
-            select(func.count())
-            .select_from(Organization)
-            .where(Organization.owner_id == current_user.id)
-        )
-        count = session.exec(count_statement).one()
-        statement = (
-            select(Organization)
-            .where(Organization.owner_id == current_user.id)
-            .order_by(col(Organization.created_at).desc())
-            .offset(skip)
-            .limit(limit)
-        )
-        organizations = session.exec(statement).all()
-
-    organizations_public = [
-        OrganizationPublic.model_validate(organization)
-        for organization in organizations
-    ]
-    return OrganizationsPublic(data=organizations_public, count=count)
+    items, count = crud.list_all(session, Organization, skip, limit)
+    return OrganizationsPublic(
+        data=[OrganizationPublic.model_validate(x) for x in items],
+        count=count,
+    )
 
 
 @router.get("/{id}", response_model=OrganizationPublic)
 def read_organization(
-    session: SessionDep, current_user: CurrentUser, id: uuid.UUID
+    session: SessionDep,
+    _current_user: CurrentUser,
+    id: uuid.UUID,
 ) -> Organization:
     """
-    Get organization by ID.
+    Get organization by ID. Доступно всем аутентифицированным пользователям.
     """
-    organization = session.get(Organization, id)
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-    if not current_user.is_superuser and (organization.owner_id != current_user.id):
-        raise HTTPException(status_code=403, detail="Not enough permissions")
-    return organization
+    return crud.get_or_404(session, Organization, id)
 
 
 @router.post("/", response_model=OrganizationPublic)
 def create_organization(
     *,
     session: SessionDep,
-    current_user: CurrentUser,
+    current_user: SuperUser,
     organization_in: OrganizationCreate,
 ) -> Organization:
     """
-    Create new organization.
+    Create new organization. Только для суперпользователя.
+    owner_id проставляется автоматически для аудита.
     """
-    organization = Organization.model_validate(
-        organization_in, update={"owner_id": current_user.id}
+    return crud.create_organization(
+        session=session,
+        organization_in=organization_in,
+        owner_id=current_user.id,
     )
-    session.add(organization)
-    session.commit()
-    session.refresh(organization)
-    return organization
 
 
 @router.put("/{id}", response_model=OrganizationPublic)
 def update_organization(
     *,
     session: SessionDep,
-    current_user: CurrentUser,
+    _current_user: SuperUser,
     id: uuid.UUID,
     organization_in: OrganizationUpdate,
 ) -> Organization:
     """
-    Update an organization.
+    Update an organization. Только для суперпользователя.
     """
-    organization = session.get(Organization, id)
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-    if not current_user.is_superuser and (organization.owner_id != current_user.id):
-        raise HTTPException(status_code=403, detail="Not enough permissions")
-    update_dict = organization_in.model_dump(exclude_unset=True)
-    _ = organization.sqlmodel_update(update_dict)
-    session.add(organization)
-    session.commit()
-    session.refresh(organization)
-    return organization
+    organization = crud.get_or_404(session, Organization, id)
+    return crud.update_obj(session, organization, organization_in)
 
 
 @router.delete("/{id}")
 def delete_organization(
-    session: SessionDep, current_user: CurrentUser, id: uuid.UUID
+    session: SessionDep,
+    _current_user: SuperUser,
+    id: uuid.UUID,
 ) -> Message:
     """
-    Delete an organization.
+    Delete an organization. Только для суперпользователя.
     """
-    organization = session.get(Organization, id)
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-    if not current_user.is_superuser and (organization.owner_id != current_user.id):
-        raise HTTPException(status_code=403, detail="Not enough permissions")
+    organization = crud.get_or_404(session, Organization, id)
     session.delete(organization)
     session.commit()
     return Message(message="Organization deleted successfully")
