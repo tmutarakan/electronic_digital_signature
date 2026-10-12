@@ -1,28 +1,30 @@
-import { Download, EllipsisVertical } from "lucide-react"
-import { useState } from "react"
+import { Download, EllipsisVertical } from "lucide-react";
+import { useState } from "react";
 
-import type { ElectronicDigitalSignaturePublic } from "@/client"
-import { Button } from "@/components/ui/button"
+import type { ElectronicDigitalSignaturePublic } from "@/client";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
-import DeleteElectronicDigitalSignature from "./DeleteElectronicDigitalSignature"
-import EditElectronicDigitalSignature from "./EditElectronicDigitalSignature"
+} from "@/components/ui/dropdown-menu";
+import DeleteElectronicDigitalSignature from "./DeleteElectronicDigitalSignature";
+import EditElectronicDigitalSignature from "./EditElectronicDigitalSignature";
 
 interface ElectronicDigitalSignatureActionsMenuProps {
-  signature: ElectronicDigitalSignaturePublic
+  signature: ElectronicDigitalSignaturePublic;
+  isSuperuser: boolean;
 }
 
 export const ElectronicDigitalSignatureActionsMenu = ({
   signature,
+  isSuperuser,
 }: ElectronicDigitalSignatureActionsMenuProps) => {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [editOpen, setEditOpen] = useState(false)
-  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   return (
     <>
@@ -57,46 +59,53 @@ export const ElectronicDigitalSignatureActionsMenu = ({
             </a>
           </DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+          {isSuperuser && (
+            <>
+              <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onSelect={(e) => {
-              // preventDefault — чтобы Radix не «съел» открытие диалога
-              e.preventDefault()
-              setMenuOpen(false)
-              setEditOpen(true)
-            }}
-          >
-            Edit ElectronicDigitalSignature
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault()
-              setMenuOpen(false)
-              setDeleteOpen(true)
-            }}
-            className="text-destructive focus:text-destructive"
-          >
-            Delete ElectronicDigitalSignature
-          </DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  // preventDefault — чтобы Radix не «съел» открытие диалога
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  setEditOpen(true);
+                }}
+              >
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  setDeleteOpen(true);
+                }}
+                className="text-destructive focus:text-destructive"
+              >
+                Delete
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Диалоги рендерятся ВНЕ DropdownMenu — это ключевой момент */}
-      <EditElectronicDigitalSignature
-        electronicDigitalSignature={signature}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-        onSuccess={() => setEditOpen(false)}
-      />
+      {isSuperuser && (
+        <>
+          <EditElectronicDigitalSignature
+            electronicDigitalSignature={signature}
+            open={editOpen}
+            onOpenChange={setEditOpen}
+            onSuccess={() => setEditOpen(false)}
+          />
 
-      <DeleteElectronicDigitalSignature
-        id={signature.id}
-        open={deleteOpen}
-        onOpenChange={setDeleteOpen}
-        onSuccess={() => setDeleteOpen(false)}
-      />
+          <DeleteElectronicDigitalSignature
+            id={signature.id}
+            open={deleteOpen}
+            onOpenChange={setDeleteOpen}
+            onSuccess={() => setDeleteOpen(false)}
+          />
+        </>
+      )}
     </>
-  )
-}
+  );
+};

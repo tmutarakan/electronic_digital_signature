@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 
 import { CertificationCentersService } from "@/client";
 import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter";
-import { columns } from "@/components/CertificationCenters/columns";
+import { getColumns } from "@/components/CertificationCenters/columns";
 import { DataTable } from "@/components/Common/DataTable";
 //import PendingCertificationCenters from "@/components/Pending/PendingCertificationCenters";
 import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
@@ -37,6 +37,9 @@ function CertificationCentersTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
     getCertificationCentersQueryOptions(),
   );
+  const { user } = Route.useRouteContext();
+  const isSuperuser = user?.is_superuser ?? false;
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser]);
 
   if (certificationCenters.data.length === 0) {
     return (
@@ -48,7 +51,9 @@ function CertificationCentersTableContent() {
           You don't have any Certification Centers yet
         </h3>
         <p className="text-muted-foreground">
-          Add a new Certification Center to get started
+          {isSuperuser
+            ? "Add a new Certification Center to get started"
+            : "Certification Center will appear here once added"}
         </p>
       </div>
     );
@@ -68,6 +73,9 @@ function CertificationCentersTable() {
 }
 
 function CertificationCenters() {
+  const { user } = Route.useRouteContext();
+  const isSuperuser = user?.is_superuser ?? false;
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -79,7 +87,7 @@ function CertificationCenters() {
             Create and manage your Certification Center
           </p>
         </div>
-        <AddCertificationCenter />
+        {isSuperuser && <AddCertificationCenter />}
       </div>
       <CertificationCentersTable />
     </div>

@@ -185,7 +185,7 @@ const AddElectronicDigitalSignature = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Electronic Digital Signature
+          Add
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

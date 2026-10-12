@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { Search } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 
 import { OrganizationsService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import AddOrganization from "@/components/Organizations/AddOrganization"
-import { columns } from "@/components/Organizations/columns"
+import { getColumns } from "@/components/Organizations/columns"
 //import PendingOrganizations from "@/components/Pending/PendingOrganizations"
 import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
@@ -37,6 +37,9 @@ function OrganizationsTableContent() {
   const { data: organizations } = useSuspenseQuery(
     getOrganizationsQueryOptions(),
   )
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
 
   if (organizations.data.length === 0) {
     return (
@@ -48,7 +51,9 @@ function OrganizationsTableContent() {
           You don't have any organizations yet
         </h3>
         <p className="text-muted-foreground">
-          Add a new organization to get started
+          {isSuperuser
+            ? "Add a new organization to get started"
+            : "Organizations will appear here once added"}
         </p>
       </div>
     )
@@ -68,6 +73,9 @@ function OrganizationsTable() {
 }
 
 function Organizations() {
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -77,7 +85,7 @@ function Organizations() {
             Create and manage your organizations
           </p>
         </div>
-        <AddOrganization />
+          {isSuperuser && <AddOrganization />}
       </div>
       <OrganizationsTable />
     </div>

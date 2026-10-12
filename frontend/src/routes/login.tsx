@@ -20,7 +20,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { PasswordInput } from "@/components/ui/password-input"
-import useAuth, { isLoggedIn } from "@/hooks/useAuth"
+import { isLoggedIn } from "@/hooks/useAuth"
+import useAuthMutations from "@/hooks/useAuthMutations"
 
 const formSchema = z.object({
   username: z.email({ message: "Invalid email address" }),
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/login")({
 })
 
 function Login() {
-  const { loginMutation } = useAuth()
+  const { loginMutation } = useAuthMutations()
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",

@@ -86,7 +86,7 @@ const EditOrganization = ({
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Organization
+        Edit
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>

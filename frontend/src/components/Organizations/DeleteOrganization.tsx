@@ -59,7 +59,7 @@ const DeleteOrganization = ({ id, onSuccess }: DeleteOrganizationProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Organization
+        Delete
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>

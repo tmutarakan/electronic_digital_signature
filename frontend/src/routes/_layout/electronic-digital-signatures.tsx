@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 
 import { ElectronicDigitalSignaturesService } from "@/client";
 import { DataTable } from "@/components/Common/DataTable";
 import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatures/AddElectronicDigitalSignature";
-import { columns } from "@/components/ElectronicDigitalSignatures/columns";
+import { getColumns } from "@/components/ElectronicDigitalSignatures/columns";
 //import PendingElectronicDigitalSignatures from "@/components/Pending/PendingElectronicDigitalSignatures"
 import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
@@ -39,6 +39,9 @@ function ElectronicDigitalSignaturesTableContent() {
   const { data: electronicDigitalSignatures } = useSuspenseQuery(
     getElectronicDigitalSignaturesQueryOptions(),
   );
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
 
   if (electronicDigitalSignatures.data.length === 0) {
     return (
@@ -50,7 +53,9 @@ function ElectronicDigitalSignaturesTableContent() {
           You don't have any Electronic Digital Signatures yet
         </h3>
         <p className="text-muted-foreground">
-          Add a new Electronic Digital Signature to get started
+          {isSuperuser
+            ? "Add a new electronic digital signature to get started"
+            : "Signatures will appear here once added"}
         </p>
       </div>
     );
@@ -74,6 +79,9 @@ function ElectronicDigitalSignaturesTable() {
 }
 
 function ElectronicDigitalSignatures() {
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -85,7 +93,7 @@ function ElectronicDigitalSignatures() {
             Create and manage your Electronic Digital Signature
           </p>
         </div>
-        <AddElectronicDigitalSignature />
+        {isSuperuser && <AddElectronicDigitalSignature />}
       </div>
       <ElectronicDigitalSignaturesTable />
     </div>

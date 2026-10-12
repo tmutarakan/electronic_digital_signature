@@ -59,7 +59,7 @@ const DeleteSignatureType = ({ id, onSuccess }: DeleteSignatureTypeProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Signature Types
+        Delete
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>

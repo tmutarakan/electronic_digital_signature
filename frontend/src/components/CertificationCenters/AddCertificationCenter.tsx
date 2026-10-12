@@ -78,7 +78,7 @@ const AddCertificationCenter = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Certification Center
+          Add
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

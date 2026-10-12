@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { Search } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 
 import { EmployeesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import AddEmployee from "@/components/Employees/AddEmployee"
-import { columns } from "@/components/Employees/columns"
+import { getColumns } from "@/components/Employees/columns"
 //import PendingEmployees from "@/components/Pending/PendingEmployees"
 import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
@@ -37,6 +37,9 @@ function EmployeesTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
     getEmployeesQueryOptions(),
   )
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
 
   if (certificationCenters.data.length === 0) {
     return (
@@ -49,6 +52,9 @@ function EmployeesTableContent() {
         </h3>
         <p className="text-muted-foreground">
           Add a new Employee to get started
+          {isSuperuser
+            ? "Add a new Employee to get started"
+            : "Employee will appear here once added"}
         </p>
       </div>
     )
@@ -68,6 +74,9 @@ function EmployeesTable() {
 }
 
 function Employees() {
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -77,7 +86,7 @@ function Employees() {
             Create and manage your Employee
           </p>
         </div>
-        <AddEmployee />
+        {isSuperuser && <AddEmployee />}
       </div>
       <EmployeesTable />
     </div>

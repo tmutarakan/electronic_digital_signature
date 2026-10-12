@@ -86,7 +86,7 @@ const EditSignatureType = ({
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Signature Type
+        Edit
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>

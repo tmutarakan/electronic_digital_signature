@@ -8,15 +8,20 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { isLoggedIn } from "@/hooks/useAuth"
+import { getCurrentUserQueryOptions } from "@/queries/currentUser"
 
 export const Route = createFileRoute("/_layout")({
   component: Layout,
-  beforeLoad: async () => {
+  beforeLoad: async ({ context }) => {
     if (!isLoggedIn()) {
       throw redirect({
         to: "/login",
       })
     }
+    const user = await context.queryClient.ensureQueryData(
+      getCurrentUserQueryOptions(),
+    )
+    return { user }
   },
 })
 

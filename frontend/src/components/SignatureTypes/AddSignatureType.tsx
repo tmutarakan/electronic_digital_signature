@@ -73,7 +73,7 @@ const AddSignatureType = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Signature Type
+          Add
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

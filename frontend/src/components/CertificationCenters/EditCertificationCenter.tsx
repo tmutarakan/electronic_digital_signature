@@ -89,7 +89,7 @@ const EditCertificationCenter = ({
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Certification Center
+        Edit
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>

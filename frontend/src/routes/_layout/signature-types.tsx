@@ -1,13 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { Search } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 
 import { SignatureTypesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 //import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
 import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
-import { columns } from "@/components/SignatureTypes/columns"
+import { getColumns } from "@/components/SignatureTypes/columns"
 import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getSignatureTypesQueryOptions() {
@@ -37,6 +37,9 @@ function SignatureTypesTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
     getSignatureTypesQueryOptions(),
   )
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
 
   if (certificationCenters.data.length === 0) {
     return (
@@ -48,7 +51,9 @@ function SignatureTypesTableContent() {
           You don't have any Signature Types yet
         </h3>
         <p className="text-muted-foreground">
-          Add a new Signature Types to get started
+          {isSuperuser
+            ? "Add a new signature type to get started"
+            : "Signature types will appear here once added"}
         </p>
       </div>
     )
@@ -68,6 +73,9 @@ function SignatureTypesTable() {
 }
 
 function SignatureTypes() {
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -77,7 +85,7 @@ function SignatureTypes() {
             Create and manage your Signature Type
           </p>
         </div>
-        <AddSignatureType />
+        {isSuperuser && <AddSignatureType />}
       </div>
       <SignatureTypesTable />
     </div>

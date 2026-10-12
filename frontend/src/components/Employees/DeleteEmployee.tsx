@@ -59,7 +59,7 @@ const DeleteEmployee = ({ id, onSuccess }: DeleteEmployeeProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Employee
+        Delete
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>

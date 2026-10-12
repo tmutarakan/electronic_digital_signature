@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -88,7 +88,7 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Employee
+        Edit
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
