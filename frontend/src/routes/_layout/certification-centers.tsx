@@ -1,13 +1,14 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { Search } from "lucide-react"
-import { Suspense } from "react"
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Search } from "lucide-react";
+import { Suspense } from "react";
 
-import { CertificationCentersService } from "@/client"
-import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter"
-import { columns } from "@/components/CertificationCenters/columns"
-import { DataTable } from "@/components/Common/DataTable"
-import PendingCertificationCenters from "@/components/Pending/PendingCertificationCenters"
+import { CertificationCentersService } from "@/client";
+import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter";
+import { columns } from "@/components/CertificationCenters/columns";
+import { DataTable } from "@/components/Common/DataTable";
+//import PendingCertificationCenters from "@/components/Pending/PendingCertificationCenters";
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getCertificationCentersQueryOptions() {
   return {
@@ -18,7 +19,7 @@ function getCertificationCentersQueryOptions() {
         })
       ).data,
     queryKey: ["certification-centers"],
-  }
+  };
 }
 
 export const Route = createFileRoute("/_layout/certification-centers")({
@@ -30,12 +31,12 @@ export const Route = createFileRoute("/_layout/certification-centers")({
       },
     ],
   }),
-})
+});
 
 function CertificationCentersTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
     getCertificationCentersQueryOptions(),
-  )
+  );
 
   if (certificationCenters.data.length === 0) {
     return (
@@ -50,18 +51,20 @@ function CertificationCentersTableContent() {
           Add a new Certification Center to get started
         </p>
       </div>
-    )
+    );
   }
 
-  return <DataTable columns={columns} data={certificationCenters.data} />
+  return <DataTable columns={columns} data={certificationCenters.data} />;
 }
 
 function CertificationCentersTable() {
   return (
-    <Suspense fallback={<PendingCertificationCenters />}>
+    <Suspense
+      fallback={<LoadingSpinner label="Loading certification centers" />}
+    >
       <CertificationCentersTableContent />
     </Suspense>
-  )
+  );
 }
 
 function CertificationCenters() {
@@ -80,5 +83,5 @@ function CertificationCenters() {
       </div>
       <CertificationCentersTable />
     </div>
-  )
+  );
 }

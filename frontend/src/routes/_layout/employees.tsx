@@ -7,7 +7,8 @@ import { EmployeesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import AddEmployee from "@/components/Employees/AddEmployee"
 import { columns } from "@/components/Employees/columns"
-import PendingEmployees from "@/components/Pending/PendingEmployees"
+//import PendingEmployees from "@/components/Pending/PendingEmployees"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getEmployeesQueryOptions() {
   return {
@@ -58,7 +59,9 @@ function EmployeesTableContent() {
 
 function EmployeesTable() {
   return (
-    <Suspense fallback={<PendingEmployees />}>
+    <Suspense
+      fallback={<LoadingSpinner label="Loading Employees" />}
+    >
       <EmployeesTableContent />
     </Suspense>
   )

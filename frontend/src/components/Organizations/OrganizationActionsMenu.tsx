@@ -26,6 +26,7 @@ export const OrganizationActionsMenu = ({
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <EllipsisVertical />
+          <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

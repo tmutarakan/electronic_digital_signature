@@ -8,3 +8,5 @@ backend/app/frontend/
 /playwright/.cache/
 
 .env
+garage-storage/
+garage.toml

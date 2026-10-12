@@ -30,6 +30,7 @@ export const ElectronicDigitalSignatureActionsMenu = ({
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" aria-label="Действия">
             <EllipsisVertical />
+            <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

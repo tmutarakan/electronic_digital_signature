@@ -8,6 +8,7 @@ export const columns: ColumnDef<CertificationCenterPublic>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    enableSorting: true,
     cell: ({ row }) => <span className="font-medium">{row.original.name}</span>,
   },
   {

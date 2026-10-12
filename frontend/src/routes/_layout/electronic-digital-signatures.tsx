@@ -1,13 +1,14 @@
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import { Search } from "lucide-react"
-import { Suspense } from "react"
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Search } from "lucide-react";
+import { Suspense } from "react";
 
-import { ElectronicDigitalSignaturesService } from "@/client"
-import { DataTable } from "@/components/Common/DataTable"
-import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatures/AddElectronicDigitalSignature"
-import { columns } from "@/components/ElectronicDigitalSignatures/columns"
-import PendingElectronicDigitalSignatures from "@/components/Pending/PendingElectronicDigitalSignatures"
+import { ElectronicDigitalSignaturesService } from "@/client";
+import { DataTable } from "@/components/Common/DataTable";
+import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatures/AddElectronicDigitalSignature";
+import { columns } from "@/components/ElectronicDigitalSignatures/columns";
+//import PendingElectronicDigitalSignatures from "@/components/Pending/PendingElectronicDigitalSignatures"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getElectronicDigitalSignaturesQueryOptions() {
   return {
@@ -20,7 +21,7 @@ function getElectronicDigitalSignaturesQueryOptions() {
         )
       ).data,
     queryKey: ["electronic-digital-signatures"],
-  }
+  };
 }
 
 export const Route = createFileRoute("/_layout/electronic-digital-signatures")({
@@ -32,14 +33,14 @@ export const Route = createFileRoute("/_layout/electronic-digital-signatures")({
       },
     ],
   }),
-})
+});
 
 function ElectronicDigitalSignaturesTableContent() {
-  const { data: certificationCenters } = useSuspenseQuery(
+  const { data: electronicDigitalSignatures } = useSuspenseQuery(
     getElectronicDigitalSignaturesQueryOptions(),
-  )
+  );
 
-  if (certificationCenters.data.length === 0) {
+  if (electronicDigitalSignatures.data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-12">
         <div className="rounded-full bg-muted p-4 mb-4">
@@ -52,18 +53,24 @@ function ElectronicDigitalSignaturesTableContent() {
           Add a new Electronic Digital Signature to get started
         </p>
       </div>
-    )
+    );
   }
 
-  return <DataTable columns={columns} data={certificationCenters.data} />
+  return (
+    <DataTable columns={columns} data={electronicDigitalSignatures.data} />
+  );
 }
 
 function ElectronicDigitalSignaturesTable() {
   return (
-    <Suspense fallback={<PendingElectronicDigitalSignatures />}>
+    <Suspense
+      fallback={
+        <LoadingSpinner label="Loading Electronic Digital Signatures" />
+      }
+    >
       <ElectronicDigitalSignaturesTableContent />
     </Suspense>
-  )
+  );
 }
 
 function ElectronicDigitalSignatures() {
@@ -82,5 +89,5 @@ function ElectronicDigitalSignatures() {
       </div>
       <ElectronicDigitalSignaturesTable />
     </div>
-  )
+  );
 }

@@ -7,7 +7,8 @@ import { OrganizationsService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import AddOrganization from "@/components/Organizations/AddOrganization"
 import { columns } from "@/components/Organizations/columns"
-import PendingOrganizations from "@/components/Pending/PendingOrganizations"
+//import PendingOrganizations from "@/components/Pending/PendingOrganizations"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getOrganizationsQueryOptions() {
   return {
@@ -58,7 +59,9 @@ function OrganizationsTableContent() {
 
 function OrganizationsTable() {
   return (
-    <Suspense fallback={<PendingOrganizations />}>
+    <Suspense
+      fallback={<LoadingSpinner label="Loading organizations" />}
+    >
       <OrganizationsTableContent />
     </Suspense>
   )

@@ -5,9 +5,10 @@ import { Suspense } from "react"
 
 import { SignatureTypesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
-import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
+//import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
 import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
 import { columns } from "@/components/SignatureTypes/columns"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getSignatureTypesQueryOptions() {
   return {
@@ -44,7 +45,7 @@ function SignatureTypesTableContent() {
           <Search className="h-8 w-8 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold">
-          You don't have any SignatureTypes yet
+          You don't have any Signature Types yet
         </h3>
         <p className="text-muted-foreground">
           Add a new Signature Types to get started
@@ -58,7 +59,9 @@ function SignatureTypesTableContent() {
 
 function SignatureTypesTable() {
   return (
-    <Suspense fallback={<PendingSignatureTypes />}>
+    <Suspense
+      fallback={<LoadingSpinner label="Loading Signature Types" />}
+    >
       <SignatureTypesTableContent />
     </Suspense>
   )
