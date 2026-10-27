@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  getSortedRowModel,
+  type SortingState,
 } from "@tanstack/react-table"
 import {
   ChevronLeft,
@@ -11,6 +13,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -38,10 +41,15 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
 
@@ -54,12 +62,16 @@ export function DataTable<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                    {header.isPlaceholder ? null : (
+                      <button
+                        className="flex items-center gap-1"
+                        onClick={header.column.getToggleSortingHandler()}
+                        disabled={!header.column.getCanSort()}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{ asc: "▲", desc: "▼" }[header.column.getIsSorted() as string] ?? null}
+                      </button>
+                    )}
                   </TableHead>
                 )
               })}
