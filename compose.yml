@@ -85,7 +85,7 @@ services:
       - traefik.http.routers.backend-http.entrypoints=http
  
   garage:
-      image: dxflrs/garage:v2.4.1
+      image: dxflrs/garage:v2.5.0
       volumes:
         - ./garage.toml:/etc/garage.toml
         - ./garage-storage:/var/lib/garage
