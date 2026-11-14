@@ -10,3 +10,4 @@ backend/app/frontend/
 .env
 garage-storage/
 garage.toml
+.aider*
