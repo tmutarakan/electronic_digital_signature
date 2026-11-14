@@ -94,6 +94,8 @@ export type Body_login_login_access_token = {
 
 /**
  * CertificationCenterCreate
+ *
+ * Свойства для создания удостоверяющего центра через API.
  */
 export type CertificationCenterCreate = {
     /**
@@ -104,6 +106,9 @@ export type CertificationCenterCreate = {
 
 /**
  * CertificationCenterPublic
+ *
+ * Свойства для возврата удостоверяющего центра через API.
+ * Всегда требуется идентификатор.
  */
 export type CertificationCenterPublic = {
     /**
@@ -127,6 +132,9 @@ export type CertificationCenterPublic = {
 
 /**
  * CertificationCenterUpdate
+ *
+ * Свойства для обновления удостоверяющего центра через API.
+ * Все свойства являются необязательными.
  */
 export type CertificationCenterUpdate = {
     /**
@@ -137,6 +145,8 @@ export type CertificationCenterUpdate = {
 
 /**
  * CertificationCentersPublic
+ *
+ * Свойства для возврата списка удостоверяющих центров через API.
  */
 export type CertificationCentersPublic = {
     /**
@@ -150,7 +160,30 @@ export type CertificationCentersPublic = {
 };
 
 /**
+ * DashboardStats
+ *
+ * Счётчики для дашборда.
+ */
+export type DashboardStats = {
+    /**
+     * Organizations
+     */
+    organizations: number;
+    /**
+     * Employees
+     */
+    employees: number;
+    /**
+     * Signatures
+     */
+    signatures: number;
+};
+
+/**
  * ElectronicDigitalSignaturePublic
+ *
+ * Свойства для возврата электронной цифровой подписи через API.
+ * Всегда требуется идентификатор.
  */
 export type ElectronicDigitalSignaturePublic = {
     /**
@@ -202,6 +235,9 @@ export type ElectronicDigitalSignaturePublic = {
 
 /**
  * ElectronicDigitalSignatureUpdate
+ *
+ * Свойства для обновления электронной цифровой подписи через API.
+ * Все свойства являются необязательными.
  */
 export type ElectronicDigitalSignatureUpdate = {
     /**
@@ -232,6 +268,8 @@ export type ElectronicDigitalSignatureUpdate = {
 
 /**
  * ElectronicDigitalSignaturesPublic
+ *
+ * Свойства для возврата списка электронных цифровых подписей через API.
  */
 export type ElectronicDigitalSignaturesPublic = {
     /**
@@ -260,6 +298,9 @@ export type EmployeeCreate = {
 
 /**
  * EmployeePublic
+ *
+ * Свойства для возврата сотрудника через API.
+ * Всегда требуется идентификатор.
  */
 export type EmployeePublic = {
     /**
@@ -287,6 +328,9 @@ export type EmployeePublic = {
 
 /**
  * EmployeeUpdate
+ *
+ * Свойства для обновления сотрудника через API.
+ * Все свойства являются необязательными.
  */
 export type EmployeeUpdate = {
     /**
@@ -301,6 +345,8 @@ export type EmployeeUpdate = {
 
 /**
  * EmployeesPublic
+ *
+ * Свойства для возврата списка сотрудников через API.
  */
 export type EmployeesPublic = {
     /**
@@ -325,6 +371,8 @@ export type HTTPValidationError = {
 
 /**
  * ItemCreate
+ *
+ * Свойства для создания элемента.
  */
 export type ItemCreate = {
     /**
@@ -339,6 +387,9 @@ export type ItemCreate = {
 
 /**
  * ItemPublic
+ *
+ * Свойства для возврата элемента через API.
+ * Всегда требуется идентификатор.
  */
 export type ItemPublic = {
     /**
@@ -365,6 +416,9 @@ export type ItemPublic = {
 
 /**
  * ItemUpdate
+ *
+ * Свойства для обновления элемента.
+ * Все свойства являются необязательными.
  */
 export type ItemUpdate = {
     /**
@@ -379,6 +433,8 @@ export type ItemUpdate = {
 
 /**
  * ItemsPublic
+ *
+ * Свойства для возврата списка элементов через API.
  */
 export type ItemsPublic = {
     /**
@@ -393,6 +449,8 @@ export type ItemsPublic = {
 
 /**
  * Message
+ *
+ * Общее сообщение.
  */
 export type Message = {
     /**
@@ -403,6 +461,8 @@ export type Message = {
 
 /**
  * NewPassword
+ *
+ * Пакет данных для обновления пароля.
  */
 export type NewPassword = {
     /**
@@ -417,6 +477,8 @@ export type NewPassword = {
 
 /**
  * OrganizationCreate
+ *
+ * Свойства для создания организации через API.
  */
 export type OrganizationCreate = {
     /**
@@ -427,6 +489,9 @@ export type OrganizationCreate = {
 
 /**
  * OrganizationPublic
+ *
+ * Свойства для возврата организации через API.
+ * Всегда требуется идентификатор.
  */
 export type OrganizationPublic = {
     /**
@@ -450,6 +515,9 @@ export type OrganizationPublic = {
 
 /**
  * OrganizationUpdate
+ *
+ * Свойства для обновления организации через API.
+ * Все свойства являются необязательными.
  */
 export type OrganizationUpdate = {
     /**
@@ -460,6 +528,8 @@ export type OrganizationUpdate = {
 
 /**
  * OrganizationsPublic
+ *
+ * Свойства для возврата списка организаций через API.
  */
 export type OrganizationsPublic = {
     /**
@@ -496,6 +566,8 @@ export type PrivateUserCreate = {
 
 /**
  * SignatureTypeCreate
+ *
+ * Свойства для создания типа подписи через API.
  */
 export type SignatureTypeCreate = {
     /**
@@ -506,6 +578,9 @@ export type SignatureTypeCreate = {
 
 /**
  * SignatureTypePublic
+ *
+ * Свойства для возврата типа подписи через API.
+ * Всегда требуется идентификатор.
  */
 export type SignatureTypePublic = {
     /**
@@ -529,6 +604,9 @@ export type SignatureTypePublic = {
 
 /**
  * SignatureTypeUpdate
+ *
+ * Свойства для обновления типа подписи через API.
+ * Все свойства являются необязательными.
  */
 export type SignatureTypeUpdate = {
     /**
@@ -539,6 +617,8 @@ export type SignatureTypeUpdate = {
 
 /**
  * SignatureTypesPublic
+ *
+ * Свойства для возврата списка типов подписи через API.
  */
 export type SignatureTypesPublic = {
     /**
@@ -553,6 +633,8 @@ export type SignatureTypesPublic = {
 
 /**
  * Token
+ *
+ * Пакет данных, содержащий токен доступа.
  */
 export type Token = {
     /**
@@ -567,6 +649,8 @@ export type Token = {
 
 /**
  * UpdatePassword
+ *
+ * Свойства для обновления пароля пользователя через API.
  */
 export type UpdatePassword = {
     /**
@@ -581,6 +665,8 @@ export type UpdatePassword = {
 
 /**
  * UserCreate
+ *
+ * Свойства для создания пользователя через API.
  */
 export type UserCreate = {
     /**
@@ -607,6 +693,9 @@ export type UserCreate = {
 
 /**
  * UserPublic
+ *
+ * Свойства для возврата пользователя через API.
+ * Всегда требуется идентификатор.
  */
 export type UserPublic = {
     /**
@@ -637,6 +726,8 @@ export type UserPublic = {
 
 /**
  * UserRegister
+ *
+ * Свойства для регистрации пользователя через API.
  */
 export type UserRegister = {
     /**
@@ -655,6 +746,9 @@ export type UserRegister = {
 
 /**
  * UserUpdate
+ *
+ * Свойства для обновления пользователя через API.
+ * Все свойства являются необязательными.
  */
 export type UserUpdate = {
     /**
@@ -681,6 +775,9 @@ export type UserUpdate = {
 
 /**
  * UserUpdateMe
+ *
+ * Свойства для обновления данных пользователя через API.
+ * Все свойства являются необязательными.
  */
 export type UserUpdateMe = {
     /**
@@ -695,6 +792,8 @@ export type UserUpdateMe = {
 
 /**
  * UsersPublic
+ *
+ * Свойства для возврата списка пользователей через API.
  */
 export type UsersPublic = {
     /**
@@ -737,6 +836,9 @@ export type ValidationError = {
 
 /**
  * ElectronicDigitalSignaturePublic
+ *
+ * Свойства для возврата электронной цифровой подписи через API.
+ * Всегда требуется идентификатор.
  */
 export type ElectronicDigitalSignaturePublicWritable = {
     /**
@@ -780,6 +882,8 @@ export type ElectronicDigitalSignaturePublicWritable = {
 
 /**
  * ElectronicDigitalSignaturesPublic
+ *
+ * Свойства для возврата списка электронных цифровых подписей через API.
  */
 export type ElectronicDigitalSignaturesPublicWritable = {
     /**
@@ -2175,6 +2279,22 @@ export type signatureTypesUpdateSignatureTypeResponses = {
 };
 
 export type signatureTypesUpdateSignatureTypeResponse = signatureTypesUpdateSignatureTypeResponses[keyof signatureTypesUpdateSignatureTypeResponses];
+
+export type dashboardReadDashboardStatsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/dashboard/stats';
+};
+
+export type dashboardReadDashboardStatsResponses = {
+    /**
+     * Successful Response
+     */
+    200: DashboardStats;
+};
+
+export type dashboardReadDashboardStatsResponse = dashboardReadDashboardStatsResponses[keyof dashboardReadDashboardStatsResponses];
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;

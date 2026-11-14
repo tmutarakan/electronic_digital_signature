@@ -5,10 +5,10 @@ import { Suspense, useMemo } from "react"
 
 import { SignatureTypesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner"
 //import PendingSignatureTypes from "@/components/Pending/PendingSignatureTypes"
 import AddSignatureType from "@/components/SignatureTypes/AddSignatureType"
 import { getColumns } from "@/components/SignatureTypes/columns"
-import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getSignatureTypesQueryOptions() {
   return {
@@ -64,9 +64,7 @@ function SignatureTypesTableContent() {
 
 function SignatureTypesTable() {
   return (
-    <Suspense
-      fallback={<LoadingSpinner label="Loading Signature Types" />}
-    >
+    <Suspense fallback={<LoadingSpinner label="Loading Signature Types" />}>
       <SignatureTypesTableContent />
     </Suspense>
   )

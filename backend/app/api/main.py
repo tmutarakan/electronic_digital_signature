@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.routes import (
     certification_centers,
+    dashboard,
     electronic_digital_signatures,
     employees,
     items,
@@ -24,6 +25,7 @@ api_router.include_router(certification_centers.router)
 api_router.include_router(electronic_digital_signatures.router)
 api_router.include_router(employees.router)
 api_router.include_router(signature_types.router)
+api_router.include_router(dashboard.router)
 
 
 if settings.FASTAPI_ENV == "development":

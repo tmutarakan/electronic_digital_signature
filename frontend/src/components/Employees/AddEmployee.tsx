@@ -5,10 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import {
-  type EmployeeCreate,
-  EmployeesService,
-} from "@/client"
+import { type EmployeeCreate, EmployeesService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -132,7 +129,6 @@ const AddEmployee = () => {
                   </FormItem>
                 )}
               />
-
             </div>
 
             <DialogFooter>

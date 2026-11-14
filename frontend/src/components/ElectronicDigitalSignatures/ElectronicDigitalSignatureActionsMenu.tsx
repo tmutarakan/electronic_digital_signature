@@ -1,30 +1,30 @@
-import { Download, EllipsisVertical } from "lucide-react";
-import { useState } from "react";
+import { Download, EllipsisVertical } from "lucide-react"
+import { useState } from "react"
 
-import type { ElectronicDigitalSignaturePublic } from "@/client";
-import { Button } from "@/components/ui/button";
+import type { ElectronicDigitalSignaturePublic } from "@/client"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import DeleteElectronicDigitalSignature from "./DeleteElectronicDigitalSignature";
-import EditElectronicDigitalSignature from "./EditElectronicDigitalSignature";
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import DeleteElectronicDigitalSignature from "./DeleteElectronicDigitalSignature"
+import EditElectronicDigitalSignature from "./EditElectronicDigitalSignature"
 
 interface ElectronicDigitalSignatureActionsMenuProps {
-  signature: ElectronicDigitalSignaturePublic;
-  isSuperuser: boolean;
+  signature: ElectronicDigitalSignaturePublic
+  isSuperuser: boolean
 }
 
 export const ElectronicDigitalSignatureActionsMenu = ({
   signature,
   isSuperuser,
 }: ElectronicDigitalSignatureActionsMenuProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
 
   return (
     <>
@@ -66,9 +66,9 @@ export const ElectronicDigitalSignatureActionsMenu = ({
               <DropdownMenuItem
                 onSelect={(e) => {
                   // preventDefault — чтобы Radix не «съел» открытие диалога
-                  e.preventDefault();
-                  setMenuOpen(false);
-                  setEditOpen(true);
+                  e.preventDefault()
+                  setMenuOpen(false)
+                  setEditOpen(true)
                 }}
               >
                 Edit
@@ -76,9 +76,9 @@ export const ElectronicDigitalSignatureActionsMenu = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onSelect={(e) => {
-                  e.preventDefault();
-                  setMenuOpen(false);
-                  setDeleteOpen(true);
+                  e.preventDefault()
+                  setMenuOpen(false)
+                  setDeleteOpen(true)
                 }}
                 className="text-destructive focus:text-destructive"
               >
@@ -107,5 +107,5 @@ export const ElectronicDigitalSignatureActionsMenu = ({
         </>
       )}
     </>
-  );
-};
+  )
+}

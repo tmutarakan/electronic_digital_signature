@@ -558,3 +558,12 @@ class ElectronicDigitalSignaturesPublic(SQLModel):
     """
     data: list[ElectronicDigitalSignaturePublic]
     count: int
+
+
+class DashboardStats(SQLModel):
+    """
+    Счётчики для дашборда.
+    """
+    organizations: int
+    employees: int
+    signatures: int

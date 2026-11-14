@@ -4,9 +4,9 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  useReactTable,
   getSortedRowModel,
   type SortingState,
+  useReactTable,
 } from "@tanstack/react-table"
 import {
   ChevronLeft,
@@ -90,12 +90,18 @@ export function DataTable<TData, TValue>({
                   <TableHead key={header.id}>
                     {header.isPlaceholder ? null : (
                       <button
+                        type="button"
                         className="flex items-center gap-1"
                         onClick={header.column.getToggleSortingHandler()}
                         disabled={!header.column.getCanSort()}
                       >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{ asc: "▲", desc: "▼" }[header.column.getIsSorted() as string] ?? null}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                        {{ asc: "▲", desc: "▼" }[
+                          header.column.getIsSorted() as string
+                        ] ?? null}
                       </button>
                     )}
                   </TableHead>
@@ -145,7 +151,9 @@ export function DataTable<TData, TValue>({
                 filteredCount,
               )}{" "}
               of{" "}
-              <span className="font-medium text-foreground">{filteredCount}</span>{" "}
+              <span className="font-medium text-foreground">
+                {filteredCount}
+              </span>{" "}
               entries
             </div>
             <div className="flex items-center gap-x-2">

@@ -1,14 +1,14 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Search } from "lucide-react";
-import { Suspense, useMemo } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { Search } from "lucide-react"
+import { Suspense, useMemo } from "react"
 
-import { ElectronicDigitalSignaturesService } from "@/client";
-import { DataTable } from "@/components/Common/DataTable";
-import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatures/AddElectronicDigitalSignature";
-import { getColumns } from "@/components/ElectronicDigitalSignatures/columns";
+import { ElectronicDigitalSignaturesService } from "@/client"
+import { DataTable } from "@/components/Common/DataTable"
 //import PendingElectronicDigitalSignatures from "@/components/Pending/PendingElectronicDigitalSignatures"
-import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner"
+import AddElectronicDigitalSignature from "@/components/ElectronicDigitalSignatures/AddElectronicDigitalSignature"
+import { getColumns } from "@/components/ElectronicDigitalSignatures/columns"
 
 function getElectronicDigitalSignaturesQueryOptions() {
   return {
@@ -21,7 +21,7 @@ function getElectronicDigitalSignaturesQueryOptions() {
         )
       ).data,
     queryKey: ["electronic-digital-signatures"],
-  };
+  }
 }
 
 export const Route = createFileRoute("/_layout/electronic-digital-signatures")({
@@ -33,12 +33,12 @@ export const Route = createFileRoute("/_layout/electronic-digital-signatures")({
       },
     ],
   }),
-});
+})
 
 function ElectronicDigitalSignaturesTableContent() {
   const { data: electronicDigitalSignatures } = useSuspenseQuery(
     getElectronicDigitalSignaturesQueryOptions(),
-  );
+  )
   const { user } = Route.useRouteContext()
   const isSuperuser = user?.is_superuser ?? false
   const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
@@ -58,12 +58,10 @@ function ElectronicDigitalSignaturesTableContent() {
             : "Signatures will appear here once added"}
         </p>
       </div>
-    );
+    )
   }
 
-  return (
-    <DataTable columns={columns} data={electronicDigitalSignatures.data} />
-  );
+  return <DataTable columns={columns} data={electronicDigitalSignatures.data} />
 }
 
 function ElectronicDigitalSignaturesTable() {
@@ -75,7 +73,7 @@ function ElectronicDigitalSignaturesTable() {
     >
       <ElectronicDigitalSignaturesTableContent />
     </Suspense>
-  );
+  )
 }
 
 function ElectronicDigitalSignatures() {
@@ -97,5 +95,5 @@ function ElectronicDigitalSignatures() {
       </div>
       <ElectronicDigitalSignaturesTable />
     </div>
-  );
+  )
 }

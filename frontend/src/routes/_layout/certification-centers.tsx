@@ -1,14 +1,14 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Search } from "lucide-react";
-import { Suspense, useMemo } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { Search } from "lucide-react"
+import { Suspense, useMemo } from "react"
 
-import { CertificationCentersService } from "@/client";
-import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter";
-import { getColumns } from "@/components/CertificationCenters/columns";
-import { DataTable } from "@/components/Common/DataTable";
+import { CertificationCentersService } from "@/client"
+import AddCertificationCenter from "@/components/CertificationCenters/AddCertificationCenter"
+import { getColumns } from "@/components/CertificationCenters/columns"
+import { DataTable } from "@/components/Common/DataTable"
 //import PendingCertificationCenters from "@/components/Pending/PendingCertificationCenters";
-import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner"
 
 function getCertificationCentersQueryOptions() {
   return {
@@ -19,7 +19,7 @@ function getCertificationCentersQueryOptions() {
         })
       ).data,
     queryKey: ["certification-centers"],
-  };
+  }
 }
 
 export const Route = createFileRoute("/_layout/certification-centers")({
@@ -31,15 +31,15 @@ export const Route = createFileRoute("/_layout/certification-centers")({
       },
     ],
   }),
-});
+})
 
 function CertificationCentersTableContent() {
   const { data: certificationCenters } = useSuspenseQuery(
     getCertificationCentersQueryOptions(),
-  );
-  const { user } = Route.useRouteContext();
-  const isSuperuser = user?.is_superuser ?? false;
-  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser]);
+  )
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
+  const columns = useMemo(() => getColumns(isSuperuser), [isSuperuser])
 
   if (certificationCenters.data.length === 0) {
     return (
@@ -56,10 +56,10 @@ function CertificationCentersTableContent() {
             : "Certification Center will appear here once added"}
         </p>
       </div>
-    );
+    )
   }
 
-  return <DataTable columns={columns} data={certificationCenters.data} />;
+  return <DataTable columns={columns} data={certificationCenters.data} />
 }
 
 function CertificationCentersTable() {
@@ -69,12 +69,12 @@ function CertificationCentersTable() {
     >
       <CertificationCentersTableContent />
     </Suspense>
-  );
+  )
 }
 
 function CertificationCenters() {
-  const { user } = Route.useRouteContext();
-  const isSuperuser = user?.is_superuser ?? false;
+  const { user } = Route.useRouteContext()
+  const isSuperuser = user?.is_superuser ?? false
 
   return (
     <div className="flex flex-col gap-6">
@@ -91,5 +91,5 @@ function CertificationCenters() {
       </div>
       <CertificationCentersTable />
     </div>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table"
 
-import type { CertificationCenterPublic } from "@/client";
-import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu";
-import { MetaDataCell } from "../Common/columns";
+import type { CertificationCenterPublic } from "@/client"
+import { MetaDataCell } from "../Common/columns"
+import { CertificationCenterActionsMenu } from "./CertificationCenterActionsMenu"
 
 export const getColumns = (
   isSuperuser: boolean,
@@ -16,7 +16,7 @@ export const getColumns = (
         <span className="font-medium">{row.original.name}</span>
       ),
     },
-  ];
+  ]
 
   if (isSuperuser) {
     columns.push(
@@ -38,8 +38,8 @@ export const getColumns = (
           </div>
         ),
       },
-    );
+    )
   }
 
-  return columns;
-};
+  return columns
+}

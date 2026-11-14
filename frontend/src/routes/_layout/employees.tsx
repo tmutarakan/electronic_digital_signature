@@ -5,10 +5,10 @@ import { Suspense, useMemo } from "react"
 
 import { EmployeesService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
+//import PendingEmployees from "@/components/Pending/PendingEmployees"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner"
 import AddEmployee from "@/components/Employees/AddEmployee"
 import { getColumns } from "@/components/Employees/columns"
-//import PendingEmployees from "@/components/Pending/PendingEmployees"
-import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getEmployeesQueryOptions() {
   return {
@@ -65,9 +65,7 @@ function EmployeesTableContent() {
 
 function EmployeesTable() {
   return (
-    <Suspense
-      fallback={<LoadingSpinner label="Loading Employees" />}
-    >
+    <Suspense fallback={<LoadingSpinner label="Loading Employees" />}>
       <EmployeesTableContent />
     </Suspense>
   )

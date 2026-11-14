@@ -1,8 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table"
 
 import type { EmployeePublic } from "@/client"
-import { EmployeeActionsMenu } from "./EmployeeActionsMenu"
 import { MetaDataCell } from "../Common/columns"
+import { EmployeeActionsMenu } from "./EmployeeActionsMenu"
 
 export const getColumns = (
   isSuperuser: boolean,

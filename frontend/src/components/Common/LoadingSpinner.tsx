@@ -1,9 +1,9 @@
 // components/Common/LoadingSpinner.tsx
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react"
 
 interface LoadingSpinnerProps {
-  label?: string;
-  className?: string;
+  label?: string
+  className?: string
 }
 
 export function LoadingSpinner({
@@ -19,5 +19,5 @@ export function LoadingSpinner({
       <Loader2 className="size-6 animate-spin text-muted-foreground" />
       <span className="sr-only">{label}</span>
     </div>
-  );
+  )
 }

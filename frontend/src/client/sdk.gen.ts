@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { certificationCentersCreateCertificationCenterData, certificationCentersCreateCertificationCenterErrors, certificationCentersCreateCertificationCenterResponses, certificationCentersDeleteCertificationCenterData, certificationCentersDeleteCertificationCenterErrors, certificationCentersDeleteCertificationCenterResponses, certificationCentersReadCertificationCenterData, certificationCentersReadCertificationCenterErrors, certificationCentersReadCertificationCenterResponses, certificationCentersReadCertificationCentersData, certificationCentersReadCertificationCentersErrors, certificationCentersReadCertificationCentersResponses, certificationCentersUpdateCertificationCenterData, certificationCentersUpdateCertificationCenterErrors, certificationCentersUpdateCertificationCenterResponses, electronicDigitalSignaturesCreateElectronicDigitalSignatureData, electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors, electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses, electronicDigitalSignaturesDeleteElectronicDigitalSignatureData, electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors, electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignatureData, electronicDigitalSignaturesReadElectronicDigitalSignatureErrors, electronicDigitalSignaturesReadElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignaturesData, electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors, electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses, electronicDigitalSignaturesReplaceCertificateData, electronicDigitalSignaturesReplaceCertificateErrors, electronicDigitalSignaturesReplaceCertificateResponses, electronicDigitalSignaturesReplaceContainerData, electronicDigitalSignaturesReplaceContainerErrors, electronicDigitalSignaturesReplaceContainerResponses, electronicDigitalSignaturesUpdateElectronicDigitalSignatureData, electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors, electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses, employeesCreateEmployeeData, employeesCreateEmployeeErrors, employeesCreateEmployeeResponses, employeesDeleteEmployeeData, employeesDeleteEmployeeErrors, employeesDeleteEmployeeResponses, employeesReadEmployeeData, employeesReadEmployeeErrors, employeesReadEmployeeResponses, employeesReadEmployeesData, employeesReadEmployeesErrors, employeesReadEmployeesResponses, employeesUpdateEmployeeData, employeesUpdateEmployeeErrors, employeesUpdateEmployeeResponses, itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, organizationsCreateOrganizationData, organizationsCreateOrganizationErrors, organizationsCreateOrganizationResponses, organizationsDeleteOrganizationData, organizationsDeleteOrganizationErrors, organizationsDeleteOrganizationResponses, organizationsReadOrganizationData, organizationsReadOrganizationErrors, organizationsReadOrganizationResponses, organizationsReadOrganizationsData, organizationsReadOrganizationsErrors, organizationsReadOrganizationsResponses, organizationsUpdateOrganizationData, organizationsUpdateOrganizationErrors, organizationsUpdateOrganizationResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, signatureTypesCreateSignatureTypeData, signatureTypesCreateSignatureTypeErrors, signatureTypesCreateSignatureTypeResponses, signatureTypesDeleteSignatureTypeData, signatureTypesDeleteSignatureTypeErrors, signatureTypesDeleteSignatureTypeResponses, signatureTypesReadSignatureTypeData, signatureTypesReadSignatureTypeErrors, signatureTypesReadSignatureTypeResponses, signatureTypesReadSignatureTypesData, signatureTypesReadSignatureTypesErrors, signatureTypesReadSignatureTypesResponses, signatureTypesUpdateSignatureTypeData, signatureTypesUpdateSignatureTypeErrors, signatureTypesUpdateSignatureTypeResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { certificationCentersCreateCertificationCenterData, certificationCentersCreateCertificationCenterErrors, certificationCentersCreateCertificationCenterResponses, certificationCentersDeleteCertificationCenterData, certificationCentersDeleteCertificationCenterErrors, certificationCentersDeleteCertificationCenterResponses, certificationCentersReadCertificationCenterData, certificationCentersReadCertificationCenterErrors, certificationCentersReadCertificationCenterResponses, certificationCentersReadCertificationCentersData, certificationCentersReadCertificationCentersErrors, certificationCentersReadCertificationCentersResponses, certificationCentersUpdateCertificationCenterData, certificationCentersUpdateCertificationCenterErrors, certificationCentersUpdateCertificationCenterResponses, dashboardReadDashboardStatsData, dashboardReadDashboardStatsResponses, electronicDigitalSignaturesCreateElectronicDigitalSignatureData, electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors, electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses, electronicDigitalSignaturesDeleteElectronicDigitalSignatureData, electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors, electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignatureData, electronicDigitalSignaturesReadElectronicDigitalSignatureErrors, electronicDigitalSignaturesReadElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignaturesData, electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors, electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses, electronicDigitalSignaturesReplaceCertificateData, electronicDigitalSignaturesReplaceCertificateErrors, electronicDigitalSignaturesReplaceCertificateResponses, electronicDigitalSignaturesReplaceContainerData, electronicDigitalSignaturesReplaceContainerErrors, electronicDigitalSignaturesReplaceContainerResponses, electronicDigitalSignaturesUpdateElectronicDigitalSignatureData, electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors, electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses, employeesCreateEmployeeData, employeesCreateEmployeeErrors, employeesCreateEmployeeResponses, employeesDeleteEmployeeData, employeesDeleteEmployeeErrors, employeesDeleteEmployeeResponses, employeesReadEmployeeData, employeesReadEmployeeErrors, employeesReadEmployeeResponses, employeesReadEmployeesData, employeesReadEmployeesErrors, employeesReadEmployeesResponses, employeesUpdateEmployeeData, employeesUpdateEmployeeErrors, employeesUpdateEmployeeResponses, itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, organizationsCreateOrganizationData, organizationsCreateOrganizationErrors, organizationsCreateOrganizationResponses, organizationsDeleteOrganizationData, organizationsDeleteOrganizationErrors, organizationsDeleteOrganizationResponses, organizationsReadOrganizationData, organizationsReadOrganizationErrors, organizationsReadOrganizationResponses, organizationsReadOrganizationsData, organizationsReadOrganizationsErrors, organizationsReadOrganizationsResponses, organizationsUpdateOrganizationData, organizationsUpdateOrganizationErrors, organizationsUpdateOrganizationResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, signatureTypesCreateSignatureTypeData, signatureTypesCreateSignatureTypeErrors, signatureTypesCreateSignatureTypeResponses, signatureTypesDeleteSignatureTypeData, signatureTypesDeleteSignatureTypeErrors, signatureTypesDeleteSignatureTypeResponses, signatureTypesReadSignatureTypeData, signatureTypesReadSignatureTypeErrors, signatureTypesReadSignatureTypeResponses, signatureTypesReadSignatureTypesData, signatureTypesReadSignatureTypesErrors, signatureTypesReadSignatureTypesResponses, signatureTypesUpdateSignatureTypeData, signatureTypesUpdateSignatureTypeErrors, signatureTypesUpdateSignatureTypeResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -368,7 +368,7 @@ export class OrganizationsService {
     /**
      * Read Organizations
      *
-     * Retrieve organizations.
+     * Retrieve organizations. Доступно всем аутентифицированным пользователям.
      */
     public static readOrganizations<ThrowOnError extends boolean = true>(options?: Options<organizationsReadOrganizationsData, ThrowOnError>) {
         return (options?.client ?? client).get<organizationsReadOrganizationsResponses, organizationsReadOrganizationsErrors, ThrowOnError>({
@@ -382,7 +382,8 @@ export class OrganizationsService {
     /**
      * Create Organization
      *
-     * Create new organization.
+     * Create new organization. Только для суперпользователя.
+     * owner_id проставляется автоматически для аудита.
      */
     public static createOrganization<ThrowOnError extends boolean = true>(options: Options<organizationsCreateOrganizationData, ThrowOnError>) {
         return (options.client ?? client).post<organizationsCreateOrganizationResponses, organizationsCreateOrganizationErrors, ThrowOnError>({
@@ -400,7 +401,7 @@ export class OrganizationsService {
     /**
      * Delete Organization
      *
-     * Delete an organization.
+     * Delete an organization. Только для суперпользователя.
      */
     public static deleteOrganization<ThrowOnError extends boolean = true>(options: Options<organizationsDeleteOrganizationData, ThrowOnError>) {
         return (options.client ?? client).delete<organizationsDeleteOrganizationResponses, organizationsDeleteOrganizationErrors, ThrowOnError>({
@@ -414,7 +415,7 @@ export class OrganizationsService {
     /**
      * Read Organization
      *
-     * Get organization by ID.
+     * Get organization by ID. Доступно всем аутентифицированным пользователям.
      */
     public static readOrganization<ThrowOnError extends boolean = true>(options: Options<organizationsReadOrganizationData, ThrowOnError>) {
         return (options.client ?? client).get<organizationsReadOrganizationResponses, organizationsReadOrganizationErrors, ThrowOnError>({
@@ -428,7 +429,7 @@ export class OrganizationsService {
     /**
      * Update Organization
      *
-     * Update an organization.
+     * Update an organization. Только для суперпользователя.
      */
     public static updateOrganization<ThrowOnError extends boolean = true>(options: Options<organizationsUpdateOrganizationData, ThrowOnError>) {
         return (options.client ?? client).put<organizationsUpdateOrganizationResponses, organizationsUpdateOrganizationErrors, ThrowOnError>({
@@ -448,7 +449,7 @@ export class CertificationCentersService {
     /**
      * Read Certification Centers
      *
-     * Retrieve Certification Centers.
+     * Retrieve Certification Centers. Доступно всем аутентифицированным пользователям.
      */
     public static centersReadCertificationCenters<ThrowOnError extends boolean = true>(options?: Options<certificationCentersReadCertificationCentersData, ThrowOnError>) {
         return (options?.client ?? client).get<certificationCentersReadCertificationCentersResponses, certificationCentersReadCertificationCentersErrors, ThrowOnError>({
@@ -462,7 +463,7 @@ export class CertificationCentersService {
     /**
      * Create Certification Center
      *
-     * Create new certification center.
+     * Create new certification center. Только для суперпользователя.
      */
     public static centersCreateCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersCreateCertificationCenterData, ThrowOnError>) {
         return (options.client ?? client).post<certificationCentersCreateCertificationCenterResponses, certificationCentersCreateCertificationCenterErrors, ThrowOnError>({
@@ -480,7 +481,7 @@ export class CertificationCentersService {
     /**
      * Delete Certification Center
      *
-     * Delete an certification center.
+     * Delete a certification center. Только для суперпользователя.
      */
     public static centersDeleteCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersDeleteCertificationCenterData, ThrowOnError>) {
         return (options.client ?? client).delete<certificationCentersDeleteCertificationCenterResponses, certificationCentersDeleteCertificationCenterErrors, ThrowOnError>({
@@ -494,7 +495,7 @@ export class CertificationCentersService {
     /**
      * Read Certification Center
      *
-     * Get certification center by ID.
+     * Get certification center by ID. Доступно всем аутентифицированным пользователям.
      */
     public static centersReadCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersReadCertificationCenterData, ThrowOnError>) {
         return (options.client ?? client).get<certificationCentersReadCertificationCenterResponses, certificationCentersReadCertificationCenterErrors, ThrowOnError>({
@@ -508,7 +509,7 @@ export class CertificationCentersService {
     /**
      * Update Certification Center
      *
-     * Update an certification center.
+     * Update a certification center. Только для суперпользователя.
      */
     public static centersUpdateCertificationCenter<ThrowOnError extends boolean = true>(options: Options<certificationCentersUpdateCertificationCenterData, ThrowOnError>) {
         return (options.client ?? client).put<certificationCentersUpdateCertificationCenterResponses, certificationCentersUpdateCertificationCenterErrors, ThrowOnError>({
@@ -529,6 +530,7 @@ export class ElectronicDigitalSignaturesService {
      * Read Electronic Digital Signatures
      *
      * Retrieve electronic digital signatures.
+     * Доступно всем аутентифицированным пользователям.
      */
     public static digitalSignaturesReadElectronicDigitalSignatures<ThrowOnError extends boolean = true>(options?: Options<electronicDigitalSignaturesReadElectronicDigitalSignaturesData, ThrowOnError>) {
         return (options?.client ?? client).get<electronicDigitalSignaturesReadElectronicDigitalSignaturesResponses, electronicDigitalSignaturesReadElectronicDigitalSignaturesErrors, ThrowOnError>({
@@ -543,6 +545,10 @@ export class ElectronicDigitalSignaturesService {
      * Create Electronic Digital Signature
      *
      * Create new electronic digital signature with certificate and container files.
+     * Только для суперпользователя.
+     *
+     * Логика с S3 остаётся в роутере: сначала грузим оба файла,
+     * потом создаём запись, при падении — откатываем.
      */
     public static digitalSignaturesCreateElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesCreateElectronicDigitalSignatureData, ThrowOnError>) {
         return (options.client ?? client).post<electronicDigitalSignaturesCreateElectronicDigitalSignatureResponses, electronicDigitalSignaturesCreateElectronicDigitalSignatureErrors, ThrowOnError>({
@@ -561,7 +567,8 @@ export class ElectronicDigitalSignaturesService {
     /**
      * Delete Electronic Digital Signature
      *
-     * Delete an electronic digital signature.
+     * Delete an electronic digital signature вместе с файлами в S3.
+     * Только для суперпользователя.
      */
     public static digitalSignaturesDeleteElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesDeleteElectronicDigitalSignatureData, ThrowOnError>) {
         return (options.client ?? client).delete<electronicDigitalSignaturesDeleteElectronicDigitalSignatureResponses, electronicDigitalSignaturesDeleteElectronicDigitalSignatureErrors, ThrowOnError>({
@@ -576,6 +583,7 @@ export class ElectronicDigitalSignaturesService {
      * Read Electronic Digital Signature
      *
      * Get electronic digital signature by ID.
+     * Доступно всем аутентифицированным пользователям.
      */
     public static digitalSignaturesReadElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesReadElectronicDigitalSignatureData, ThrowOnError>) {
         return (options.client ?? client).get<electronicDigitalSignaturesReadElectronicDigitalSignatureResponses, electronicDigitalSignaturesReadElectronicDigitalSignatureErrors, ThrowOnError>({
@@ -589,7 +597,8 @@ export class ElectronicDigitalSignaturesService {
     /**
      * Update Electronic Digital Signature
      *
-     * Update an electronic digital signature.
+     * Update an electronic digital signature (метаданные, без файлов).
+     * Только для суперпользователя.
      */
     public static digitalSignaturesUpdateElectronicDigitalSignature<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesUpdateElectronicDigitalSignatureData, ThrowOnError>) {
         return (options.client ?? client).put<electronicDigitalSignaturesUpdateElectronicDigitalSignatureResponses, electronicDigitalSignaturesUpdateElectronicDigitalSignatureErrors, ThrowOnError>({
@@ -607,7 +616,7 @@ export class ElectronicDigitalSignaturesService {
     /**
      * Replace Certificate
      *
-     * Заменить файл сертификата.
+     * Заменить файл сертификата. Только для суперпользователя.
      */
     public static digitalSignaturesReplaceCertificate<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesReplaceCertificateData, ThrowOnError>) {
         return (options.client ?? client).post<electronicDigitalSignaturesReplaceCertificateResponses, electronicDigitalSignaturesReplaceCertificateErrors, ThrowOnError>({
@@ -626,7 +635,7 @@ export class ElectronicDigitalSignaturesService {
     /**
      * Replace Container
      *
-     * Заменить файл контейнера.
+     * Заменить файл контейнера. Только для суперпользователя.
      */
     public static digitalSignaturesReplaceContainer<ThrowOnError extends boolean = true>(options: Options<electronicDigitalSignaturesReplaceContainerData, ThrowOnError>) {
         return (options.client ?? client).post<electronicDigitalSignaturesReplaceContainerResponses, electronicDigitalSignaturesReplaceContainerErrors, ThrowOnError>({
@@ -647,7 +656,7 @@ export class EmployeesService {
     /**
      * Read Employees
      *
-     * Retrieve employees.
+     * Retrieve employees. Доступно всем аутентифицированным пользователям.
      */
     public static readEmployees<ThrowOnError extends boolean = true>(options?: Options<employeesReadEmployeesData, ThrowOnError>) {
         return (options?.client ?? client).get<employeesReadEmployeesResponses, employeesReadEmployeesErrors, ThrowOnError>({
@@ -661,7 +670,7 @@ export class EmployeesService {
     /**
      * Create Employee
      *
-     * Create new employee.
+     * Create new employee. Только для суперпользователя.
      */
     public static createEmployee<ThrowOnError extends boolean = true>(options: Options<employeesCreateEmployeeData, ThrowOnError>) {
         return (options.client ?? client).post<employeesCreateEmployeeResponses, employeesCreateEmployeeErrors, ThrowOnError>({
@@ -679,7 +688,7 @@ export class EmployeesService {
     /**
      * Delete Employee
      *
-     * Delete an employee.
+     * Delete an employee. Только для суперпользователя.
      */
     public static deleteEmployee<ThrowOnError extends boolean = true>(options: Options<employeesDeleteEmployeeData, ThrowOnError>) {
         return (options.client ?? client).delete<employeesDeleteEmployeeResponses, employeesDeleteEmployeeErrors, ThrowOnError>({
@@ -693,7 +702,7 @@ export class EmployeesService {
     /**
      * Read Employee
      *
-     * Get employee by ID.
+     * Get employee by ID. Доступно всем аутентифицированным пользователям.
      */
     public static readEmployee<ThrowOnError extends boolean = true>(options: Options<employeesReadEmployeeData, ThrowOnError>) {
         return (options.client ?? client).get<employeesReadEmployeeResponses, employeesReadEmployeeErrors, ThrowOnError>({
@@ -707,7 +716,7 @@ export class EmployeesService {
     /**
      * Update Employee
      *
-     * Update an employee.
+     * Update an employee. Только для суперпользователя.
      */
     public static updateEmployee<ThrowOnError extends boolean = true>(options: Options<employeesUpdateEmployeeData, ThrowOnError>) {
         return (options.client ?? client).put<employeesUpdateEmployeeResponses, employeesUpdateEmployeeErrors, ThrowOnError>({
@@ -726,8 +735,6 @@ export class EmployeesService {
 export class SignatureTypesService {
     /**
      * Read Signature Types
-     *
-     * Retrieve signature types.
      */
     public static typesReadSignatureTypes<ThrowOnError extends boolean = true>(options?: Options<signatureTypesReadSignatureTypesData, ThrowOnError>) {
         return (options?.client ?? client).get<signatureTypesReadSignatureTypesResponses, signatureTypesReadSignatureTypesErrors, ThrowOnError>({
@@ -740,8 +747,6 @@ export class SignatureTypesService {
     
     /**
      * Create Signature Type
-     *
-     * Create new signature type.
      */
     public static typesCreateSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesCreateSignatureTypeData, ThrowOnError>) {
         return (options.client ?? client).post<signatureTypesCreateSignatureTypeResponses, signatureTypesCreateSignatureTypeErrors, ThrowOnError>({
@@ -758,8 +763,6 @@ export class SignatureTypesService {
     
     /**
      * Delete Signature Type
-     *
-     * Delete an signature type.
      */
     public static typesDeleteSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesDeleteSignatureTypeData, ThrowOnError>) {
         return (options.client ?? client).delete<signatureTypesDeleteSignatureTypeResponses, signatureTypesDeleteSignatureTypeErrors, ThrowOnError>({
@@ -772,8 +775,6 @@ export class SignatureTypesService {
     
     /**
      * Read Signature Type
-     *
-     * Get signature type by ID.
      */
     public static typesReadSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesReadSignatureTypeData, ThrowOnError>) {
         return (options.client ?? client).get<signatureTypesReadSignatureTypeResponses, signatureTypesReadSignatureTypeErrors, ThrowOnError>({
@@ -786,8 +787,6 @@ export class SignatureTypesService {
     
     /**
      * Update Signature Type
-     *
-     * Update an signature type.
      */
     public static typesUpdateSignatureType<ThrowOnError extends boolean = true>(options: Options<signatureTypesUpdateSignatureTypeData, ThrowOnError>) {
         return (options.client ?? client).put<signatureTypesUpdateSignatureTypeResponses, signatureTypesUpdateSignatureTypeErrors, ThrowOnError>({
@@ -799,6 +798,22 @@ export class SignatureTypesService {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+}
+
+export class DashboardService {
+    /**
+     * Read Dashboard Stats
+     *
+     * Счётчики организаций, сотрудников и подписей для дашборда.
+     */
+    public static readDashboardStats<ThrowOnError extends boolean = true>(options?: Options<dashboardReadDashboardStatsData, ThrowOnError>) {
+        return (options?.client ?? client).get<dashboardReadDashboardStatsResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/dashboard/stats',
+            ...options
         });
     }
 }

@@ -1,11 +1,10 @@
-import { Check, Copy } from "lucide-react";
-
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { Button } from "@/components/ui/button";
+import { Check, Copy } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 
 function CopyId({ id }: { id: string }) {
-  const [copiedText, copy] = useCopyToClipboard();
-  const isCopied = copiedText === id;
+  const [copiedText, copy] = useCopyToClipboard()
+  const isCopied = copiedText === id
 
   return (
     <div className="flex items-center gap-1.5 group">
@@ -24,34 +23,34 @@ function CopyId({ id }: { id: string }) {
         <span className="sr-only">Copy ID</span>
       </Button>
     </div>
-  );
+  )
 }
 
 const dateFormatter = new Intl.DateTimeFormat("ru-RU", {
   dateStyle: "short",
   timeStyle: "short",
-});
+})
 
 const formatDate = (value: string | null | undefined) => {
-  if (!value) return "—";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "—";
-  return dateFormatter.format(date);
-};
+  if (!value) return "—"
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return "—"
+  return dateFormatter.format(date)
+}
 
 interface MetaData {
-  id: string;
-  owner?: { email: string } | null;
-  created_at: string | null | undefined;
-  updated_at: string | null | undefined;
+  id: string
+  owner?: { email: string } | null
+  created_at: string | null | undefined
+  updated_at: string | null | undefined
 }
 
 interface MetaDataCellProps {
-  metadata: MetaData;
+  metadata: MetaData
 }
 
 export const MetaDataCell = ({ metadata }: MetaDataCellProps) => {
-  const { id, owner, created_at, updated_at } = metadata;
+  const { id, owner, created_at, updated_at } = metadata
 
   return (
     <div className="flex flex-col gap-0.5 text-sm font-light">
@@ -69,5 +68,5 @@ export const MetaDataCell = ({ metadata }: MetaDataCellProps) => {
         {formatDate(updated_at)}
       </span>
     </div>
-  );
-};
+  )
+}

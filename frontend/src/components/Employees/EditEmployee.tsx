@@ -5,10 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import {
-  type EmployeePublic,
-  EmployeesService,
-} from "@/client"
+import { type EmployeePublic, EmployeesService } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -131,7 +128,6 @@ const EditEmployee = ({ employee, onSuccess }: EditEmployeeProps) => {
                   </FormItem>
                 )}
               />
-
             </div>
 
             <DialogFooter>

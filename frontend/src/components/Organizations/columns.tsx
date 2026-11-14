@@ -1,8 +1,8 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table"
 
-import type { OrganizationPublic } from "@/client";
-import { OrganizationActionsMenu } from "./OrganizationActionsMenu";
-import { MetaDataCell } from "../Common/columns";
+import type { OrganizationPublic } from "@/client"
+import { MetaDataCell } from "../Common/columns"
+import { OrganizationActionsMenu } from "./OrganizationActionsMenu"
 
 export const getColumns = (
   isSuperuser: boolean,
@@ -16,7 +16,7 @@ export const getColumns = (
         <span className="font-medium">{row.original.name}</span>
       ),
     },
-  ];
+  ]
 
   if (isSuperuser) {
     columns.push(
@@ -37,8 +37,8 @@ export const getColumns = (
           </div>
         ),
       },
-    );
+    )
   }
 
-  return columns;
-};
+  return columns
+}

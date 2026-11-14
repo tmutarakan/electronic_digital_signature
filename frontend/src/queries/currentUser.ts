@@ -1,4 +1,4 @@
-import { UsersService, type UserPublic } from "@/client";
+import { type UserPublic, UsersService } from "@/client"
 
 export function getCurrentUserQueryOptions() {
   return {
@@ -6,5 +6,5 @@ export function getCurrentUserQueryOptions() {
       (await UsersService.readUserMe()).data,
     queryKey: ["currentUser"] as const,
     staleTime: 5 * 60 * 1000,
-  };
+  }
 }

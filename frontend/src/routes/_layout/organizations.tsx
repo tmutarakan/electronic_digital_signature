@@ -5,10 +5,10 @@ import { Suspense, useMemo } from "react"
 
 import { OrganizationsService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
+//import PendingOrganizations from "@/components/Pending/PendingOrganizations"
+import { LoadingSpinner } from "@/components/Common/LoadingSpinner"
 import AddOrganization from "@/components/Organizations/AddOrganization"
 import { getColumns } from "@/components/Organizations/columns"
-//import PendingOrganizations from "@/components/Pending/PendingOrganizations"
-import { LoadingSpinner } from "@/components/Common/LoadingSpinner";
 
 function getOrganizationsQueryOptions() {
   return {
@@ -64,9 +64,7 @@ function OrganizationsTableContent() {
 
 function OrganizationsTable() {
   return (
-    <Suspense
-      fallback={<LoadingSpinner label="Loading organizations" />}
-    >
+    <Suspense fallback={<LoadingSpinner label="Loading organizations" />}>
       <OrganizationsTableContent />
     </Suspense>
   )
@@ -85,7 +83,7 @@ function Organizations() {
             Create and manage your organizations
           </p>
         </div>
-          {isSuperuser && <AddOrganization />}
+        {isSuperuser && <AddOrganization />}
       </div>
       <OrganizationsTable />
     </div>

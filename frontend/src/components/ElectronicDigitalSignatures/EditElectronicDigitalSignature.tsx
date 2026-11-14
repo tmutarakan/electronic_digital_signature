@@ -1,7 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import {
   CertificationCentersService,
@@ -10,8 +10,8 @@ import {
   EmployeesService,
   OrganizationsService,
   SignatureTypesService,
-} from "@/client";
-import { Button } from "@/components/ui/button";
+} from "@/client"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -20,7 +20,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -28,18 +28,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { LoadingButton } from "@/components/ui/loading-button";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { LoadingButton } from "@/components/ui/loading-button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import useCustomToast from "@/hooks/useCustomToast";
-import { handleError } from "@/utils";
+} from "@/components/ui/select"
+import useCustomToast from "@/hooks/useCustomToast"
+import { handleError } from "@/utils"
 
 const formSchema = z.object({
   date_certificate: z.iso.datetime({
@@ -58,15 +58,15 @@ const formSchema = z.object({
   }),
   file_certificate: z.instanceof(File).optional(),
   file_container: z.instanceof(File).optional(),
-});
+})
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 interface EditElectronicDigitalSignatureProps {
-  electronicDigitalSignature: ElectronicDigitalSignaturePublic;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: () => void;
+  electronicDigitalSignature: ElectronicDigitalSignaturePublic
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onSuccess: () => void
 }
 
 const EditElectronicDigitalSignature = ({
@@ -75,43 +75,43 @@ const EditElectronicDigitalSignature = ({
   onOpenChange,
   onSuccess,
 }: EditElectronicDigitalSignatureProps) => {
-  const queryClient = useQueryClient();
-  const { showSuccessToast, showErrorToast } = useCustomToast();
+  const queryClient = useQueryClient()
+  const { showSuccessToast, showErrorToast } = useCustomToast()
 
   const { data: organizationsData, isLoading: isLoadingOrganizations } =
     useQuery({
       queryFn: async () => {
         const response = await OrganizationsService.readOrganizations({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["organizations"],
-    });
-  const organizations = organizationsData?.data || [];
+    })
+  const organizations = organizationsData?.data || []
 
   const { data: signatureTypesData, isLoading: isLoadingSignatureTypes } =
     useQuery({
       queryFn: async () => {
         const response = await SignatureTypesService.typesReadSignatureTypes({
           query: { skip: 0, limit: 100 },
-        });
-        return response.data; // или response, в зависимости от вашего API
+        })
+        return response.data // или response, в зависимости от вашего API
       },
       queryKey: ["signature-types"],
-    });
-  const signatureTypes = signatureTypesData?.data || [];
+    })
+  const signatureTypes = signatureTypesData?.data || []
 
   const { data: employeesData, isLoading: isLoadingEmployees } = useQuery({
     queryFn: async () => {
       const response = await EmployeesService.readEmployees({
         query: { skip: 0, limit: 100 },
-      });
-      return response.data; // или response, в зависимости от вашего API
+      })
+      return response.data // или response, в зависимости от вашего API
     },
     queryKey: ["employees"],
-  });
-  const employees = employeesData?.data || [];
+  })
+  const employees = employeesData?.data || []
 
   const {
     data: certificationCentersData,
@@ -121,12 +121,12 @@ const EditElectronicDigitalSignature = ({
       const response =
         await CertificationCentersService.centersReadCertificationCenters({
           query: { skip: 0, limit: 100 },
-        });
-      return response.data; // или response, в зависимости от вашего API
+        })
+      return response.data // или response, в зависимости от вашего API
     },
     queryKey: ["certification-centers"],
-  });
-  const certificationCenters = certificationCentersData?.data || [];
+  })
+  const certificationCenters = certificationCentersData?.data || []
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -143,7 +143,7 @@ const EditElectronicDigitalSignature = ({
       file_certificate: undefined,
       file_container: undefined,
     },
-  });
+  })
 
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => {
@@ -159,7 +159,7 @@ const EditElectronicDigitalSignature = ({
             certification_center_id: data.certification_center_id,
           },
         },
-      );
+      )
 
       if (data.file_certificate) {
         await ElectronicDigitalSignaturesService.digitalSignaturesReplaceCertificate(
@@ -169,7 +169,7 @@ const EditElectronicDigitalSignature = ({
               file: data.file_certificate, // File
             },
           },
-        );
+        )
       }
 
       if (data.file_container) {
@@ -180,26 +180,26 @@ const EditElectronicDigitalSignature = ({
               file: data.file_container, // File
             },
           },
-        );
+        )
       }
     },
     onSuccess: () => {
-      showSuccessToast("Electronic Digital Signature updated successfully");
-      onOpenChange(false);
-      form.reset();
-      onSuccess();
+      showSuccessToast("Electronic Digital Signature updated successfully")
+      onOpenChange(false)
+      form.reset()
+      onSuccess()
     },
     onError: handleError.bind(showErrorToast),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ["electronic-digital-signatures"],
-      });
+      })
     },
-  });
+  })
 
   const onSubmit = (data: FormValues) => {
-    mutation.mutate(data);
-  };
+    mutation.mutate(data)
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -245,8 +245,8 @@ const EditElectronicDigitalSignature = ({
                         type="file"
                         accept=".cer,.crt,.pem,.der"
                         onChange={(e) => {
-                          console.log("file selected:", e.target.files?.[0]);
-                          field.onChange(e.target.files?.[0]);
+                          console.log("file selected:", e.target.files?.[0])
+                          field.onChange(e.target.files?.[0])
                         }}
                       />
                     </FormControl>
@@ -439,7 +439,7 @@ const EditElectronicDigitalSignature = ({
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default EditElectronicDigitalSignature;
+export default EditElectronicDigitalSignature
