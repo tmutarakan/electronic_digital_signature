@@ -15,7 +15,7 @@ function getEmployeesQueryOptions() {
     queryFn: async () =>
       (
         await EmployeesService.readEmployees({
-          query: { skip: 0, limit: 100 },
+          query: { skip: 0, limit: 1000 },
         })
       ).data,
     queryKey: ["employees"],

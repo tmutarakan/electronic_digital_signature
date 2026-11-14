@@ -16,7 +16,7 @@ function getElectronicDigitalSignaturesQueryOptions() {
       (
         await ElectronicDigitalSignaturesService.digitalSignaturesReadElectronicDigitalSignatures(
           {
-            query: { skip: 0, limit: 100 },
+            query: { skip: 0, limit: 10000 },
           },
         )
       ).data,
