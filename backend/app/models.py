@@ -14,6 +14,9 @@ from .mixins import IDMixin, TimestampsMixin
 
 # Shared properties
 class UserBase(SQLModel):
+    """
+    Базовые свойства пользователя.
+    """
     email: EmailStr = Field(unique=True, index=True, max_length=255)
     is_active: bool = True
     is_superuser: bool = False
@@ -22,10 +25,16 @@ class UserBase(SQLModel):
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
+    """
+    Свойства для создания пользователя через API.
+    """
     password: str = Field(min_length=8, max_length=128)
 
 
 class UserRegister(SQLModel):
+    """
+    Свойства для регистрации пользователя через API.
+    """
     email: EmailStr = Field(max_length=255)
     password: str = Field(min_length=8, max_length=128)
     full_name: str | None = Field(default=None, max_length=255)
@@ -33,6 +42,10 @@ class UserRegister(SQLModel):
 
 # Properties to receive via API on update, all are optional
 class UserUpdate(SQLModel):
+    """
+    Свойства для обновления пользователя через API.
+    Все свойства являются необязательными.
+    """
     email: EmailStr | None = Field(default=None, max_length=255)
     is_active: bool | None = None
     is_superuser: bool | None = None
@@ -41,17 +54,27 @@ class UserUpdate(SQLModel):
 
 
 class UserUpdateMe(SQLModel):
+    """
+    Свойства для обновления данных пользователя через API.
+    Все свойства являются необязательными.
+    """
     full_name: str | None = Field(default=None, max_length=255)
     email: EmailStr | None = Field(default=None, max_length=255)
 
 
 class UpdatePassword(SQLModel):
+    """
+    Свойства для обновления пароля пользователя через API.
+    """
     current_password: str = Field(min_length=8, max_length=128)
     new_password: str = Field(min_length=8, max_length=128)
 
 
 # Database model, database table inferred from class name
 class User(UserBase, table=True):
+    """
+    Модель пользователя в базе данных.
+    """
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     hashed_password: str
     created_at: datetime | None = Field(
@@ -78,34 +101,53 @@ class User(UserBase, table=True):
 
 # Properties to return via API, id is always required
 class UserPublic(UserBase):
+    """
+    Свойства для возврата пользователя через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     created_at: datetime | None = None
 
 
 class UsersPublic(SQLModel):
+    """
+    Свойства для возврата списка пользователей через API.
+    """
     data: list[UserPublic]
     count: int
 
 
 # Shared properties
 class ItemBase(SQLModel):
+    """
+    Базовые свойства элемента.
+    """
     title: str = Field(min_length=1, max_length=255)
     description: str | None = Field(default=None, max_length=255)
 
 
 # Properties to receive on item creation
 class ItemCreate(ItemBase):
-    pass
+    """
+    Свойства для создания элемента.
+    """
 
 
 # Properties to receive on item update
 class ItemUpdate(SQLModel):
+    """
+    Свойства для обновления элемента.
+    Все свойства являются необязательными.
+    """
     title: str | None = Field(default=None, min_length=1, max_length=255)
     description: str | None = Field(default=None, max_length=255)
 
 
 # Database model, database table inferred from class name
 class Item(ItemBase, table=True):
+    """
+    Модель элемента в базе данных.
+    """
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     created_at: datetime | None = Field(
         default_factory=get_datetime_utc,
@@ -119,33 +161,52 @@ class Item(ItemBase, table=True):
 
 # Properties to return via API, id is always required
 class ItemPublic(ItemBase):
+    """
+    Свойства для возврата элемента через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     owner_id: uuid.UUID
     created_at: datetime | None = None
 
 
 class ItemsPublic(SQLModel):
+    """
+    Свойства для возврата списка элементов через API.
+    """
     data: list[ItemPublic]
     count: int
 
 
 # Generic message
 class Message(SQLModel):
+    """
+    Общее сообщение.
+    """
     message: str
 
 
 # JSON payload containing access token
 class Token(SQLModel):
+    """
+    Пакет данных, содержащий токен доступа.
+    """
     access_token: str
     token_type: str = "bearer"
 
 
 # Contents of JWT token
 class TokenPayload(SQLModel):
+    """
+    Содержимое JWT токена.
+    """
     sub: str | None = None
 
 
 class NewPassword(SQLModel):
+    """
+    Пакет данных для обновления пароля.
+    """
     token: str
     new_password: str = Field(min_length=8, max_length=128)
 
@@ -154,18 +215,30 @@ class NewPassword(SQLModel):
 # Организации
 # --------------------------------------------------------------------------------
 class OrganizationBase(SQLModel):
+    """
+    Базовые свойства организации.
+    """
     name: str = Field(min_length=1, max_length=255)
 
 
 class OrganizationCreate(OrganizationBase):
-    pass
+    """
+    Свойства для создания организации через API.
+    """
 
 
 class OrganizationUpdate(SQLModel):
+    """
+    Свойства для обновления организации через API.
+    Все свойства являются необязательными.
+    """
     name: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class Organization(OrganizationBase, IDMixin, TimestampsMixin, table=True):
+    """
+    Модель организации в базе данных.
+    """
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -176,6 +249,10 @@ class Organization(OrganizationBase, IDMixin, TimestampsMixin, table=True):
 
 
 class OrganizationPublic(OrganizationBase):
+    """
+    Свойства для возврата организации через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     owner: UserPublic
     created_at: datetime
@@ -183,6 +260,9 @@ class OrganizationPublic(OrganizationBase):
 
 
 class OrganizationsPublic(SQLModel):
+    """
+    Свойства для возврата списка организаций через API.
+    """
     data: list[OrganizationPublic]
     count: int
 
@@ -191,20 +271,32 @@ class OrganizationsPublic(SQLModel):
 # Удостоверяющий центр
 # --------------------------------------------------------------------------------
 class CertificationCenterBase(SQLModel):
+    """
+    Базовые свойства удостоверяющего центра.
+    """
     name: str = Field(min_length=1, max_length=255)
 
 
 class CertificationCenterCreate(CertificationCenterBase):
-    pass
+    """
+    Свойства для создания удостоверяющего центра через API.
+    """
 
 
 class CertificationCenterUpdate(SQLModel):
+    """
+    Свойства для обновления удостоверяющего центра через API.
+    Все свойства являются необязательными.
+    """
     name: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class CertificationCenter(
     CertificationCenterBase, IDMixin, TimestampsMixin, table=True
 ):
+    """
+    Модель удостоверяющего центра в базе данных.
+    """
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -215,6 +307,10 @@ class CertificationCenter(
 
 
 class CertificationCenterPublic(CertificationCenterBase):
+    """
+    Свойства для возврата удостоверяющего центра через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     owner: UserPublic
     created_at: datetime
@@ -222,6 +318,9 @@ class CertificationCenterPublic(CertificationCenterBase):
 
 
 class CertificationCentersPublic(SQLModel):
+    """
+    Свойства для возврата списка удостоверяющих центров через API.
+    """
     data: list[CertificationCenterPublic]
     count: int
 
@@ -230,18 +329,30 @@ class CertificationCentersPublic(SQLModel):
 # Тип подписи
 # --------------------------------------------------------------------------------
 class SignatureTypeBase(SQLModel):
+    """
+    Базовые свойства типа подписи.
+    """
     name: str = Field(min_length=1, max_length=255)
 
 
 class SignatureTypeCreate(SignatureTypeBase):
-    pass
+    """
+    Свойства для создания типа подписи через API.
+    """
 
 
 class SignatureTypeUpdate(SQLModel):
+    """
+    Свойства для обновления типа подписи через API.
+    Все свойства являются необязательными.
+    """
     name: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class SignatureType(SignatureTypeBase, IDMixin, TimestampsMixin, table=True):
+    """
+    Модель типа подписи в базе данных.
+    """
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -252,6 +363,10 @@ class SignatureType(SignatureTypeBase, IDMixin, TimestampsMixin, table=True):
 
 
 class SignatureTypePublic(SignatureTypeBase):
+    """
+    Свойства для возврата типа подписи через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     owner: UserPublic
     created_at: datetime
@@ -259,6 +374,9 @@ class SignatureTypePublic(SignatureTypeBase):
 
 
 class SignatureTypesPublic(SQLModel):
+    """
+    Свойства для возврата списка типов подписи через API.
+    """
     data: list[SignatureTypePublic]
     count: int
 
@@ -267,6 +385,9 @@ class SignatureTypesPublic(SQLModel):
 # Сотрудники
 # --------------------------------------------------------------------------------
 class EmployeeBase(SQLModel):
+    """
+    Базовые свойства сотрудника.
+    """
     name: str = Field(min_length=1, max_length=255)
     position: str = Field(min_length=1, max_length=255)
 
@@ -275,11 +396,18 @@ class EmployeeCreate(EmployeeBase): ...
 
 
 class EmployeeUpdate(SQLModel):
+    """
+    Свойства для обновления сотрудника через API.
+    Все свойства являются необязательными.
+    """
     name: str | None = Field(default=None, min_length=1, max_length=255)
     position: str | None = Field(default=None, min_length=1, max_length=255)
 
 
 class Employee(EmployeeBase, IDMixin, TimestampsMixin, table=True):
+    """
+    Модель сотрудника в базе данных.
+    """
     owner_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE", index=True
     )
@@ -290,6 +418,10 @@ class Employee(EmployeeBase, IDMixin, TimestampsMixin, table=True):
 
 
 class EmployeePublic(EmployeeBase):
+    """
+    Свойства для возврата сотрудника через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     owner: UserPublic
     created_at: datetime
@@ -297,6 +429,9 @@ class EmployeePublic(EmployeeBase):
 
 
 class EmployeesPublic(SQLModel):
+    """
+    Свойства для возврата списка сотрудников через API.
+    """
     data: list[EmployeePublic]
     count: int
 
@@ -305,6 +440,9 @@ class EmployeesPublic(SQLModel):
 # Электронная цифровая подпись
 # --------------------------------------------------------------------------------
 class ElectronicDigitalSignatureBase(SQLModel):
+    """
+    Базовые свойства электронной цифровой подписи.
+    """
     date_certificate: datetime = Field(
         sa_type=DateTime(timezone=True),  # pyright: ignore[reportArgumentType]
         description="Дата окончания срока действия сертификата",
@@ -316,6 +454,9 @@ class ElectronicDigitalSignatureBase(SQLModel):
 
 
 class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
+    """
+    Свойства для создания электронной цифровой подписи через API.
+    """
     organization_id: uuid.UUID
     signature_type_id: uuid.UUID
     employee_id: uuid.UUID
@@ -325,6 +466,10 @@ class ElectronicDigitalSignatureCreate(ElectronicDigitalSignatureBase):
 
 
 class ElectronicDigitalSignatureUpdate(SQLModel):
+    """
+    Свойства для обновления электронной цифровой подписи через API.
+    Все свойства являются необязательными.
+    """
     date_certificate: datetime | None = None
     date_container: datetime | None = None
     organization_id: uuid.UUID | None = None
@@ -336,6 +481,9 @@ class ElectronicDigitalSignatureUpdate(SQLModel):
 class ElectronicDigitalSignature(
     ElectronicDigitalSignatureBase, IDMixin, TimestampsMixin, table=True
 ):
+    """
+    Модель электронной цифровой подписи в базе данных.
+    """
     file_certificate: str = Field(max_length=1024, nullable=False)
     file_container: str = Field(max_length=1024, nullable=False)
 
@@ -370,6 +518,10 @@ class ElectronicDigitalSignature(
 
 
 class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
+    """
+    Свойства для возврата электронной цифровой подписи через API.
+    Всегда требуется идентификатор.
+    """
     id: uuid.UUID
     file_certificate: str
     file_container: str
@@ -401,5 +553,8 @@ class ElectronicDigitalSignaturePublic(ElectronicDigitalSignatureBase):
 
 
 class ElectronicDigitalSignaturesPublic(SQLModel):
+    """
+    Свойства для возврата списка электронных цифровых подписей через API.
+    """
     data: list[ElectronicDigitalSignaturePublic]
     count: int
